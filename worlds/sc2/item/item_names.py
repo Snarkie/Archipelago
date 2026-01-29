@@ -762,6 +762,7 @@ ORACLE_STEALTH_DRIVE                                    = "Stealth Drive (Oracle
 ORACLE_SKYWARD_CHRONOANOMALY                            = "Skyward Chronoanomaly (Oracle)"
 ORACLE_TEMPORAL_ACCELERATION_BEAM                       = "Temporal Acceleration Beam (Oracle)"
 ORACLE_BOSONIC_CORE                                     = "Bosonic Core (Oracle)"
+ORACLE_SURFACE_STABILIZER                               = "Surface Stabilizer (Oracle)"
 ARBITER_CHRONOSTATIC_REINFORCEMENT                      = "Chronostatic Reinforcement (Arbiter)"
 ARBITER_KHAYDARIN_CORE                                  = "Khaydarin Core (Arbiter)"
 ARBITER_SPACETIME_ANCHOR                                = "Spacetime Anchor (Arbiter)"

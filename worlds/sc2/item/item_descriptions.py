@@ -972,6 +972,10 @@ item_descriptions = {
     item_names.ORACLE_SKYWARD_CHRONOANOMALY: "The Oracle's Stasis Ward can affect air units.",
     item_names.ORACLE_TEMPORAL_ACCELERATION_BEAM: "Oracles no longer need to spend energy to attack.",
     item_names.ORACLE_BOSONIC_CORE: "Increases starting energy by 150 and maximum energy by 50.",
+    item_names.ORACLE_SURFACE_STABILIZER: inspect.cleandoc("""
+        Allows the Oracle to transform into Ground mode.
+        Ground mode grants increased life and shields, and allows attacking only air units.
+    """),
     item_names.ARBITER_CHRONOSTATIC_REINFORCEMENT: "Arbiters gain +50 maximum life and +1 armor.",
     item_names.ARBITER_KHAYDARIN_CORE: _get_start_and_max_energy_desc("Arbiters"),
     item_names.ARBITER_SPACETIME_ANCHOR: "Allows Arbiters to use an alternate version of Stasis Field which lasts 50 seconds longer.",
