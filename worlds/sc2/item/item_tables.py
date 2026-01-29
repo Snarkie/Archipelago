@@ -954,7 +954,13 @@ item_table = {
                  parent=item_names.GHOST),
     item_names.SPECTRE_BARGAIN_BIN_PRICES:
         ItemData(768 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 22, SC2Race.TERRAN,
-                 parent=item_names.SPECTRE),
+                 parent=item_names.SPECTRE), 
+    item_names.WARHOUND_BRAWLER_CONFIGURATION:
+        ItemData(769 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 23, SC2Race.TERRAN,
+                 parent=item_names.WARHOUND),
+    item_names.WARHOUND_JUMP_JETS:
+        ItemData(770 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 24, SC2Race.TERRAN,
+                 classification=ItemClassification.progression, parent=item_names.WARHOUND,),
 
     # Filler items to fill remaining spots
     item_names.STARTING_MINERALS:
