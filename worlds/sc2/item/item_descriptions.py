@@ -744,6 +744,7 @@ item_descriptions = {
     item_names.CORRUPTOR_CONSTRUCT_REGENERATION: "Corruptors gain increased life regeneration.",
     item_names.CORRUPTOR_SCOURGE_INCUBATION: "Corruptors spawn 2 Scourge upon death (3 with Swarm Scourge).",
     item_names.CORRUPTOR_RESOURCE_EFFICIENCY: _get_resource_efficiency_desc(item_names.CORRUPTOR),
+    item_names.CORRUPTOR_ACID_SPLASH: "Corruptors attacking air units cause splash damage to enemy ground units below the target.",
     item_names.PRIMAL_IGNITER_CONCENTRATED_FIRE: "Primal Igniters deal +15 damage vs light armor.",
     item_names.PRIMAL_IGNITER_PRIMAL_TENACITY: "Primal Igniters gain +100 health and +1 armor.",
     item_names.INFESTED_SCV_BUILD_CHARGES: "Starting Infested SCV charges increased to 3. Maximum charges increased to 5.",

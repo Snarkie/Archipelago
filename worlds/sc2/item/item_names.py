@@ -514,6 +514,7 @@ CORRUPTOR_MONSTROUS_RESILIENCE                    = "Monstrous Resilience (Corru
 CORRUPTOR_CONSTRUCT_REGENERATION                  = "Construct Regeneration (Corruptor)"
 CORRUPTOR_SCOURGE_INCUBATION                      = "Scourge Incubation (Corruptor)"
 CORRUPTOR_RESOURCE_EFFICIENCY                     = "Resource Efficiency (Corruptor)"
+CORRUPTOR_ACID_SPLASH                             = "Acid Splash (Corruptor)"
 PRIMAL_IGNITER_CONCENTRATED_FIRE                  = "Concentrated Fire (Primal Igniter)"
 PRIMAL_IGNITER_PRIMAL_TENACITY                    = "Primal Tenacity (Primal Igniter)"
 OVERLORD_IMPROVED_OVERLORDS                       = "Improved Overlords (Overlord)"
