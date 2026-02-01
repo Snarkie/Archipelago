@@ -896,6 +896,10 @@ item_table = {
                  classification=ItemClassification.progression),
     item_names.SIGNAL_BEACON:
         ItemData(633 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Laboratory, 24, SC2Race.TERRAN, parent=parent_names.TERRAN_MERCENARIES),
+    item_names.JUGGERNAUT_THRUSTERS:
+        ItemData(634 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Laboratory, 25, SC2Race.TERRAN),
+    item_names.SUPPLY_DEPOT_COVERT_STOCKS:
+        ItemData(635 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Laboratory, 26, SC2Race.TERRAN),
 
     # WoL Protoss takes SC2WOL + 700~708
 
@@ -961,6 +965,15 @@ item_table = {
     item_names.WARHOUND_JUMP_JETS:
         ItemData(770 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 24, SC2Race.TERRAN,
                  classification=ItemClassification.progression, parent=item_names.WARHOUND,),
+    item_names.SCV_RESOURCEFUL:
+        ItemData(771 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 25, SC2Race.TERRAN),
+    item_names.SCV_CAUTERIZER:
+        ItemData(772 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 26, SC2Race.TERRAN),
+    item_names.COMMAND_CENTER_TACTICAL_JUMP:
+        ItemData(773 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 27, SC2Race.TERRAN),
+    item_names.BUNKER_EMERGENCY_PROVISIONS:
+        ItemData(774 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 28, SC2Race.TERRAN,
+                 parent=item_names.BUNKER),
 
     # Filler items to fill remaining spots
     item_names.STARTING_MINERALS:

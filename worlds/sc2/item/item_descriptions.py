@@ -193,11 +193,14 @@ item_descriptions = {
     item_names.PROGRESSIVE_TERRAN_WEAPON_ARMOR_UPGRADE: GENERIC_UPGRADE_TEMPLATE.format("damage and armor", TERRAN, "units"),
     item_names.BUNKER_PROJECTILE_ACCELERATOR: "Increases range of all units in the Bunker by 1.",
     item_names.BUNKER_NEOSTEEL_BUNKER: "Increases the number of Bunker slots by 2.",
+    item_names.BUNKER_EMERGENCY_PROVISIONS: "Units loaded into Bunkers no longer use supply.",
     item_names.MISSILE_TURRET_TITANIUM_HOUSING: "Increases Missile Turret life by 75.",
     item_names.MISSILE_TURRET_HELLSTORM_BATTERIES: "The Missile Turret unleashes an additional flurry of missiles with each attack.",
     item_names.SCV_ADVANCED_CONSTRUCTION: "Multiple SCVs can construct a structure, reducing its construction time.",
     item_names.SCV_DUAL_FUSION_WELDERS: "SCVs repair twice as fast.",
     item_names.SCV_CONSTRUCTION_JUMP_JETS: "Allows SCVs to jump up and down cliffs.",
+    item_names.SCV_RESOURCEFUL: "Repair no longer costs resources.",
+    item_names.SCV_CAUTERIZER: "Allows repairing non-mechanical units.",
     item_names.PROGRESSIVE_FIRE_SUPPRESSION_SYSTEM: inspect.cleandoc("""
         Level 1: While on low health, Terran structures are repaired to half health instead of burning down.
         Level 2: Terran structures are repaired to full health instead of half health.
@@ -207,6 +210,8 @@ item_descriptions = {
         Level 1: Allows Command Centers to use Scanner Sweep and Calldown: MULE abilities.
         Level 2: Orbital Command abilities work even in Planetary Fortress mode.
     """),
+    item_names.JUGGERNAUT_THRUSTERS: "Increases the movement speed of flying Terran buildings.",
+    item_names.SUPPLY_DEPOT_COVERT_STOCKS: "Supply Depots are cloaked while lowered.",
     item_names.MARINE_PROGRESSIVE_STIMPACK: STIMPACK_SMALL_DESCRIPTION,
     item_names.MARINE_COMBAT_SHIELD: "Increases Marine life by 10.",
     item_names.MEDIC_ADVANCED_MEDIC_FACILITIES: INTERNAL_TECH_MODULE_DESCRIPTION_TEMPLATE.format("Medics", "Barracks"),
@@ -340,6 +345,7 @@ item_descriptions = {
     item_names.COMMAND_CENTER_SCANNER_SWEEP: "Temporarily reveals an area of the map, detecting cloaked and burrowed units.",
     item_names.COMMAND_CENTER_MULE: "Summons a unit that gathers minerals more quickly than regular SCVs. Has timed life.",
     item_names.COMMAND_CENTER_EXTRA_SUPPLIES: "Drops additional supplies, permanently increasing the supply output of the target Supply Depot by 8.",
+    item_names.COMMAND_CENTER_TACTICAL_JUMP: "Allows a flying Command Center to to warp to a target location anywhere on the map.",
     item_names.HELLION_TWIN_LINKED_FLAMETHROWER: "Doubles the width of the Hellion's flame attack.",
     item_names.HELLION_THERMITE_FILAMENTS: "Hellions do an additional 10 damage to Light Armor.",
     item_names.SPIDER_MINE_CERBERUS_MINE: "Increases trigger and blast radius of Spider Mines.",
