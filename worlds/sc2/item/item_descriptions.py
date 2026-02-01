@@ -345,7 +345,7 @@ item_descriptions = {
     item_names.COMMAND_CENTER_SCANNER_SWEEP: "Temporarily reveals an area of the map, detecting cloaked and burrowed units.",
     item_names.COMMAND_CENTER_MULE: "Summons a unit that gathers minerals more quickly than regular SCVs. Has timed life.",
     item_names.COMMAND_CENTER_EXTRA_SUPPLIES: "Drops additional supplies, permanently increasing the supply output of the target Supply Depot by 8.",
-    item_names.COMMAND_CENTER_TACTICAL_JUMP: "Allows a flying Command Center to to warp to a target location anywhere on the map.",
+    item_names.COMMAND_CENTER_TACTICAL_JUMP: "Allows a flying Command Center to warp to a target location anywhere on the map.",
     item_names.HELLION_TWIN_LINKED_FLAMETHROWER: "Doubles the width of the Hellion's flame attack.",
     item_names.HELLION_THERMITE_FILAMENTS: "Hellions do an additional 10 damage to Light Armor.",
     item_names.SPIDER_MINE_CERBERUS_MINE: "Increases trigger and blast radius of Spider Mines.",
