@@ -245,6 +245,8 @@ class SC2World(World):
         slot_data["plando_locations"] = get_plando_locations(self)
         slot_data["nova_presence"] = self.options.nova_presence.value
         slot_data["nova_grant_story_tech"] = self.logic.nova_grant_story_tech
+        slot_data["enabled_heroes"] = self.logic.enabled_heroes.value
+        slot_data["hero_presence"] = self.logic.hero_presence.value
         slot_data["final_mission_ids"] = self.custom_mission_order.get_final_mission_ids()
         slot_data["custom_mission_order"] = self.custom_mission_order.get_slot_data()
         slot_data["version"] = 5

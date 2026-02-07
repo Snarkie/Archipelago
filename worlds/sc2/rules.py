@@ -16,6 +16,8 @@ from .options import (
     EnableMorphling,
     EnableRaceSwapVariants,
     NovaPresence,
+    EnabledHeroes,
+    HeroPresence,
     get_enabled_campaigns,
     get_enabled_races,
 )
@@ -76,6 +78,8 @@ class SC2Logic:
         self.generic_upgrade_missions = 0 if world is None else world.options.generic_upgrade_missions.value
         self.all_in_map = AllInMap.option_ground if world is None else world.options.all_in_map.value
         self.nova_presence = NovaPresence.default if world is None else world.options.nova_presence.value
+        self.enabled_heroes = EnabledHeroes.default if world is None else world.options.enabled_heroes
+        self.hero_presence = HeroPresence.default if world is None else world.options.hero_presence
 
         # If Nova is only used in no-build missions, she will be granted story tech for those missions for now
         # Currently, this is determined only by the options, not by the actual missions rolled

@@ -19,6 +19,7 @@ from .mission_tables import (
 from .mission_groups import mission_groups, MissionGroupNames
 from .mission_order.options import CustomMissionOrder
 from .tables import NovaPresenceOptions
+from .tables import HeroOptions
 
 if TYPE_CHECKING:
     from worlds.AutoWorld import World
@@ -887,6 +888,50 @@ class NovaPresence(OptionSet):
     }
     default = frozenset((NovaPresenceOptions.NCO_TERRAN,))
 
+class EnabledHeroes(OptionSet):
+    """
+    Determines the Heroes used in missions
+
+    Kerrigan: Enable using Kerrigan from the HotS campaign
+    Nova: Enable using Nova from the NCO campaign
+    Artanis: Enable using Artanis, a custom Protoss Hero
+
+    Use in combination wih the "Hero Presence" option
+    to determine, which hero will show up in which mission
+    """
+    display_name = "Enable Heroes"
+    valid_keys = {
+        HeroOptions.KERRIGAN,
+        HeroOptions.NOVA,
+        HeroOptions.ARTANIS,
+    }
+    default = frozenset((
+        HeroOptions.KERRIGAN,
+        HeroOptions.NOVA,
+    ))
+
+class HeroPresence(Choice):
+    """
+    Determines, which missions use which of the enabled Heroes
+
+    Vanilla: Kerrigan in HotS Zerg, Nova in NCO Terran, no Hero anywhere else
+    Vanilla Raceswap: Only HotS and NCO Missions have Heroes, matching their Race. Kerrigan in HotS Zerg and NCO Zerg
+    Vanilla Original Race: HotS has Kerrigan for all races, NCO has Nova for all races, no Hero anywhere else
+    Same Race: Kerrigan in every Zerg Mission, Nova in every Terran Mission, Artanis in every Protoss Mission
+    Original Race: Kerrigan in every HotS Mission, Nova in every WoL and NCO Mission, Artanis in every LotV Mission
+    Anywhere: Every enabled Hero in all Missions
+    
+    """
+    display_name = "Hero Presence"
+    option_vanilla = 1
+    option_vanilla_raceswap = 2
+    option_vanilla_original_race= 3
+    option_same_race = 4
+    option_original_race = 5
+    option_anywhere = 6
+    default = option_vanilla
+
+
 class NovaMaxWeapons(Range):
     """
     Determines maximum number of Nova weapons that can be present in the game
@@ -1404,6 +1449,8 @@ class Starcraft2Options(PerGameCommonOptions):
     nova_presence: NovaPresence
     nova_max_weapons: NovaMaxWeapons
     nova_max_gadgets: NovaMaxGadgets
+    enabled_heroes: EnabledHeroes
+    hero_presence: HeroPresence
     take_over_ai_allies: TakeOverAIAllies
     locked_items: LockedItems
     excluded_items: ExcludedItems

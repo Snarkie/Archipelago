@@ -9,3 +9,10 @@ class NovaPresenceOptions:
     NCO_PROTOSS = "Nova Covert Ops (Protoss)"
     GHOST_OF_A_CHANCE = "Ghost of a Chance"
     GHOST_OF_A_CHANCE_AUTO = "Ghost of a Chance (Auto)" # Use NCO Nova only if Nova is enabled in any build missions
+
+
+class HeroOptions:
+    # Artanis is not yet implemented
+    KERRIGAN = "Kerrigan"
+    NOVA = "Nova"
+    ARTANIS = "Artanis"

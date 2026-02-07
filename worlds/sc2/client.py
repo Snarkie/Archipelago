@@ -33,7 +33,7 @@ from .options import (
     MissionOrder, KerriganPrimalStatus, KerriganPresence, EnableMorphling, GameDifficulty,
     GameSpeed, GenericUpgradeItems, GenericUpgradeResearch, ColorChoice, GenericUpgradeMissions, MaxUpgradeLevel,
     LocationInclusion, ExtraLocations, MasteryLocations, SpeedrunLocations, PreventativeLocations, ChallengeLocations,
-    VanillaLocations, NovaPresence,
+    VanillaLocations, NovaPresence, EnabledHeroes, HeroPresence,
     GrantStoryTech, GrantStoryLevels, TakeOverAIAllies, RequiredTactics,
     SpearOfAdunPresence, SpearOfAdunPresentInNoBuild, SpearOfAdunPassiveAbilityPresence,
     SpearOfAdunPassivesPresentInNoBuild, EnableVoidTrade, VoidTradeAgeLimit, void_trade_age_limits_ms, VoidTradeWorkers,
@@ -41,7 +41,7 @@ from .options import (
 )
 from .mission_order.slot_data import CampaignSlotData, LayoutSlotData, MissionSlotData, MissionOrderObjectSlotData
 from .mission_order.entry_rules import SubRuleRuleData, CountMissionsRuleData, MissionEntryRules
-from .tables import NovaPresenceOptions
+from .tables import NovaPresenceOptions, HeroOptions
 from .apclient.transfer_data import worker_units
 from . import SC2World
 from .apclient import banks, user_paths, game_client
@@ -767,6 +767,8 @@ class SC2Context(CommonContext):
         self.lowest_maximum_supply: int = options.LowestMaximumSupply.default
         self.research_cost_reduction_per_item: int = options.ResearchCostReductionPerItem.default
         self.nova_presence: frozenset[str] = NovaPresence.default
+        self.enabled_heroes: frozenset[str] = EnabledHeroes.default
+        self.hero_presence: int = HeroPresence.default
         self.mercenary_highlanders: bool = False
         self.kerrigan_levels_per_mission_completed = 0
         self.trade_enabled: int = EnableVoidTrade.default
@@ -975,6 +977,8 @@ class SC2Context(CommonContext):
                     self.nova_presence = frozenset((NovaPresenceOptions.NCO_TERRAN,))
                 else:
                     self.nova_presence = frozenset((NovaPresenceOptions.NCO_TERRAN, NovaPresenceOptions.GHOST_OF_A_CHANCE,))
+            self.enabled_heroes = args["slot_data"].get("enabled_heroes", EnabledHeroes.default)
+            self.hero_presence = args["slot_data"].get("hero_presence", HeroPresence.default)
             self.trade_enabled = args["slot_data"].get("enable_void_trade", EnableVoidTrade.option_false)
             self.trade_age_limit = args["slot_data"].get("void_trade_age_limit", VoidTradeAgeLimit.default)
             self.trade_workers_allowed = args["slot_data"].get("void_trade_workers", VoidTradeWorkers.default)
