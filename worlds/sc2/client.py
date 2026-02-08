@@ -832,6 +832,20 @@ class SC2Context(CommonContext):
         elif str(SC2World.settings.game_speed).casefold() == 'faster':
             self.game_speed = GameSpeed.option_faster
 
+    def unpack_hero_presence(self, slot_data: list[dict[str, str], dict[str, str]]) -> list:
+        result =[[0 for i in range(4)] for j in range (9)]
+        for key, value in slot_data[0].items():
+            campaign, race = key.split(".")
+            result[int(campaign)][int(race)] = int(value)
+        # TODO: Handle missions
+        return result
+
+    def default_hero_presence(self) -> list:
+        result =[[0 for i in range(4)] for j in range (9)]
+        result[SC2Campaign.HOTS.value][SC2Race.ZERG.value] = 1
+        result[SC2Campaign.NCO.value][SC2Race.TERRAN.value] = 2
+        return result
+
     def on_package(self, cmd: str, args: dict) -> None:
         if cmd == "Connected":
             # Set up the trade storage
@@ -977,8 +991,12 @@ class SC2Context(CommonContext):
                     self.nova_presence = frozenset((NovaPresenceOptions.NCO_TERRAN,))
                 else:
                     self.nova_presence = frozenset((NovaPresenceOptions.NCO_TERRAN, NovaPresenceOptions.GHOST_OF_A_CHANCE,))
-            self.enabled_heroes = args["slot_data"].get("enabled_heroes", EnabledHeroes.default)
-            self.hero_presence = args["slot_data"].get("hero_presence", HeroPresence.default)
+            hero_presence_args = args["slot_data"].get("hero_presence","0")
+            if hero_presence_args != "0":
+                self.hero_presence = self.unpack_hero_presence(hero_presence_args)
+            else:
+                self.hero_presence = self.default_hero_presence()
+            # sc2_logger.info(f"Hero Presence: {self.hero_presence}")
             self.trade_enabled = args["slot_data"].get("enable_void_trade", EnableVoidTrade.option_false)
             self.trade_age_limit = args["slot_data"].get("void_trade_age_limit", VoidTradeAgeLimit.default)
             self.trade_workers_allowed = args["slot_data"].get("void_trade_workers", VoidTradeWorkers.default)

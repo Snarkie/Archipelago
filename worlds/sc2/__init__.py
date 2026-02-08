@@ -27,7 +27,7 @@ from .options import (
     get_enabled_campaigns, SpearOfAdunPassiveAbilityPresence, Starcraft2Options,
     GrantStoryTech, GenericUpgradeResearch, RequiredTactics,
     upgrade_included_names, EnableVoidTrade, FillerItemsDistribution, MissionOrderScouting, option_groups,
-    NovaPresence, MissionOrder, VanillaItemsOnly, ExcludeOverpoweredItems,
+    NovaPresence, HeroPresence, HeroOptions, MissionOrder, VanillaItemsOnly, ExcludeOverpoweredItems,
     is_mission_in_soa_presence,
 )
 from . import options
@@ -35,7 +35,7 @@ from .rules import get_basic_units, SC2Logic
 from . import settings
 from .pool_filter import filter_items
 from .mission_tables import SC2Campaign, SC2Mission, SC2Race, MissionFlag
-from .tables import NovaPresenceOptions
+from .tables import NovaPresenceOptions, HeroOptions
 from .regions import create_mission_order
 from .mission_order import SC2MissionOrder
 from worlds.LauncherComponents import components, Component, launch as launch_component
@@ -233,6 +233,50 @@ class SC2World(World):
         # Assume `self.filler_items_distribution` is validated and has at least one non-zero entry
         return self.random.choices(tuple(self.filler_items_distribution), weights=self.filler_items_distribution.values())[0]  # type: ignore
 
+    def calculate_hero_presence(self) -> list[dict[str, str], dict[str, str]]:
+        presence = self.logic.hero_presence.value
+        heroes = self.logic.enabled_heroes.value
+        races = [race.value for race in SC2Race if race != SC2Race.ANY]
+        campaigns = [campaign.value for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
+        kerrigan_bitflag = 1 if HeroOptions.KERRIGAN in heroes else 0
+        nova_bitflag = 2 if HeroOptions.NOVA in heroes else 0
+        artanis_bitflag = 4 if HeroOptions.ARTANIS in heroes else 0
+        all_bitflag = kerrigan_bitflag | nova_bitflag | artanis_bitflag
+        race_bitflag = {}
+        race_bitflag[SC2Race.ZERG.value] = kerrigan_bitflag
+        race_bitflag[SC2Race.TERRAN.value] = nova_bitflag
+        race_bitflag[SC2Race.PROTOSS.value] = artanis_bitflag
+        result = {}
+        if presence == HeroPresence.option_anywhere:
+            for campaign in campaigns:
+                for race in races:
+                    result[f"{campaign}.{race}"] = all_bitflag
+        if presence == HeroPresence.option_same_race:
+            for campaign in campaigns:
+                for race in races:
+                    result[f"{campaign}.{race}"] = race_bitflag[race]
+        if presence == HeroPresence.option_original_race:
+            for race in races:
+                result[f"{SC2Campaign.HOTS.value}.{race}"] = kerrigan_bitflag
+                result[f"{SC2Campaign.WOL.value}.{race}"] = nova_bitflag
+                result[f"{SC2Campaign.NCO.value}.{race}"] = nova_bitflag
+                result[f"{SC2Campaign.LOTV.value}.{race}"] = artanis_bitflag
+                result[f"{SC2Campaign.PROLOGUE.value}.{race}"] = artanis_bitflag
+                result[f"{SC2Campaign.PROPHECY.value}.{race}"] = artanis_bitflag
+        if presence == HeroPresence.option_vanilla:
+            result[f"{SC2Campaign.HOTS.value}.{SC2Race.ZERG.value}"] = kerrigan_bitflag
+            result[f"{SC2Campaign.NCO.value}.{SC2Race.TERRAN.value}"] = nova_bitflag
+        if presence == HeroPresence.option_vanilla_raceswap:
+            for race in races:
+                result[f"{SC2Campaign.HOTS.value}.{race}"] = race_bitflag[race]
+                result[f"{SC2Campaign.NCO.value}.{race}"] = race_bitflag[race]
+        if presence == HeroPresence.option_vanilla_original_race:
+            for race in races:
+                result[f"{SC2Campaign.HOTS.value}.{race}"] = kerrigan_bitflag
+                result[f"{SC2Campaign.NCO.value}.{race}"] = nova_bitflag
+        missions = {} #TODO: handle exceptions here
+        return [result, missions]
+
     def fill_slot_data(self) -> Mapping[str, Any]:
         assert self.logic
         slot_data: dict[str, Any] = {}
@@ -245,8 +289,7 @@ class SC2World(World):
         slot_data["plando_locations"] = get_plando_locations(self)
         slot_data["nova_presence"] = self.options.nova_presence.value
         slot_data["nova_grant_story_tech"] = self.logic.nova_grant_story_tech
-        slot_data["enabled_heroes"] = self.logic.enabled_heroes.value
-        slot_data["hero_presence"] = self.logic.hero_presence.value
+        slot_data["hero_presence"] = self.calculate_hero_presence()
         slot_data["final_mission_ids"] = self.custom_mission_order.get_final_mission_ids()
         slot_data["custom_mission_order"] = self.custom_mission_order.get_slot_data()
         slot_data["version"] = 5

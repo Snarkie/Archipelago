@@ -101,7 +101,7 @@ class MissionClient:
         missions_beaten = self.missions_beaten_count()
         kerrigan_level = get_kerrigan_level(self.ctx, start_items, missions_beaten)
         kerrigan_options = calculate_kerrigan_options(self.ctx)
-        hero_presence = calculate_hero_presence(self.ctx, mission)
+        hero_presence = self.ctx.hero_presence[mission.campaign.value][mission.race.value]
         nova_presence = calculate_nova_presence(self.ctx, mission)
         grant_story_tech = calculate_story_tech(self.ctx, mission)
         soa_options = calculate_soa_options(self.ctx, mission)
@@ -908,88 +908,6 @@ def calculate_nova_presence(ctx: 'SC2Context', mission: SC2Mission) -> int:
     ):
         result = 1
     return result
-
-def calculate_hero_presence(ctx: 'SC2Context', mission: SC2Mission) -> int:
-    result = 0
-    if ctx.hero_presence == options.HeroPresence.option_anywhere:
-        if options.HeroOptions.KERRIGAN in ctx.enabled_heroes:
-            result += 1 # Bitflag for Kerrigan
-        if options.HeroOptions.NOVA in ctx.enabled_heroes:
-            result += 2 # Bitflag for Nova
-        if options.HeroOptions.ARTANIS in ctx.enabled_heroes:
-            result += 4 # Bitflag for Artanis
-    elif ctx.hero_presence == options.HeroPresence.option_same_race:
-        if (options.HeroOptions.KERRIGAN in ctx.enabled_heroes
-            and mission.race == SC2Race.ZERG
-        ):
-            result = 1
-        elif (options.HeroOptions.NOVA in ctx.enabled_heroes
-            and mission.race == SC2Race.TERRAN
-        ): 
-            result = 2
-        elif (options.HeroOptions.ARTANIS in ctx.enabled_heroes
-            and mission.race == SC2Race.PROTOSS
-        ): 
-            result = 4
-    elif ctx.hero_presence == options.HeroPresence.option_original_race:
-        #TODO: Epilogue
-        if (options.HeroOptions.KERRIGAN in ctx.enabled_heroes
-            and mission.campaign == SC2Campaign.HOTS
-        ):
-            result = 1
-        elif (options.HeroOptions.NOVA in ctx.enabled_heroes
-            and( mission.campaign == SC2Campaign.WOL
-                or mission.campaign == SC2Campaign.NCO
-            )
-        ): 
-            result = 2
-        elif (options.HeroOptions.ARTANIS in ctx.enabled_heroes
-            and( mission.campaign == SC2Campaign.LOTV
-                or mission.campaign == SC2Campaign.PROPHECY
-                or mission.campaign == SC2Campaign.PROLOGUE
-            )
-        ): 
-            result = 4    
-    elif ctx.hero_presence == options.HeroPresence.option_vanilla:
-        if (options.HeroOptions.KERRIGAN in ctx.enabled_heroes
-            and mission.campaign == SC2Campaign.HOTS
-            and mission.race == SC2Race.ZERG
-        ):
-            result = 1
-        elif (options.HeroOptions.NOVA in ctx.enabled_heroes
-            and mission.campaign == SC2Campaign.NCO
-            and mission.race == SC2Race.TERRAN
-        ): 
-            result = 2
-    elif (ctx.hero_presence == options.HeroPresence.option_vanilla_raceswap
-        and (mission.campaign == SC2Campaign.HOTS
-            or mission.campaign == SC2Campaign.NCO
-        )
-    ):
-        if (options.HeroOptions.KERRIGAN in ctx.enabled_heroes
-            and mission.race == SC2Race.ZERG
-        ):
-            result = 1
-        elif (options.HeroOptions.NOVA in ctx.enabled_heroes
-            and mission.race == SC2Race.TERRAN
-        ): 
-            result = 2
-        elif (options.HeroOptions.ARTANIS in ctx.enabled_heroes
-            and mission.race == SC2Race.PROTOSS
-        ): 
-            result = 4 
-    elif ctx.hero_presence == options.HeroPresence.option_vanilla_original_race:
-        #TODO: Epilogue
-        if (options.HeroOptions.KERRIGAN in ctx.enabled_heroes
-            and mission.campaign == SC2Campaign.HOTS
-        ):
-            result = 1
-        elif (options.HeroOptions.NOVA in ctx.enabled_heroes
-            and mission.campaign == SC2Campaign.NCO
-        ): 
-            result = 2
-    return result
-        
 
 def calculate_story_tech(ctx: 'SC2Context', mission: SC2Mission) -> bool:
     if (
