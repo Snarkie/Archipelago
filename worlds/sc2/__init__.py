@@ -292,18 +292,33 @@ class SC2World(World):
                 or mission.campaign == SC2Campaign.EPILOGUE
             ):
                 missions[mission.name] = 0
+        # Zerg Into the Void has Kerrigan
+        missions[SC2Mission.INTO_THE_VOID_Z.value] = 1
+        # Kerrigan no-builds
+        missions[SC2Mission.BACK_IN_THE_SADDLE.value] = 1
+        missions[SC2Mission.CONVICTION.value] = 1
+        missions[SC2Mission.THE_INFINITE_CYCLE.value] = 1
+        # Nova no-builds
+        # missions[SC2Mission.GHOST_OF_A_CHANCE.value] = 2 # TODO: Handle Ghost of a Chance
+        missions[SC2Mission.THE_ESCAPE.value] = 2
+        missions[SC2Mission.IN_THE_ENEMY_S_SHADOW.value] = 2
+        # Artanis no-builds
+        # missions[SC2Mission.IN_UTTER_DARKNESS.value] = 4 # sort of
+        # missions[SC2Mission.THE_INFINITE_CYCLE.value] = 4 # TODO: Check, once Artanis is implemented
+        # missions[SC2Mission.TEMPLAR_S_RETURN.value] = 4 # 
         excluded_missions = {
             SC2Mission.ECHOES_OF_THE_FUTURE.get_short_name(),
             SC2Mission.LAB_RAT.get_short_name(),
             SC2Mission.THE_CRUCIBLE.get_short_name(),
             SC2Mission.PHANTOMS_OF_THE_VOID.get_short_name(),
             SC2Mission.DEATH_FROM_ABOVE.get_short_name(),
-            SC2Mission.HARBINGER_OF_OBLIVION.get_short_name(),
+            SC2Mission.HARBINGER_OF_OBLIVION.get_short_name(), # TODO: Handle ally control
         }
         for short_name in excluded_missions:
             for mission in mission_groups[short_name]:
                 missions[mission] = 0
         self.hero_presence_missions = missions
+
 
 
     def fill_slot_data(self) -> Mapping[str, Any]:
