@@ -286,26 +286,29 @@ class SC2World(World):
                 result[SC2Campaign.HOTS.value][race] = kerrigan_bitflag
                 result[SC2Campaign.NCO.value][race] = nova_bitflag
         self.hero_presence_campaigns = result
-        missions = {} # handle exceptions here
+        missions = {} 
+        # handle exceptions here
         for mission in SC2Mission:
             if (MissionFlag.NoBuild in mission.flags
                 or mission.campaign == SC2Campaign.EPILOGUE
             ):
-                missions[mission.name] = 0
+                missions[mission.mission_name] = 0
         # Zerg Into the Void has Kerrigan
-        missions[SC2Mission.INTO_THE_VOID_Z.value] = 1
+        missions[SC2Mission.INTO_THE_VOID_Z.mission_name] = kerrigan_bitflag
         # Kerrigan no-builds
-        missions[SC2Mission.BACK_IN_THE_SADDLE.value] = 1
-        missions[SC2Mission.CONVICTION.value] = 1
-        missions[SC2Mission.THE_INFINITE_CYCLE.value] = 1
+        # if Kerrigan is disabled, these should get story tech
+        missions[SC2Mission.BACK_IN_THE_SADDLE.mission_name] = kerrigan_bitflag
+        missions[SC2Mission.CONVICTION.mission_name] = kerrigan_bitflag
+        missions[SC2Mission.THE_INFINITE_CYCLE.mission_name] = kerrigan_bitflag
         # Nova no-builds
-        # missions[SC2Mission.GHOST_OF_A_CHANCE.value] = 2 # TODO: Handle Ghost of a Chance
-        missions[SC2Mission.THE_ESCAPE.value] = 2
-        missions[SC2Mission.IN_THE_ENEMY_S_SHADOW.value] = 2
+        # if Nova is disabled, these should get story tech
+        # missions[SC2Mission.GHOST_OF_A_CHANCE.mission_name] = nova_bitflag # TODO: Handle Ghost of a Chance
+        missions[SC2Mission.THE_ESCAPE.mission_name] = nova_bitflag
+        missions[SC2Mission.IN_THE_ENEMY_S_SHADOW.mission_name] = nova_bitflag
         # Artanis no-builds
-        # missions[SC2Mission.IN_UTTER_DARKNESS.value] = 4 # sort of
-        # missions[SC2Mission.THE_INFINITE_CYCLE.value] = 4 # TODO: Check, once Artanis is implemented
-        # missions[SC2Mission.TEMPLAR_S_RETURN.value] = 4 # 
+        # missions[SC2Mission.IN_UTTER_DARKNESS.mission_name] = artanis_bitflag # sort of
+        # missions[SC2Mission.THE_INFINITE_CYCLE.mission_name] = artanis_bitflag # TODO: Check, once Artanis is implemented
+        # missions[SC2Mission.TEMPLAR_S_RETURN.mission_name] = artanis_bitflag # 
         excluded_missions = {
             SC2Mission.ECHOES_OF_THE_FUTURE.get_short_name(),
             SC2Mission.LAB_RAT.get_short_name(),
@@ -734,21 +737,28 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
     campaign_check = True
     # Exclude items based on hero presence
     # first, check mission list for special handling
-    for mission in missions:
-        if mission.name in world.hero_presence_missions: 
-            if world.hero_presence_missions[mission.name] & 1 == 1: # Kerrigan bitflag
+    temp_missions = missions.copy() 
+    logger.info(world.hero_presence_missions)
+    to_remove = []
+    for mission in temp_missions:
+        if mission.mission_name in world.hero_presence_missions: 
+            if world.hero_presence_missions[mission.mission_name] & 1 == 1: # Kerrigan bitflag
                 kerrigan_is_present = True
-            if world.hero_presence_missions[mission.name] & 2 == 2: # Nova bitflag
+            if world.hero_presence_missions[mission.mission_name] & 2 == 2: # Nova bitflag
                 nova_is_present = True
-            if world.hero_presence_missions[mission.name] & 4 == 4: # Artanis bitflag
+            if world.hero_presence_missions[mission.mission_name] & 4 == 4: # Artanis bitflag
                 artanis_is_present = True
             if kerrigan_is_present and nova_is_present and artanis_is_present: 
                 campaign_check = False
-                break
-    # then check generic campaign list
-    # TODO: only check missions not checked before. Copy mission list?
+            to_remove.append(mission)
+    # remove missions that were already handled from the list, apply generic presence options to others
+    logger.info(temp_missions)
+    logger.info(to_remove)
+    for mission in to_remove:
+        temp_missions.remove(mission)
+    logger.info(temp_missions)
     if campaign_check:
-        for mission in missions:
+        for mission in temp_missions:
             campaign = mission.campaign.value
             race = mission.race.value
             if world.hero_presence_campaigns[campaign][race] & 1 == 1: # Kerrigan bitflag
