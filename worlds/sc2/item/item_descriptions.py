@@ -710,7 +710,7 @@ item_descriptions = {
     item_names.IMPALER_SECRETION_GLANDS: "Impalers generate creep while standing still or burrowed.",
     item_names.IMPALER_SUNKEN_SPINES: "Impalers deal increased damage.",
     item_names.IMPALER_DISTRIBUTED_ATTACK: "Allows Impalers to distribute their attacks across multiple targets.",
-    item_names.IMPALER_TENTACLE_EXTENSIONS: "Impaler tentacles bounce to one secondary target.",
+    item_names.IMPALER_TENTACLE_EXTENSIONS: "Allows Piercing Tentacle to hit an additional nearby secondary target for reduced damage.",
     item_names.IMPALER_DEEP_TUNNEL: _ability_desc("Impalers", "Deep Tunnel", "allows them to burrow to any visible location on the map covered in creep"),
     item_names.LURKER_SEISMIC_SPINES: "Lurkers gain +6 range.",
     item_names.LURKER_ADAPTED_SPINES: "Lurkers deal increased damage to non-light targets.",
