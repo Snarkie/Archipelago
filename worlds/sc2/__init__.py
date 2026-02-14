@@ -738,75 +738,42 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
     # Exclude items based on hero presence
     # first, check mission list for special handling
     temp_missions = missions.copy() 
-    logger.info(world.hero_presence_missions)
     to_remove = []
+    kerrigan_missions = []
+    nova_missions = []
+    artanis_missions = []
     for mission in temp_missions:
         if mission.mission_name in world.hero_presence_missions: 
             if world.hero_presence_missions[mission.mission_name] & 1 == 1: # Kerrigan bitflag
-                kerrigan_is_present = True
+                kerrigan_missions.append(mission)
             if world.hero_presence_missions[mission.mission_name] & 2 == 2: # Nova bitflag
-                nova_is_present = True
+                nova_missions.append(mission)
             if world.hero_presence_missions[mission.mission_name] & 4 == 4: # Artanis bitflag
-                artanis_is_present = True
-            if kerrigan_is_present and nova_is_present and artanis_is_present: 
-                campaign_check = False
+                artanis_missions.append(mission)
             to_remove.append(mission)
     # remove missions that were already handled from the list, apply generic presence options to others
-    logger.info(temp_missions)
-    logger.info(to_remove)
     for mission in to_remove:
         temp_missions.remove(mission)
-    logger.info(temp_missions)
     if campaign_check:
         for mission in temp_missions:
             campaign = mission.campaign.value
             race = mission.race.value
             if world.hero_presence_campaigns[campaign][race] & 1 == 1: # Kerrigan bitflag
-                 kerrigan_is_present = True
+                 kerrigan_missions.append(mission)
             if world.hero_presence_campaigns[campaign][race] & 2 == 2: # Nova bitflag
-                 nova_is_present = True
+                 nova_missions.append(mission)
             if world.hero_presence_campaigns[campaign][race] & 4 == 4: # Artanis bitflag
-                 artanis_is_present = True
-            if kerrigan_is_present and nova_is_present and artanis_is_present: 
-                break
+                 artanis_missions.append(mission)
         
-
-    kerrigan_missions = [mission for mission in missions if MissionFlag.Kerrigan in mission.flags]
     kerrigan_build_missions = [mission for mission in kerrigan_missions if MissionFlag.NoBuild not in mission.flags]
-    nova_missions = [
-        mission for mission in missions
-        if MissionFlag.Nova in mission.flags
-            and ( 
-               (
-                    MissionFlag.Terran in mission.flags
-                    and NovaPresenceOptions.NCO_TERRAN in world.options.nova_presence
-                )
-                or (MissionFlag.Zerg in mission.flags
-                    and NovaPresenceOptions.NCO_ZERG in world.options.nova_presence
-                )
-                or (MissionFlag.Protoss in mission.flags
-                    and NovaPresenceOptions.NCO_PROTOSS in world.options.nova_presence
-                )
-            )
-        or (
-            NovaPresenceOptions.GHOST_OF_A_CHANCE in world.options.nova_presence
-            and MissionFlag.WoLNova in mission.flags
-        )
-    ]
     nova_build_missions = [mission for mission in nova_missions if MissionFlag.NoBuild not in mission.flags]
-
-    # kerrigan_is_present = (
-    #     len(kerrigan_missions) > 0
-    #     and world.options.kerrigan_presence in kerrigan_unit_available
-    #     and SC2Campaign.HOTS in get_enabled_campaigns(world) # TODO: Kerrigan available all Zerg/Everywhere
-    #     and SC2Race.ZERG.get_title() in world.options.selected_races.value
-    # )
-
-    # nova_is_present = (
-    #     # for now, no-builds will force grant story tech, if there is no build mission with nova
-    #     len(nova_build_missions) > 0
-    # )
-
+    artanis_build_missions = [mission for mission in artanis_missions if MissionFlag.NoBuild not in mission.flags]
+    kerrigan_is_present = (len(kerrigan_build_missions) > 0)
+    nova_is_present = (len(nova_build_missions) > 0)
+    artanis_is_present = (len(nova_build_missions) > 0)
+    logger.info(f"Kerrigan build missions:\n{kerrigan_build_missions}")
+    logger.info(f"Nova build missions:\n{nova_build_missions}")
+    logger.info(f"Artanis build missions:\n{artanis_build_missions}")
     # TvX build missions -- check flags
     if world.options.take_over_ai_allies:
         terran_build_missions = [mission for mission in missions if (
@@ -853,18 +820,14 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
         soa_passive_presence = False
 
     remove_kerrigan_abils = (
-        # TODO: Update handling for no builds/grant story tech
         not kerrigan_is_present
-        # or (world.options.grant_story_tech.value == GrantStoryTech.option_grant and not kerrigan_build_missions)
-        # or (
-        #     world.options.grant_story_tech.value == GrantStoryTech.option_allow_substitutes
-        #     and len(kerrigan_missions) == 1
-        #     and kerrigan_missions[0] == SC2Mission.SUPREME
-        # )
     )
 
     remove_nova_items = (
-        # If handling of Nova no-builds is changed, this might need to get more complex
+        not nova_is_present
+    )
+
+    remove_artanis_items = (
         not nova_is_present
     )
 
