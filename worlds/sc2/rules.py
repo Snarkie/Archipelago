@@ -53,16 +53,13 @@ class SC2Logic:
         self.advanced_tactics = self.logic_level != RequiredTactics.option_standard
         self.take_over_ai_allies = bool(world and world.options.take_over_ai_allies)
         self.kerrigan_unit_available = (
-            (True if world is None else (world.options.kerrigan_presence.value in kerrigan_unit_available))
-            and SC2Campaign.HOTS in get_enabled_campaigns(world)
-            and SC2Race.ZERG in get_enabled_races(world)
+            world is None or (world.options.kerrigan_presence.value in kerrigan_unit_available)
         )
         self.kerrigan_levels_per_mission_completed = 0 if world is None else world.options.kerrigan_levels_per_mission_completed.value
         self.kerrigan_levels_per_mission_completed_cap = -1 if world is None else world.options.kerrigan_levels_per_mission_completed_cap.value
         self.kerrigan_total_level_cap = -1 if world is None else world.options.kerrigan_total_level_cap.value
         self.morphling_enabled = False if world is None else (world.options.enable_morphling.value == EnableMorphling.option_true)
         self.grant_story_tech = GrantStoryTech.option_no_grant if world is None else (world.options.grant_story_tech.value)
-        self.story_levels_granted = False if world is None else (world.options.grant_story_levels.value != GrantStoryLevels.option_disabled)
         self.basic_terran_units = get_basic_units(self.logic_level, SC2Race.TERRAN)
         self.basic_zerg_units = get_basic_units(self.logic_level, SC2Race.ZERG)
         self.basic_protoss_units = get_basic_units(self.logic_level, SC2Race.PROTOSS)
@@ -80,31 +77,19 @@ class SC2Logic:
         self.nova_presence = NovaPresence.default if world is None else world.options.nova_presence.value
         self.enabled_heroes = EnabledHeroes.default if world is None else world.options.enabled_heroes
         self.hero_presence = HeroPresence.default if world is None else world.options.hero_presence
-
-        # If Nova is only used in no-build missions, she will be granted story tech for those missions for now
-        # Currently, this is determined only by the options, not by the actual missions rolled
-        # This can break, if players manually exclude missions, or the mission order happens to not roll NCO build missions
-        # TODO: consider actual missions rolled, also allow this behavior to be turned off
-        self.nova_grant_story_tech = (
-            False if world is None else (
-                SC2Campaign.NCO not in get_enabled_campaigns(world)
-                or not (
-                    (NovaPresenceOptions.NCO_TERRAN in self.nova_presence and SC2Race.TERRAN in self.enabled_races)
-                    or (
-                        self.enabled_raceswaps
-                        and (
-                            (NovaPresenceOptions.NCO_ZERG in self.nova_presence and SC2Race.ZERG in self.enabled_races)
-                            or (NovaPresenceOptions.NCO_PROTOSS in self.nova_presence and SC2Race.PROTOSS in self.enabled_races)
-                        )
-                    )
-                )
-            )
-        )
         self.war_council_upgrades = True if world is None else not world.options.war_council_nerfs.value
         self.base_power_rating = 2 if self.advanced_tactics else 0
 
         # Must be set externally for accurate logic checking of upgrade level when generic_upgrade_missions is checked
         self.total_mission_count = 1
+
+        # Conditionally changed by the world after finalizing missions
+        self.kerrigan_items_granted = False
+        self.kerrigan_levels_granted = False
+        self.kerrigan_build_missions = False
+        self.nova_items_granted = False
+        self.artanis_items_granted = False
+        
 
         # Conditionally set to False by the world after culling items
         self.has_barracks_unit: bool = True
@@ -697,7 +682,7 @@ class SC2Logic:
         """
         return ( 
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or state.has_any((
                 item_names.NOVA_DOMINATION,
                 item_names.NOVA_BLAZEFIRE_GUNBLADE,
@@ -1150,7 +1135,7 @@ class SC2Logic:
         ), self.player)
 
     def kerrigan_levels(self, state: CollectionState, target: int, story_levels_available=True) -> bool:
-        if (story_levels_available and self.story_levels_granted) or not self.kerrigan_unit_available:
+        if (story_levels_available or self.kerrigan_levels_granted):
             return True  # Levels are granted
         if (
             self.kerrigan_levels_per_mission_completed > 0
@@ -1176,10 +1161,7 @@ class SC2Logic:
         return levels >= target
 
     def basic_kerrigan(self, state: CollectionState, story_tech_available=True) -> bool:
-        if story_tech_available and (
-            self.grant_story_tech == GrantStoryTech.option_grant
-            or not self.kerrigan_unit_available
-        ):
+        if (story_tech_available or self.kerrigan_items_granted):
             return True
         # One active ability that can be used to defeat enemies directly
         if not state.has_any(
@@ -1203,10 +1185,7 @@ class SC2Logic:
         return False
 
     def two_kerrigan_actives(self, state: CollectionState, story_tech_available=True) -> bool:
-        if story_tech_available and (
-            self.grant_story_tech == GrantStoryTech.option_grant
-            or not self.kerrigan_unit_available
-        ):
+        if story_tech_available or self.kerrigan_items_granted:
             return True
         return state.count_from_list(item_groups.kerrigan_logic_active_abilities, self.player) >= 2
 
@@ -2401,11 +2380,10 @@ class SC2Logic:
         )
     def zerg_any_units_back_in_the_saddle_requirement(self, state: CollectionState) -> bool:
         return (
-            self.grant_story_tech == GrantStoryTech.option_grant
             # Note(mm): This check isn't necessary as self.kerrigan_levels cover it,
             # and it's not fully desirable in future when we support non-grant story tech + kerriganless.
             # or not self.kerrigan_presence
-            or not self.kerrigan_unit_available
+            self.kerrigan_items_granted
             or state.has_any((
                 # Cases tested by Snarky
                 item_names.KERRIGAN_KINETIC_BLAST,
@@ -2482,7 +2460,7 @@ class SC2Logic:
     def supreme_requirement(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant
-            or not self.kerrigan_unit_available
+            or self.kerrigan_items_granted
             or (self.grant_story_tech == GrantStoryTech.option_allow_substitutes
                 and state.has_any((
                     item_names.KERRIGAN_LEAPING_STRIKE,
@@ -2586,7 +2564,7 @@ class SC2Logic:
             self.kerrigan_levels(state, 70)
             and (
                 self.grant_story_tech == GrantStoryTech.option_grant
-                or not self.kerrigan_unit_available
+                or self.kerrigan_items_granted
                 or (
                     state.has_any((
                         item_names.KERRIGAN_KINETIC_BLAST,
@@ -3364,7 +3342,7 @@ class SC2Logic:
         return ( 
             self.grant_story_tech == GrantStoryTech.option_grant 
             or self.mission_order == MissionOrder.option_vanilla and self.enabled_campaigns == {SC2Campaign.NCO}
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
         )
 
     def the_escape_first_stage_requirement(self, state: CollectionState) -> bool:
@@ -3376,7 +3354,7 @@ class SC2Logic:
     def the_escape_hard_rule(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or self.nova_any_nobuild_damage(state)
         )
 
@@ -3860,14 +3838,14 @@ class SC2Logic:
     def enemy_shadow_tripwires_tool(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or state.has_any({item_names.NOVA_FLASHBANG_GRENADES, item_names.NOVA_BLINK, item_names.NOVA_DOMINATION}, self.player)
         )
 
     def enemy_shadow_door_unlocks_tool(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or state.has_any({item_names.NOVA_DOMINATION, item_names.NOVA_BLINK, item_names.NOVA_JUMP_SUIT_MODULE}, self.player)
         )
     
@@ -3876,7 +3854,7 @@ class SC2Logic:
             self.enemy_shadow_second_stage(state)
             and (
                 self.grant_story_tech == GrantStoryTech.option_grant 
-                or self.nova_grant_story_tech
+                or self.nova_items_granted
                 or state.has(item_names.NOVA_BLINK, self.player)
                 or (
                     self.advanced_tactics
@@ -3895,7 +3873,7 @@ class SC2Logic:
     def enemy_shadow_nova_damage_and_blazefire_unlock(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or (
                 self.nova_any_nobuild_damage(state) 
                 and (
@@ -3908,7 +3886,7 @@ class SC2Logic:
     def enemy_shadow_domination(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or (
                 self.nova_ranged_weapon(state)
                 and (
@@ -3924,7 +3902,7 @@ class SC2Logic:
             self.enemy_shadow_domination(state) 
             and (
                 self.grant_story_tech == GrantStoryTech.option_grant
-                or self.nova_grant_story_tech
+                or self.nova_items_granted
                 or (
                     self.nova_full_stealth(state) and self.enemy_shadow_tripwires_tool(state)
                     or (self.nova_heal(state) and self.nova_splash(state))
@@ -3937,7 +3915,7 @@ class SC2Logic:
             self.enemy_shadow_first_stage(state) 
             and (
                 self.grant_story_tech == GrantStoryTech.option_grant
-                or self.nova_grant_story_tech
+                or self.nova_items_granted
                 or (self.nova_splash(state) or self.nova_heal(state) or self.nova_escape_assist(state))
                 and (self.advanced_tactics or state.has(item_names.NOVA_GHOST_VISOR, self.player))
             )
@@ -3948,7 +3926,7 @@ class SC2Logic:
             self.enemy_shadow_second_stage(state) 
             and (
                 self.grant_story_tech == GrantStoryTech.option_grant 
-                or self.nova_grant_story_tech
+                or self.nova_items_granted
                 or self.enemy_shadow_door_unlocks_tool(state)
             )
         )
@@ -3958,7 +3936,7 @@ class SC2Logic:
             self.enemy_shadow_door_controls(state) 
             and (
                 self.grant_story_tech == GrantStoryTech.option_grant 
-                or self.nova_grant_story_tech
+                or self.nova_items_granted
                 or (self.nova_heal(state) and self.nova_beat_stone(state))
             )
         )
@@ -3966,7 +3944,7 @@ class SC2Logic:
     def enemy_shadow_hard_rule(self, state: CollectionState) -> bool:
         return (
             self.grant_story_tech == GrantStoryTech.option_grant 
-            or self.nova_grant_story_tech
+            or self.nova_items_granted
             or self.nova_any_nobuild_damage(state)
         )
 

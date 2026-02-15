@@ -1,3 +1,5 @@
+from enum import IntFlag
+
 
 class NovaPresenceOptions:
     # Currently, if Nova is disabled in all available campaigns, Nova can still appear in no-builds
@@ -12,7 +14,14 @@ class NovaPresenceOptions:
 
 
 class HeroOptions:
-    # Artanis is not yet implemented
     KERRIGAN = "Kerrigan"
     NOVA = "Nova"
-    ARTANIS = "Artanis"
+    ARTANIS = "Artanis" # not yet implemented
+
+
+class HeroFlag(IntFlag):
+    # get send to the mission, must match the SC2Data implementation
+    NONE = 0
+    KERRIGAN = 1
+    NOVA = 2
+    ARTANIS = 4

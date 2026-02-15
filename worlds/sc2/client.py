@@ -832,12 +832,11 @@ class SC2Context(CommonContext):
         elif str(SC2World.settings.game_speed).casefold() == 'faster':
             self.game_speed = GameSpeed.option_faster
 
-    def unpack_hero_presence(self, slot_data: list[dict[str, str], dict[str, str]]) -> list:
+    def unpack_hero_presence(self, slot_data: dict[str, str]) -> list:
         result =[[0 for i in range(4)] for j in range (9)]
-        for key, value in slot_data[0].items():
+        for key, value in slot_data.items():
             campaign, race = key.split(".")
             result[int(campaign)][int(race)] = int(value)
-        # TODO: Handle missions
         return result
 
     def default_hero_presence(self) -> list:
@@ -980,7 +979,7 @@ class SC2Context(CommonContext):
             self.lowest_maximum_supply = args["slot_data"].get("lowest_maximum_supply", options.LowestMaximumSupply.default)
             self.research_cost_reduction_per_item = args["slot_data"].get("research_cost_reduction_per_item", options.ResearchCostReductionPerItem.default)
             self.nova_presence = args["slot_data"].get("nova_presence", options.NovaPresence.default)
-            self.nova_grant_story_tech = args["slot_data"].get("nova_grant_story_tech", False)
+            self.nova_items_granted = args["slot_data"].get("nova_items_granted", False)
             if self.slot_data_version < 4:
                 if args["slot_data"].get("nova_covert_ops_only", True):
                     self.nova_presence = frozenset((NovaPresenceOptions.NCO_TERRAN,))
