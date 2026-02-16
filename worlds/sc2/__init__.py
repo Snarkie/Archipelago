@@ -250,7 +250,7 @@ class SC2World(World):
             SC2Race.TERRAN: nova_flag,
             SC2Race.PROTOSS: artanis_flag,
         }
-        self.hero_presence = {campaign: {} for campaign in campaigns}
+        self.hero_presence = {campaign: {race: HeroFlag.NONE for race in races} for campaign in campaigns}
         if presence == HeroPresence.option_anywhere:
             for campaign in campaigns:
                 for race in races:
