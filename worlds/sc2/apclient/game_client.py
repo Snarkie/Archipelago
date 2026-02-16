@@ -101,7 +101,7 @@ class MissionClient:
         missions_beaten = self.missions_beaten_count()
         kerrigan_level = get_kerrigan_level(self.ctx, start_items, missions_beaten)
         kerrigan_options = calculate_kerrigan_options(self.ctx)
-        hero_presence = self.ctx.hero_presence[mission.campaign.value][mission.race.value]
+        hero_presence = self.ctx.hero_presence[mission.campaign][mission.race]
         nova_presence = calculate_nova_presence(self.ctx, mission)
         grant_story_tech = calculate_story_tech(self.ctx, mission)
         soa_options = calculate_soa_options(self.ctx, mission)
@@ -213,7 +213,7 @@ class MissionClient:
                 self.ctx.trade_underway = True
                 self.ctx.trade_response = None
                 async_start(self.ctx.trade_receive(1))
-                # TODO: handle supply, self.ctx.trade_response = "?TradeFail Void Trade rejected: Not enough supply."
+                # TODO (snarky): handle supply, self.ctx.trade_response = "?TradeFail Void Trade rejected: Not enough supply."
             elif int(trade_receive_string) == 5:
                 self.ctx.trade_underway = True
                 self.ctx.trade_response = None
@@ -908,6 +908,7 @@ def calculate_nova_presence(ctx: 'SC2Context', mission: SC2Mission) -> int:
     ):
         result = 1
     return result
+
 
 def calculate_story_tech(ctx: 'SC2Context', mission: SC2Mission) -> bool:
     if (

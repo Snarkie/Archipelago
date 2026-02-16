@@ -428,6 +428,7 @@ lookup_id_to_mission: dict[int, SC2Mission] = {
     mission.id: mission for mission in SC2Mission
 }
 
+
 lookup_name_to_mission: dict[str, SC2Mission] = {
     mission.mission_name: mission for mission in SC2Mission
 }
@@ -439,6 +440,10 @@ for mission in SC2Mission:
 
 lookup_id_to_campaign: dict[int, SC2Campaign] = {
     campaign.id: campaign for campaign in SC2Campaign
+}
+
+lookup_id_to_race: dict[int, SC2Race] = {
+    race.value: race for race in SC2Race
 }
 
 

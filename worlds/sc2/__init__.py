@@ -109,6 +109,7 @@ class SC2World(World):
     custom_mission_order: SC2MissionOrder
     logic: 'SC2Logic | None'
     filler_items_distribution: dict[str, int]
+    hero_presence: dict[SC2Campaign, dict[SC2Race, HeroFlag]] = {}
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super(SC2World, self).__init__(multiworld, player)
@@ -157,7 +158,7 @@ class SC2World(World):
         self.custom_mission_order = create_mission_order(
             self, get_locations(self), self.location_cache
         )
-        # TODO: Revisit later
+        # TODO (snarky): Revisit later
         # if (
         #     NovaPresenceOptions.GHOST_OF_A_CHANCE_AUTO in self.options.nova_presence
         #     and MissionFlag.Nova in self.custom_mission_order.get_used_flags() 
@@ -178,7 +179,7 @@ class SC2World(World):
         setup_events(self.player, self.locked_locations, self.location_cache)
         set_up_filler_items_distribution(self)
         self.calculate_hero_presence()
-
+        logger.info(self.hero_presence)
         item_list: list[FilterItem] = create_and_flag_explicit_item_locks_and_excludes(self)
         flag_excludes_by_faction_presence(self, item_list)
         flag_mission_based_item_excludes(self, item_list)
@@ -236,58 +237,48 @@ class SC2World(World):
         # Assume `self.filler_items_distribution` is validated and has at least one non-zero entry
         return self.random.choices(tuple(self.filler_items_distribution), weights=self.filler_items_distribution.values())[0]  # type: ignore
 
-    def pack_hero_presence(self) -> list[dict[str, str], dict[str, str]]:
-        races = [race.value for race in SC2Race if race != SC2Race.ANY]
-        campaigns = [campaign.value for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
-        result = {}
-        for campaign in campaigns:
-            for race in races:
-                result[f"{campaign}.{race}"] = self.hero_presence[campaign][race]
-        return result
-
     def calculate_hero_presence(self) -> None:
         presence = self.logic.hero_presence.value
         heroes = self.logic.enabled_heroes.value
-        races = [race.value for race in SC2Race if race != SC2Race.ANY]
-        campaigns = [campaign.value for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
+        races = [race for race in SC2Race if race != SC2Race.ANY]
+        campaigns = [campaign for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
         kerrigan_flag = HeroFlag.KERRIGAN if HeroOptions.KERRIGAN in heroes else HeroFlag.NONE
         nova_flag = HeroFlag.NOVA if HeroOptions.NOVA in heroes else HeroFlag.NONE
         artanis_flag = HeroFlag.ARTANIS if HeroOptions.ARTANIS in heroes else HeroFlag.NONE
         all_flag = kerrigan_flag | nova_flag | artanis_flag
-        race_flag = {}
-        race_flag[SC2Race.ZERG.value] = kerrigan_flag
-        race_flag[SC2Race.TERRAN.value] = nova_flag
-        race_flag[SC2Race.PROTOSS.value] = artanis_flag
-        result = [[0 for i in range(4)] for j in range (9)] ## TODO: use constants?
+        race_flag = {
+            SC2Race.ZERG: kerrigan_flag,
+            SC2Race.TERRAN: nova_flag,
+            SC2Race.PROTOSS: artanis_flag,
+        }
+        self.hero_presence = {campaign: {} for campaign in campaigns}
         if presence == HeroPresence.option_anywhere:
             for campaign in campaigns:
                 for race in races:
-                    result[campaign][race] = all_flag
-        if presence == HeroPresence.option_same_race:
+                    self.hero_presence[campaign][race] = all_flag
+        elif presence == HeroPresence.option_same_race:
             for campaign in campaigns:
                 for race in races:
-                    result[campaign][race] = race_flag[race]
-        if presence == HeroPresence.option_original_race:
+                    self.hero_presence[campaign][race] = race_flag[race]
+        elif presence == HeroPresence.option_original_race:
             for race in races:
-                result[SC2Campaign.HOTS.value][race] = kerrigan_flag
-                result[SC2Campaign.WOL.value][race] = nova_flag
-                result[SC2Campaign.NCO.value][race] = nova_flag
-                result[SC2Campaign.LOTV.value][race] = artanis_flag
-                result[SC2Campaign.PROLOGUE.value][race] = artanis_flag
-                result[SC2Campaign.PROPHECY.value][race] = artanis_flag
-        if presence == HeroPresence.option_vanilla:
-            result[SC2Campaign.HOTS.value][SC2Race.ZERG.value] = kerrigan_flag
-            result[SC2Campaign.NCO.value][SC2Race.TERRAN.value] = nova_flag
-        if presence == HeroPresence.option_vanilla_raceswap:
+                self.hero_presence[SC2Campaign.HOTS][race] = kerrigan_flag
+                self.hero_presence[SC2Campaign.WOL][race] = nova_flag
+                self.hero_presence[SC2Campaign.NCO][race] = nova_flag
+                self.hero_presence[SC2Campaign.LOTV][race] = artanis_flag
+                self.hero_presence[SC2Campaign.PROLOGUE][race] = artanis_flag
+                self.hero_presence[SC2Campaign.PROPHECY][race] = artanis_flag
+        elif presence == HeroPresence.option_vanilla:
+            self.hero_presence[SC2Campaign.HOTS][SC2Race.ZERG] = kerrigan_flag
+            self.hero_presence[SC2Campaign.NCO][SC2Race.TERRAN] = nova_flag
+        elif presence == HeroPresence.option_vanilla_raceswap:
             for race in races:
-                result[SC2Campaign.HOTS.value][race] = race_flag[race]
-                result[SC2Campaign.NCO.value][race] = race_flag[race]
-        if presence == HeroPresence.option_vanilla_original_race:
+                self.hero_presence[SC2Campaign.HOTS][race] = race_flag[race]
+                self.hero_presence[SC2Campaign.NCO][race] = race_flag[race]
+        elif presence == HeroPresence.option_vanilla_original_race:
             for race in races:
-                result[SC2Campaign.HOTS.value][race] = kerrigan_flag
-                result[SC2Campaign.NCO.value][race] = nova_flag
-        self.hero_presence = result
-
+                self.hero_presence[SC2Campaign.HOTS][race] = kerrigan_flag
+                self.hero_presence[SC2Campaign.NCO][race] = nova_flag
 
     def fill_slot_data(self) -> Mapping[str, Any]:
         assert self.logic
@@ -301,8 +292,7 @@ class SC2World(World):
         slot_data["plando_locations"] = get_plando_locations(self)
         slot_data["nova_presence"] = self.options.nova_presence.value
         slot_data["nova_items_granted"] = self.logic.nova_items_granted
-        self.calculate_hero_presence()
-        slot_data["hero_presence"] = self.pack_hero_presence()
+        slot_data["hero_presence"] = pack_hero_presence(self.hero_presence)
         slot_data["final_mission_ids"] = self.custom_mission_order.get_final_mission_ids()
         slot_data["custom_mission_order"] = self.custom_mission_order.get_slot_data()
         slot_data["version"] = 5
@@ -433,6 +423,14 @@ class SC2World(World):
                                     if location.address is not None:
                                         hint_data[self.player][location.address] = mission_position_name
 
+
+def pack_hero_presence(presence: dict[SC2Campaign, dict[SC2Race, HeroFlag]]) -> dict[str, int]:
+    result: dict[str, int] = {}
+    for campaign in presence:
+        for race in presence[campaign]:
+            result[f"{campaign.id}.{race.value}"] = presence[campaign][race].value
+    return result
+    
 
 def _get_column_display(index: int, single_row_layout: bool) -> str:
     """
@@ -699,21 +697,27 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
     # Exclude items based on hero presence
     kerrigan_missions = [
         mission for mission in missions
-        if ((MissionFlag.NoHeroSupport | MissionFlag.Kerrigan) in mission.flags 
-            or MissionFlag.NoHeroSupport not in mission.flags 
-            and world.hero_presence[mission.campaign.value][mission.race.value] & HeroFlag.KERRIGAN)
+        if ((MissionFlag.NoHeroSupport | MissionFlag.Kerrigan) in mission.flags
+            or (MissionFlag.NoHeroSupport not in mission.flags
+                and HeroFlag.KERRIGAN in world.hero_presence[mission.campaign][mission.race]
+            )
+        )
     ]
     nova_missions = [
         mission for mission in missions
-        if ((MissionFlag.NoHeroSupport | MissionFlag.Nova) in mission.flags 
-            or MissionFlag.NoHeroSupport not in mission.flags 
-            and world.hero_presence[mission.campaign.value][mission.race.value] & HeroFlag.NOVA)
+        if ((MissionFlag.NoHeroSupport | MissionFlag.Nova) in mission.flags
+            or (MissionFlag.NoHeroSupport not in mission.flags
+                and HeroFlag.NOVA in world.hero_presence[mission.campaign][mission.race]
+            )
+        )
     ]
     artanis_missions = [
         mission for mission in missions
-        if ((MissionFlag.NoHeroSupport | MissionFlag.Artanis) in mission.flags 
-            or MissionFlag.NoHeroSupport not in mission.flags 
-            and world.hero_presence[mission.campaign.value][mission.race.value] & HeroFlag.ARTANIS)
+        if ((MissionFlag.NoHeroSupport | MissionFlag.Artanis) in mission.flags
+            or (MissionFlag.NoHeroSupport not in mission.flags
+                and HeroFlag.ARTANIS in world.hero_presence[mission.campaign][mission.race]
+            )
+        )
     ]
     kerrigan_build_missions = [mission for mission in kerrigan_missions if MissionFlag.NoBuild not in mission.flags]
     nova_build_missions = [mission for mission in nova_missions if MissionFlag.NoBuild not in mission.flags]

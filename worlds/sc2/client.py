@@ -41,7 +41,7 @@ from .options import (
 )
 from .mission_order.slot_data import CampaignSlotData, LayoutSlotData, MissionSlotData, MissionOrderObjectSlotData
 from .mission_order.entry_rules import SubRuleRuleData, CountMissionsRuleData, MissionEntryRules
-from .tables import NovaPresenceOptions, HeroOptions
+from .tables import NovaPresenceOptions, HeroOptions, HeroFlag
 from .apclient.transfer_data import worker_units
 from . import SC2World
 from .apclient import banks, user_paths, game_client
@@ -56,7 +56,8 @@ from .locations import (
 )
 from .mission_tables import (
     lookup_id_to_mission, SC2Campaign, MissionInfo,
-    lookup_id_to_campaign, SC2Mission, campaign_mission_table, SC2Race
+    lookup_id_to_campaign, SC2Mission, campaign_mission_table, 
+    lookup_id_to_race, SC2Race,
 )
 import colorama
 from NetUtils import (
@@ -768,7 +769,7 @@ class SC2Context(CommonContext):
         self.research_cost_reduction_per_item: int = options.ResearchCostReductionPerItem.default
         self.nova_presence: frozenset[str] = NovaPresence.default
         self.enabled_heroes: frozenset[str] = EnabledHeroes.default
-        self.hero_presence: int = HeroPresence.default
+        self.hero_presence: dict[SC2Campaign, dict[SC2Race], int] = HeroPresence.default
         self.mercenary_highlanders: bool = False
         self.kerrigan_levels_per_mission_completed = 0
         self.trade_enabled: int = EnableVoidTrade.default
@@ -831,19 +832,33 @@ class SC2Context(CommonContext):
             self.game_speed = GameSpeed.option_fast
         elif str(SC2World.settings.game_speed).casefold() == 'faster':
             self.game_speed = GameSpeed.option_faster
+            
+        # kerrigan_flag = HeroFlag.KERRIGAN if HeroOptions.KERRIGAN in heroes else HeroFlag.NONE
+        # nova_flag = HeroFlag.NOVA if HeroOptions.NOVA in heroes else HeroFlag.NONE
+        # artanis_flag = HeroFlag.ARTANIS if HeroOptions.ARTANIS in heroes else HeroFlag.NONE
+        # all_flag = kerrigan_flag | nova_flag | artanis_flag
+        # race_flag = {
+        #     SC2Race.ZERG: kerrigan_flag,
+        #     SC2Race.TERRAN: nova_flag,
+        #     SC2Race.PROTOSS: artanis_flag,
+        # }
+        # self.hero_presence = {campaign: {} for campaign in campaigns}
 
-    def unpack_hero_presence(self, slot_data: dict[str, str]) -> list:
-        result =[[0 for i in range(4)] for j in range (9)]
+    def unpack_hero_presence(self, slot_data: dict[str, str]) -> dict[SC2Campaign, dict[SC2Race, int]]:
+        campaigns = [campaign for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
+        result: dict[SC2Campaign, dict[SC2Race, int]] = {campaign: {} for campaign in campaigns}
+        sc2_logger.info(f"clean:\n{result}")
         for key, value in slot_data.items():
-            campaign, race = key.split(".")
-            result[int(campaign)][int(race)] = int(value)
+            campaign, race, = key.split(".")
+            result[lookup_id_to_campaign[int(campaign)]][lookup_id_to_race[int(race)]] = int(value)
         return result
 
-    def default_hero_presence(self) -> list:
-        result =[[0 for i in range(4)] for j in range (9)]
-        result[SC2Campaign.HOTS.value][SC2Race.ZERG.value] = 1
-        result[SC2Campaign.NCO.value][SC2Race.TERRAN.value] = 2
-        return result
+    def default_hero_presence(self) -> dict[SC2Campaign, dict[SC2Race, int]] :
+        return {
+            SC2Campaign.HOTS.value: {SC2Race.ZERG : HeroFlag.KERRIGAN.value},
+            SC2Campaign.NCO.value: {SC2Race.TERRAN : HeroFlag.NOVA.value},
+        }
+
 
     def on_package(self, cmd: str, args: dict) -> None:
         if cmd == "Connected":
