@@ -179,7 +179,6 @@ class SC2World(World):
         setup_events(self.player, self.locked_locations, self.location_cache)
         set_up_filler_items_distribution(self)
         self.calculate_hero_presence()
-        logger.info(self.hero_presence)
         item_list: list[FilterItem] = create_and_flag_explicit_item_locks_and_excludes(self)
         flag_excludes_by_faction_presence(self, item_list)
         flag_mission_based_item_excludes(self, item_list)
@@ -722,9 +721,6 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
     kerrigan_build_missions = [mission for mission in kerrigan_missions if MissionFlag.NoBuild not in mission.flags]
     nova_build_missions = [mission for mission in nova_missions if MissionFlag.NoBuild not in mission.flags]
     artanis_build_missions = [mission for mission in artanis_missions if MissionFlag.NoBuild not in mission.flags]
-    logger.info(f"Kerrigan missions:\n{kerrigan_missions}")
-    logger.info(f"Nova missions:\n{nova_missions}")
-    logger.info(f"Artanis missions:\n{artanis_missions}")
 
     # Heroes are considered present, if they appear in any build mission or in more than 1 no-build
     # TODO: Make a constant?

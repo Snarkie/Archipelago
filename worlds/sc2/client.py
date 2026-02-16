@@ -1010,7 +1010,6 @@ class SC2Context(CommonContext):
                 self.hero_presence = self.unpack_hero_presence(hero_presence_args)
             else:
                 self.hero_presence = self.default_hero_presence()
-            # sc2_logger.info(f"Hero Presence: {self.hero_presence}")
             self.trade_enabled = args["slot_data"].get("enable_void_trade", EnableVoidTrade.option_false)
             self.trade_age_limit = args["slot_data"].get("void_trade_age_limit", VoidTradeAgeLimit.default)
             self.trade_workers_allowed = args["slot_data"].get("void_trade_workers", VoidTradeWorkers.default)
