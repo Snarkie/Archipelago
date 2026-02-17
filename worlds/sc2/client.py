@@ -855,8 +855,8 @@ class SC2Context(CommonContext):
 
     def default_hero_presence(self) -> dict[SC2Campaign, dict[SC2Race, int]] :
         return {
-            SC2Campaign.HOTS.value: {SC2Race.ZERG : HeroFlag.KERRIGAN.value},
-            SC2Campaign.NCO.value: {SC2Race.TERRAN : HeroFlag.NOVA.value},
+            SC2Campaign.HOTS: {SC2Race.ZERG : HeroFlag.KERRIGAN.value},
+            SC2Campaign.NCO: {SC2Race.TERRAN : HeroFlag.NOVA.value},
         }
 
 

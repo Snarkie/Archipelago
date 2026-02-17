@@ -101,7 +101,11 @@ class MissionClient:
         missions_beaten = self.missions_beaten_count()
         kerrigan_level = get_kerrigan_level(self.ctx, start_items, missions_beaten)
         kerrigan_options = calculate_kerrigan_options(self.ctx)
-        hero_presence = self.ctx.hero_presence[mission.campaign][mission.race]
+        if mission.campaign in self.ctx.hero_presence:
+            if mission.race in self.ctx.hero_presence[mission.campaign]:
+                hero_presence = self.ctx.hero_presence[mission.campaign][mission.race]
+        else:
+            hero_presence = 0
         nova_presence = calculate_nova_presence(self.ctx, mission)
         grant_story_tech = calculate_story_tech(self.ctx, mission)
         soa_options = calculate_soa_options(self.ctx, mission)
