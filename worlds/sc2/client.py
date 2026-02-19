@@ -847,7 +847,6 @@ class SC2Context(CommonContext):
     def unpack_hero_presence(self, slot_data: dict[str, str]) -> dict[SC2Campaign, dict[SC2Race, int]]:
         campaigns = [campaign for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
         result: dict[SC2Campaign, dict[SC2Race, int]] = {campaign: {} for campaign in campaigns}
-        sc2_logger.info(f"clean:\n{result}")
         for key, value in slot_data.items():
             campaign, race, = key.split(".")
             result[lookup_id_to_campaign[int(campaign)]][lookup_id_to_race[int(race)]] = int(value)

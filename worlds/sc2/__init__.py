@@ -179,6 +179,7 @@ class SC2World(World):
         setup_events(self.player, self.locked_locations, self.location_cache)
         set_up_filler_items_distribution(self)
         self.calculate_hero_presence()
+        self.logic.hero_presence = self.hero_presence
         item_list: list[FilterItem] = create_and_flag_explicit_item_locks_and_excludes(self)
         flag_excludes_by_faction_presence(self, item_list)
         flag_mission_based_item_excludes(self, item_list)
@@ -237,7 +238,7 @@ class SC2World(World):
         return self.random.choices(tuple(self.filler_items_distribution), weights=self.filler_items_distribution.values())[0]  # type: ignore
 
     def calculate_hero_presence(self) -> None:
-        presence = self.logic.hero_presence.value
+        presence = self.logic.hero_presence_option.value
         heroes = self.logic.enabled_heroes.value
         races = [race for race in SC2Race if race != SC2Race.ANY]
         campaigns = [campaign for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 
