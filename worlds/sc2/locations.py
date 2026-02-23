@@ -142,10 +142,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
         kerriganless = False
     else:
         logic_level = world.options.required_tactics.value
-        kerriganless = (
-            world.options.kerrigan_presence.value != KerriganPresence.option_vanilla
-            or SC2Campaign.HOTS not in get_enabled_campaigns(world)
-        )
+        kerriganless = world.logic.kerrigan_items_granted
     adv_tactics = logic_level != RequiredTactics.option_standard
     if world is not None and world.logic is not None:
         logic = world.logic
@@ -2310,68 +2307,42 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2HOTS_LOC_ID_OFFSET + 300,
             LocationType.VICTORY,
-            lambda state: (
-                logic.zerg_common_unit(state)
-                and logic.zerg_basic_anti_air(state)
-                and logic.zerg_defense_rating(state, False, False) >= 3
-            ),
+            logic.zerg_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS.mission_name,
             "Right Queen",
             SC2HOTS_LOC_ID_OFFSET + 301,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_common_unit(state)
-                and logic.zerg_basic_anti_air(state)
-                and logic.zerg_defense_rating(state, False, False) >= 3
-            ),
+            logic.zerg_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS.mission_name,
             "Center Queen",
             SC2HOTS_LOC_ID_OFFSET + 302,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_common_unit(state)
-                and logic.zerg_basic_anti_air(state)
-                and logic.zerg_defense_rating(state, False, False) >= 3
-            ),
+            logic.zerg_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS.mission_name,
             "Left Queen",
             SC2HOTS_LOC_ID_OFFSET + 303,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_common_unit(state)
-                and logic.zerg_basic_anti_air(state)
-                and logic.zerg_defense_rating(state, False, False) >= 3
-            ),
+            logic.zerg_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS.mission_name,
             "Hold Out Finished",
             SC2HOTS_LOC_ID_OFFSET + 304,
             LocationType.EXTRA,
-            lambda state: (
-                logic.zerg_common_unit(state)
-                and logic.zerg_basic_anti_air(state)
-                and logic.zerg_defense_rating(state, False, False) >= 3
-            ),
+            logic.zerg_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS.mission_name,
             "Kill All Buildings Before Reinforcements",
             SC2HOTS_LOC_ID_OFFSET + 305,
             LocationType.MASTERY,
-            lambda state: (
-                logic.zerg_competent_comp(state)
-                and logic.zerg_competent_anti_air(state)
-                and (logic.basic_kerrigan(state, False) or kerriganless)
-                and logic.zerg_defense_rating(state, False, False) >= 3
-                and logic.zerg_power_rating(state) >= 5
-            ),
+            logic.zerg_rendezvous_speedrun_requirement,
             flags=LocationFlag.SPEEDRUN,
         ),
         make_location_data(
@@ -2379,78 +2350,70 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2HOTS_LOC_ID_OFFSET + 400,
             LocationType.VICTORY,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_competent_anti_air(state)
-            ),
+            logic.zerg_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "First Ursadon Matriarch",
             SC2HOTS_LOC_ID_OFFSET + 401,
             LocationType.VANILLA,
+            logic.zerg_harvest_start_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "North Ursadon Matriarch",
             SC2HOTS_LOC_ID_OFFSET + 402,
             LocationType.VANILLA,
-            logic.zerg_common_unit,
+            logic.zerg_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "West Ursadon Matriarch",
             SC2HOTS_LOC_ID_OFFSET + 403,
             LocationType.VANILLA,
-            logic.zerg_common_unit,
+            logic.zerg_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "Lost Brood",
             SC2HOTS_LOC_ID_OFFSET + 404,
             LocationType.EXTRA,
+            logic.zerg_harvest_start_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "Northeast Psi-link Spire",
             SC2HOTS_LOC_ID_OFFSET + 405,
             LocationType.EXTRA,
-            logic.zerg_common_unit,
+            logic.zerg_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "Northwest Psi-link Spire",
             SC2HOTS_LOC_ID_OFFSET + 406,
             LocationType.EXTRA,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "Southwest Psi-link Spire",
             SC2HOTS_LOC_ID_OFFSET + 407,
             LocationType.EXTRA,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_competent_anti_air(state)
-            ),
+            logic.zerg_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "Nafash",
             SC2HOTS_LOC_ID_OFFSET + 408,
             LocationType.EXTRA,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS.mission_name,
             "20 Unfrozen Structures",
             SC2HOTS_LOC_ID_OFFSET + 409,
             LocationType.CHALLENGE,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.SHOOT_THE_MESSENGER.mission_name,
@@ -3691,35 +3654,35 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2LOTV_LOC_ID_OFFSET + 100,
             LocationType.VICTORY,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_dark_whispers_requirement,
         ),
         make_location_data(
             SC2Mission.DARK_WHISPERS.mission_name,
             "First Prisoner Group",
             SC2LOTV_LOC_ID_OFFSET + 101,
             LocationType.VANILLA,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_dark_whispers_requirement,
         ),
         make_location_data(
             SC2Mission.DARK_WHISPERS.mission_name,
             "Second Prisoner Group",
             SC2LOTV_LOC_ID_OFFSET + 102,
             LocationType.VANILLA,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_dark_whispers_requirement,
         ),
         make_location_data(
             SC2Mission.DARK_WHISPERS.mission_name,
             "First Pylon",
             SC2LOTV_LOC_ID_OFFSET + 103,
             LocationType.VANILLA,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_dark_whispers_requirement,
         ),
         make_location_data(
             SC2Mission.DARK_WHISPERS.mission_name,
             "Second Pylon",
             SC2LOTV_LOC_ID_OFFSET + 104,
             LocationType.VANILLA,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_dark_whispers_requirement,
         ),
         make_location_data(
             SC2Mission.DARK_WHISPERS.mission_name,
@@ -3861,10 +3824,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2LOTV_LOC_ID_OFFSET + 500,
             LocationType.VICTORY,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_moderate_anti_air(state)
-            ),
+            logic.protoss_growing_shadow_requirement,
             hard_rule=logic.protoss_any_anti_air_unit_or_soa,
         ),
         make_location_data(
@@ -3878,16 +3838,14 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "East Pylon",
             SC2LOTV_LOC_ID_OFFSET + 502,
             LocationType.VANILLA,
-            lambda state: logic.protoss_common_unit(state)
-            and (adv_tactics or logic.protoss_moderate_anti_air(state)),
+            logic.protoss_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW.mission_name,
             "West Pylon",
             SC2LOTV_LOC_ID_OFFSET + 503,
             LocationType.VANILLA,
-            lambda state: logic.protoss_common_unit(state)
-            and (adv_tactics or logic.protoss_moderate_anti_air(state)),
+            logic.protoss_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW.mission_name,
@@ -3900,10 +3858,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Templar Base",
             SC2LOTV_LOC_ID_OFFSET + 505,
             LocationType.EXTRA,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_moderate_anti_air(state)
-            ),
+            logic.protoss_growing_shadow_requirement,
             hard_rule=logic.protoss_any_anti_air_unit_or_soa,
         ),
         make_location_data(
@@ -9643,67 +9598,42 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 6300,
             LocationType.VICTORY,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_basic_anti_air(state)
-                and logic.terran_defense_rating(state, False, False) >= 3
-            ),
+            logic.terran_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_T.mission_name,
             "Right Group",
             SC2_RACESWAP_LOC_ID_OFFSET + 6301,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_basic_anti_air(state)
-                and logic.terran_defense_rating(state, False, False) >= 3
-            ),
+            logic.terran_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_T.mission_name,
             "Center Group",
             SC2_RACESWAP_LOC_ID_OFFSET + 6302,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_basic_anti_air(state)
-                and logic.terran_defense_rating(state, False, False) >= 3
-            ),
+            logic.terran_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_T.mission_name,
             "Left Group",
             SC2_RACESWAP_LOC_ID_OFFSET + 6303,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_basic_anti_air(state)
-                and logic.terran_defense_rating(state, False, False) >= 3
-            ),
+            logic.terran_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_T.mission_name,
             "Hold Out Finished",
             SC2_RACESWAP_LOC_ID_OFFSET + 6304,
             LocationType.EXTRA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_basic_anti_air(state)
-                and logic.terran_defense_rating(state, False, False) >= 3
-            ),
+            logic.terran_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_T.mission_name,
             "Kill All Buildings Before Reinforcements",
             SC2_RACESWAP_LOC_ID_OFFSET + 6305,
             LocationType.MASTERY,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_competent_comp(state)
-                and logic.terran_defense_rating(state, False, False) >= 3
-                and logic.terran_power_rating(state) >= 5
-            ),
+            logic.terran_rendezvous_speedrun_requirement,
             flags=LocationFlag.SPEEDRUN,
         ),
         make_location_data(
@@ -9711,66 +9641,42 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 6400,
             LocationType.VICTORY,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_basic_anti_air(state)
-                and logic.protoss_defense_rating(state, False) >= 3
-            ),
+            logic.protoss_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_P.mission_name,
             "Right Group",
             SC2_RACESWAP_LOC_ID_OFFSET + 6401,
             LocationType.VANILLA,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_basic_anti_air(state)
-                and logic.protoss_defense_rating(state, False) >= 3
-            ),
+            logic.protoss_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_P.mission_name,
             "Center Group",
             SC2_RACESWAP_LOC_ID_OFFSET + 6402,
             LocationType.VANILLA,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_basic_anti_air(state)
-                and logic.protoss_defense_rating(state, False) >= 3
-            ),
+            logic.protoss_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_P.mission_name,
             "Left Group",
             SC2_RACESWAP_LOC_ID_OFFSET + 6403,
             LocationType.VANILLA,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_basic_anti_air(state)
-                and logic.protoss_defense_rating(state, False) >= 3
-            ),
+            logic.protoss_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_P.mission_name,
             "Hold Out Finished",
             SC2_RACESWAP_LOC_ID_OFFSET + 6404,
             LocationType.EXTRA,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_basic_anti_air(state)
-                and logic.protoss_defense_rating(state, False) >= 3
-            ),
+            logic.protoss_rendezvous_requirement,
         ),
         make_location_data(
             SC2Mission.RENDEZVOUS_P.mission_name,
             "Kill All Buildings Before Reinforcements",
             SC2_RACESWAP_LOC_ID_OFFSET + 6405,
             LocationType.MASTERY,
-            lambda state: (
-                logic.protoss_competent_comp(state)
-                and logic.protoss_defense_rating(state, False) >= 3
-                and logic.protoss_power_rating(state) >= 5
-            ),
+            logic.protoss_rendezvous_requirement,
             flags=LocationFlag.SPEEDRUN,
         ),
         make_location_data(
@@ -9778,169 +9684,140 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 6500,
             LocationType.VICTORY,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_competent_anti_air(state)
-            ),
+            logic.terran_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "First Ursadon Matriarch",
             SC2_RACESWAP_LOC_ID_OFFSET + 6501,
             LocationType.VANILLA,
+            logic.terran_harvest_start_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "North Ursadon Matriarch",
             SC2_RACESWAP_LOC_ID_OFFSET + 6502,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_moderate_anti_air(state)
-            ),
+            logic.terran_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "West Ursadon Matriarch",
             SC2_RACESWAP_LOC_ID_OFFSET + 6503,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_moderate_anti_air(state)
-            ),
+            logic.terran_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "Lost Base",
             SC2_RACESWAP_LOC_ID_OFFSET + 6504,
             LocationType.EXTRA,
+            logic.terran_harvest_start_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "Northeast Psi-link Spire",
             SC2_RACESWAP_LOC_ID_OFFSET + 6505,
             LocationType.EXTRA,
-            lambda state: logic.terran_common_unit(state) or adv_tactics,
+            logic.terran_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "Northwest Psi-link Spire",
             SC2_RACESWAP_LOC_ID_OFFSET + 6506,
             LocationType.EXTRA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_moderate_anti_air(state)
-            ),
+            logic.terran_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "Southwest Psi-link Spire",
             SC2_RACESWAP_LOC_ID_OFFSET + 6507,
             LocationType.EXTRA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_competent_anti_air(state)
-            ),
+            logic.terran_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "Nafash",
             SC2_RACESWAP_LOC_ID_OFFSET + 6508,
             LocationType.EXTRA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_moderate_anti_air(state)
-            ),
+            logic.terran_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_T.mission_name,
             "20 Unfrozen Structures",
             SC2_RACESWAP_LOC_ID_OFFSET + 6509,
             LocationType.CHALLENGE,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_competent_anti_air(state)
-            ),
+            logic.terran_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 6600,
             LocationType.VICTORY,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_anti_armor_anti_air(state)
-            ),
+            logic.protoss_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "First Ursadon Matriarch",
             SC2_RACESWAP_LOC_ID_OFFSET + 6601,
             LocationType.VANILLA,
+            logic.protoss_harvest_start_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "North Ursadon Matriarch",
             SC2_RACESWAP_LOC_ID_OFFSET + 6602,
             LocationType.VANILLA,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "West Ursadon Matriarch",
             SC2_RACESWAP_LOC_ID_OFFSET + 6603,
             LocationType.VANILLA,
-            logic.protoss_common_unit_basic_aa,
+            logic.protoss_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "Lost Base",
             SC2_RACESWAP_LOC_ID_OFFSET + 6604,
             LocationType.EXTRA,
+            logic.protoss_harvest_start_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "Northeast Psi-link Spire",
             SC2_RACESWAP_LOC_ID_OFFSET + 6605,
             LocationType.EXTRA,
-            lambda state: logic.protoss_common_unit(state) or adv_tactics,
+            logic.protoss_harvest_early_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "Northwest Psi-link Spire",
             SC2_RACESWAP_LOC_ID_OFFSET + 6606,
             LocationType.EXTRA,
-            lambda state: (
-                logic.protoss_common_unit(state) and logic.protoss_basic_anti_air(state)
-            ),
+            logic.protoss_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "Southwest Psi-link Spire",
             SC2_RACESWAP_LOC_ID_OFFSET + 6607,
             LocationType.EXTRA,
-            lambda state: (
-                logic.protoss_common_unit(state)
-                and logic.protoss_anti_armor_anti_air(state)
-            ),
+            logic.protoss_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "Nafash",
             SC2_RACESWAP_LOC_ID_OFFSET + 6608,
             LocationType.EXTRA,
-            lambda state: (
-                logic.protoss_common_unit(state) and logic.protoss_basic_anti_air(state)
-            ),
+            logic.protoss_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.HARVEST_OF_SCREAMS_P.mission_name,
             "20 Unfrozen Structures",
             SC2_RACESWAP_LOC_ID_OFFSET + 6609,
             LocationType.CHALLENGE,
-            lambda state: (
-                logic.protoss_common_unit(state) and logic.protoss_basic_anti_air(state)
-            ),
+            logic.protoss_harvest_requirement,
         ),
         make_location_data(
             SC2Mission.SHOOT_THE_MESSENGER_T.mission_name,
@@ -12280,10 +12157,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 10700,
             LocationType.VICTORY,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_moderate_anti_air(state)
-            ),
+            logic.terran_growing_shadow_requirement,
             hard_rule=logic.terran_any_anti_air,
         ),
         make_location_data(
@@ -12297,26 +12171,14 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "East Pylon",
             SC2_RACESWAP_LOC_ID_OFFSET + 10702,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and (
-                    adv_tactics
-                    or (
-                        logic.terran_moderate_anti_air(state)
-                        and logic.terran_any_air_unit(state)
-                    )
-                )
-            ),
+            logic.terran_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW_T.mission_name,
             "West Pylon",
             SC2_RACESWAP_LOC_ID_OFFSET + 10703,
             LocationType.VANILLA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and (adv_tactics or logic.terran_moderate_anti_air(state))
-            ),
+            logic.terran_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW_T.mission_name,
@@ -12329,20 +12191,14 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Templar Base",
             SC2_RACESWAP_LOC_ID_OFFSET + 10705,
             LocationType.EXTRA,
-            lambda state: (
-                logic.terran_common_unit(state)
-                and logic.terran_moderate_anti_air(state)
-            ),
-            hard_rule=logic.terran_any_anti_air,
+            logic.terran_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW_Z.mission_name,
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 10800,
             LocationType.VICTORY,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW_Z.mission_name,
@@ -12355,18 +12211,14 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "East Pylon",
             SC2_RACESWAP_LOC_ID_OFFSET + 10802,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW_Z.mission_name,
             "West Pylon",
             SC2_RACESWAP_LOC_ID_OFFSET + 10803,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_GROWING_SHADOW_Z.mission_name,
@@ -12379,9 +12231,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Templar Base",
             SC2_RACESWAP_LOC_ID_OFFSET + 10805,
             LocationType.EXTRA,
-            lambda state: (
-                logic.zerg_common_unit(state) and logic.zerg_moderate_anti_air(state)
-            ),
+            logic.zerg_growing_shadow_requirement,
         ),
         make_location_data(
             SC2Mission.THE_SPEAR_OF_ADUN_T.mission_name,

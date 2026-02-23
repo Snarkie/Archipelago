@@ -2766,6 +2766,111 @@ class SC2Logic:
             # Insufficient: Wild Mutation, Assimilation Aura
         )
 
+    def zerg_rendezvous_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.zerg_common_unit(state)
+            and self.zerg_basic_anti_air(state)
+            and self.basic_or_no_nova(state, SC2Mission.RENDEZVOUS, False)
+            and self.zerg_defense_rating(state, False, False) >= 3
+        )
+    
+    def zerg_rendezvous_speedrun_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.zerg_competent_comp(state)
+            and self.zerg_competent_anti_air(state)
+            and self.basic_or_no_hero(state, SC2Mission.RENDEZVOUS, False)
+            and self.zerg_defense_rating(state, False, False) >= 3
+            and self.zerg_power_rating(state) >= 5
+        )
+    
+    def terran_rendezvous_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.terran_common_unit(state)
+            and self.terran_basic_anti_air(state)
+            and self.basic_or_no_nova(state, SC2Mission.RENDEZVOUS_T, False)
+            and self.terran_defense_rating(state, False) >= 3
+        )
+    
+    def terran_rendezvous_speedrun_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.terran_common_unit(state)
+            and self.terran_basic_anti_air(state)
+            and self.terran_competent_comp(state)
+            and self.basic_or_no_hero(state, SC2Mission.RENDEZVOUS_T, False)
+            and self.terran_defense_rating(state, False) >= 3
+            and self.terran_power_rating(state) >= 5
+        )
+
+    def protoss_rendezvous_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.protoss_common_unit(state)
+            and self.protoss_basic_anti_air(state)
+            and self.basic_or_no_nova(state, SC2Mission.RENDEZVOUS_P, False)
+            and self.protoss_defense_rating(state, False) >= 3
+        )
+    
+    def protoss_rendezvous_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.protoss_competent_comp(state)
+            and self.basic_or_no_hero(state, SC2Mission.RENDEZVOUS_P, False)
+            and self.protoss_defense_rating(state, False) >= 3
+            and self.protoss_power_rating(state) >= 5
+        )
+
+    def zerg_harvest_start_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS, False)
+        )
+    
+    def zerg_harvest_early_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.zerg_common_unit(state)
+            and self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS, False)
+        )
+    
+    def zerg_harvest_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.zerg_common_unit(state)
+            and self.zerg_basic_anti_air(state)
+            and self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS, False)
+        )
+
+    def terran_harvest_start_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS_T, False)
+        )
+    
+    def terran_harvest_early_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.terran_common_unit(state)
+            and self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS_T, False)
+        )
+    
+    def terran_harvest_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.terran_common_unit(state)
+            and self.terran_basic_anti_air(state)
+            and self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS_T, False)
+        )
+
+    def protoss_harvest_start_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS_P, False)
+        )
+    
+    def protoss_harvest_early_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.protoss_common_unit(state)
+            and self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS_P, False)
+        )
+    
+    def protoss_harvest_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.protoss_common_unit(state)
+            and self.protoss_basic_anti_air(state)
+            and self.basic_or_no_nova(state, SC2Mission.HARVEST_OF_SCREAMS_P, False)
+        )
+
     def zerg_enemy_within_advanced_tactics_requirement(self, state: CollectionState) -> bool:
         return (
             state.has(item_names.INFESTOR, self.player)
@@ -2966,11 +3071,48 @@ class SC2Logic:
             )
         )
 
+    def protoss_dark_whispers_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.protoss_common_unit_basic_aa(state)
+            and self.basic_or_no_hero(state, SC2Mission.DARK_WHISPERS)
+        )
+
+    def protoss_growing_shadow_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.protoss_common_unit(state)
+            and self.protoss_moderate_anti_air(state)
+            and self.basic_or_no_hero(state, SC2Mission.THE_GROWING_SHADOW)
+        )
+
+    def terran_growing_shadow_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.terran_common_unit(state)
+            and self.terran_moderate_anti_air(state)
+            and self.basic_or_no_hero(state, SC2Mission.THE_GROWING_SHADOW_T)
+        )
+    
+    def zerg_growing_shadow_requirement(self, state: CollectionState) -> bool:
+        return (
+            self.zerg_common_unit(state)
+            and self.zerg_moderate_anti_air(state)
+            and self.basic_or_no_hero(state, SC2Mission.THE_GROWING_SHADOW_Z)
+        )
+    
     def terran_spear_of_adun_requirement(self, state: CollectionState) -> bool:
-        return self.terran_common_unit(state) and self.terran_competent_anti_air(state) and self.terran_defense_rating(state, False, False) >= 5
+        return (
+            self.terran_common_unit(state) 
+            and self.terran_competent_anti_air(state) 
+            and self.terran_defense_rating(state, False, False) >= 5
+            and self.basic_or_no_hero(state, SC2Mission.THE_SPEAR_OF_ADUN_T)
+        )
 
     def zerg_spear_of_adun_requirement(self, state: CollectionState) -> bool:
-        return self.zerg_common_unit(state) and self.zerg_competent_anti_air(state) and self.zerg_defense_rating(state, False, False) >= 5
+        return (
+            self.zerg_common_unit(state) 
+            and self.zerg_competent_anti_air(state) 
+            and self.zerg_defense_rating(state, False, False) >= 5
+            and self.basic_or_no_hero(state, SC2Mission.THE_SPEAR_OF_ADUN_Z)
+        )
 
     def protoss_spear_of_adun_requirement(self, state: CollectionState) -> bool:
         return (
@@ -2981,16 +3123,33 @@ class SC2Logic:
                 or self.protoss_basic_splash(state)
             )
             and self.protoss_defense_rating(state, False) >= 5
+            and self.basic_or_no_hero(state, SC2Mission.THE_SPEAR_OF_ADUN)
         )
 
     def terran_sky_shield_requirement(self, state: CollectionState) -> bool:
-        return self.terran_common_unit(state) and self.terran_competent_anti_air(state) and self.terran_power_rating(state) >= 7
-
+        return (
+            self.terran_common_unit(state) 
+            and self.terran_competent_anti_air(state) 
+            and self.terran_power_rating(state) >= 7
+            and self.basic_or_no_hero(state, SC2Mission.SKY_SHIELD_T)
+        )
+    
     def zerg_sky_shield_requirement(self, state: CollectionState) -> bool:
-        return self.zerg_common_unit(state) and self.zerg_competent_anti_air(state) and self.zerg_power_rating(state) >= 7
+        return ( 
+            self.zerg_common_unit(state) 
+            and self.zerg_competent_anti_air(state) 
+            and self.zerg_power_rating(state) >= 7
+            and self.basic_or_no_hero(state, SC2Mission.SKY_SHIELD_Z)
+        )
 
     def protoss_sky_shield_requirement(self, state: CollectionState) -> bool:
-        return self.protoss_common_unit(state) and self.protoss_competent_anti_air(state) and self.protoss_power_rating(state) >= 7
+        return (
+            self.protoss_common_unit(state) 
+            and self.protoss_competent_anti_air(state) 
+            and self.protoss_power_rating(state) >= 7
+            and self.basic_or_no_hero(state, SC2Mission.SKY_SHIELD)
+        )
+
 
     def protoss_brothers_in_arms_requirement(self, state: CollectionState) -> bool:
         return (self.protoss_common_unit(state) and self.protoss_anti_armor_anti_air(state) and self.protoss_hybrid_counter(state)) or (
