@@ -962,6 +962,7 @@ class TestItemFiltering(Sc2SetupTestBase):
                 }
             },
             'grant_story_levels': options.GrantStoryLevels.option_additive,
+            'grant_story_tech': options.GrantStoryTech.option_no_grant,
             'excluded_items': {
                 item_names.KERRIGAN_LEAPING_STRIKE: -1,
                 item_names.KERRIGAN_MEND: -1,
