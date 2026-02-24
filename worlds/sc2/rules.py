@@ -2333,7 +2333,7 @@ class SC2Logic:
         return (
             self.terran_the_dig_requirement(state)
             and self.terran_beats_protoss_deathball(state)
-            and self.terran_base_trasher(self.state)
+            and self.terran_base_trasher(state)
         )
     
     def zerg_the_dig_start_requirement(self, state: CollectionState) -> bool:
