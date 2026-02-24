@@ -2551,7 +2551,7 @@ class SC2Logic:
         return (
             self.basic_or_no_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION, False)
             and (
-                self.active_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION, False)
+                self.active_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION)
                 or self.marine_medic_upgrade(state)
             )
         )
@@ -2574,7 +2574,7 @@ class SC2Logic:
         return (
             self.basic_or_no_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION_Z, False)
             and (
-                self.active_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION_Z, False)
+                self.active_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION_Z)
                 or self.zergling_hydra_roach_start(state)
             )
         )
@@ -2599,7 +2599,7 @@ class SC2Logic:
         return (
             self.basic_or_no_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION_Z, False)
             and (
-                self.active_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION_Z, False)
+                self.active_hero(state, SC2Mission.ENGINE_OF_DESTRUCTION_Z)
                 or self.zealot_sentry_slayer_start(state)
             )
         )
