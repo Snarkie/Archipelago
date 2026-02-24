@@ -832,17 +832,6 @@ class SC2Context(CommonContext):
             self.game_speed = GameSpeed.option_fast
         elif str(SC2World.settings.game_speed).casefold() == 'faster':
             self.game_speed = GameSpeed.option_faster
-            
-        # kerrigan_flag = HeroFlag.KERRIGAN if HeroOptions.KERRIGAN in heroes else HeroFlag.NONE
-        # nova_flag = HeroFlag.NOVA if HeroOptions.NOVA in heroes else HeroFlag.NONE
-        # artanis_flag = HeroFlag.ARTANIS if HeroOptions.ARTANIS in heroes else HeroFlag.NONE
-        # all_flag = kerrigan_flag | nova_flag | artanis_flag
-        # race_flag = {
-        #     SC2Race.ZERG: kerrigan_flag,
-        #     SC2Race.TERRAN: nova_flag,
-        #     SC2Race.PROTOSS: artanis_flag,
-        # }
-        # self.hero_presence = {campaign: {} for campaign in campaigns}
 
     def unpack_hero_presence(self, slot_data: dict[str, str]) -> dict[SC2Campaign, dict[SC2Race, int]]:
         campaigns = [campaign for campaign in SC2Campaign if campaign != SC2Campaign.GLOBAL] 

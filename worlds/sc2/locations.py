@@ -5133,7 +5133,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             SC2NCO_LOC_ID_OFFSET + 300,
             LocationType.VICTORY,
             logic.enemy_intelligence_third_stage_requirement,
-            hard_rule=logic.enemy_intelligence_cliff_garrison_and_nova_mobility,
+            hard_rule=logic.enemy_intelligence_hard_rule,
         ),
         make_location_data(
             SC2Mission.ENEMY_INTELLIGENCE.mission_name,
@@ -5202,7 +5202,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             SC2NCO_LOC_ID_OFFSET + 308,
             LocationType.VANILLA,
             logic.enemy_intelligence_second_stage_requirement,
-            hard_rule=logic.enemy_intelligence_cliff_garrison_and_nova_mobility,
+            hard_rule=logic.enemy_intelligence_hard_rule,
         ),
         make_location_data(
             SC2Mission.TROUBLE_IN_PARADISE.mission_name,
@@ -5347,20 +5347,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Blightbringer",
             SC2NCO_LOC_ID_OFFSET + 508,
             LocationType.VANILLA,
-            lambda state: (
-                logic.night_terrors_requirement(state)
-                and logic.nova_ranged_weapon(state)
-                and state.has_any(
-                    {
-                        item_names.NOVA_HELLFIRE_SHOTGUN,
-                        item_names.NOVA_PULSE_GRENADES,
-                        item_names.NOVA_STIM_INFUSION,
-                        item_names.NOVA_HOLO_DECOY,
-                    },
-                    player,
-                )
-                or NovaPresenceOptions.NCO_TERRAN not in logic.nova_presence
-            ),
+            logic.night_terrors_side_area_requirement,
         ),
         make_location_data(
             SC2Mission.NIGHT_TERRORS.mission_name,
@@ -5374,11 +5361,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Eradicators",
             SC2NCO_LOC_ID_OFFSET + 510,
             LocationType.VANILLA,
-            lambda state: (
-                logic.night_terrors_requirement(state) 
-                and (logic.nova_any_weapon(state) 
-                     or NovaPresenceOptions.NCO_TERRAN not in logic.nova_presence)
-            ),
+            logic.night_terrors_side_area_requirement,
         ),
         make_location_data(
             SC2Mission.FLASHPOINT.mission_name,
@@ -5685,9 +5668,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2NCO_LOC_ID_OFFSET + 900,
             LocationType.VICTORY,
-            lambda state: logic.end_game_requirement(state)
-            and (logic.nova_any_weapon(state)
-                or NovaPresenceOptions.NCO_TERRAN not in logic.nova_presence)
+            logic.end_game_requirement,
         ),
         make_location_data(
             SC2Mission.END_GAME.mission_name,
@@ -14483,7 +14464,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             SC2_RACESWAP_LOC_ID_OFFSET + 15300,
             LocationType.VICTORY,
             logic.zerg_enemy_intelligence_third_stage_requirement,
-            hard_rule=logic.zerg_enemy_intelligence_cliff_garrison_and_nova_mobility,
+            hard_rule=logic.zerg_enemy_intelligence_hard_rule,
         ),
         make_location_data(
             SC2Mission.ENEMY_INTELLIGENCE_Z.mission_name,
@@ -14552,7 +14533,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             SC2_RACESWAP_LOC_ID_OFFSET + 15308,
             LocationType.VANILLA,
             logic.zerg_enemy_intelligence_second_stage_requirement,
-            hard_rule=logic.zerg_enemy_intelligence_cliff_garrison_and_nova_mobility,
+            hard_rule=logic.zerg_enemy_intelligence_hard_rule,
         ),
         make_location_data(
             SC2Mission.ENEMY_INTELLIGENCE_P.mission_name,
@@ -14560,7 +14541,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             SC2_RACESWAP_LOC_ID_OFFSET + 15400,
             LocationType.VICTORY,
             logic.protoss_enemy_intelligence_third_stage_requirement,
-            hard_rule=logic.protoss_enemy_intelligence_cliff_garrison_and_nova_mobility,
+            hard_rule=logic.protoss_enemy_intelligence_hard_rule,
         ),
         make_location_data(
             SC2Mission.ENEMY_INTELLIGENCE_P.mission_name,
@@ -14629,7 +14610,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             SC2_RACESWAP_LOC_ID_OFFSET + 15408,
             LocationType.VANILLA,
             logic.protoss_enemy_intelligence_second_stage_requirement,
-            hard_rule=logic.protoss_enemy_intelligence_cliff_garrison_and_nova_mobility,
+            hard_rule=logic.protoss_enemy_intelligence_hard_rule,
         ),
         make_location_data(
             SC2Mission.TROUBLE_IN_PARADISE_Z.mission_name,
@@ -14856,22 +14837,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Blightbringer",
             SC2_RACESWAP_LOC_ID_OFFSET + 15708,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_night_terrors_requirement(state)
-                and (
-                    logic.nova_ranged_weapon(state)
-                    and state.has_any(
-                        {
-                            item_names.NOVA_HELLFIRE_SHOTGUN,
-                            item_names.NOVA_PULSE_GRENADES,
-                            item_names.NOVA_STIM_INFUSION,
-                            item_names.NOVA_HOLO_DECOY,
-                        },
-                        player,
-                    )
-                    or NovaPresenceOptions.NCO_ZERG not in logic.nova_presence
-                )
-            ),
+            logic.zerg_night_terrors_side_area_requirement,
         ),
         make_location_data(
             SC2Mission.NIGHT_TERRORS_Z.mission_name,
@@ -14885,11 +14851,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Eradicators",
             SC2_RACESWAP_LOC_ID_OFFSET + 15710,
             LocationType.VANILLA,
-            lambda state: (
-                logic.zerg_night_terrors_requirement(state) 
-                and (logic.nova_any_weapon(state) 
-                     or NovaPresenceOptions.NCO_ZERG not in logic.nova_presence)
-            ),
+            logic.zerg_night_terrors_side_area_requirement,
         ),
         make_location_data(
             SC2Mission.NIGHT_TERRORS_P.mission_name,
@@ -14952,22 +14914,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Blightbringer",
             SC2_RACESWAP_LOC_ID_OFFSET + 15808,
             LocationType.VANILLA,
-            lambda state: (
-                logic.protoss_night_terrors_requirement(state)
-                and (
-                    logic.nova_ranged_weapon(state)
-                    and state.has_any(
-                        {
-                            item_names.NOVA_HELLFIRE_SHOTGUN,
-                            item_names.NOVA_PULSE_GRENADES,
-                            item_names.NOVA_STIM_INFUSION,
-                            item_names.NOVA_HOLO_DECOY,
-                        },
-                        player,
-                    )
-                    or NovaPresenceOptions.NCO_PROTOSS not in logic.nova_presence
-                )
-            ),
+            logic.protoss_night_terrors_side_area_requirement,
         ),
         make_location_data(
             SC2Mission.NIGHT_TERRORS_P.mission_name,
@@ -14981,11 +14928,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Eradicators",
             SC2_RACESWAP_LOC_ID_OFFSET + 15810,
             LocationType.VANILLA,
-            lambda state: (
-                logic.protoss_night_terrors_requirement(state) 
-                and (logic.nova_any_weapon(state) 
-                     or NovaPresenceOptions.NCO_PROTOSS not in logic.nova_presence)
-            ),
+            logic.protoss_night_terrors_side_area_requirement,
         ),
         make_location_data(
             SC2Mission.FLASHPOINT_Z.mission_name,
@@ -15285,9 +15228,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 16500,
             LocationType.VICTORY,
-            lambda state: logic.zerg_end_game_requirement(state)
-            and (logic.nova_any_weapon(state) 
-                 or NovaPresenceOptions.NCO_ZERG not in logic.nova_presence)
+            logic.zerg_end_game_requirement,
         ),
         make_location_data(
             SC2Mission.END_GAME_Z.mission_name,
@@ -15344,9 +15285,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Victory",
             SC2_RACESWAP_LOC_ID_OFFSET + 16600,
             LocationType.VICTORY,
-            lambda state: logic.protoss_end_game_requirement(state)
-            and (logic.nova_any_weapon(state) 
-                 or NovaPresenceOptions.NCO_PROTOSS not in logic.nova_presence)
+            logic.protoss_end_game_requirement,
         ),
         make_location_data(
             SC2Mission.END_GAME_P.mission_name,

@@ -106,7 +106,7 @@ class MissionClient:
                 hero_presence = self.ctx.hero_presence[mission.campaign][mission.race]
         else:
             hero_presence = 0
-        logger.debug(f"Hero Presence after slot data: {hero_presence}")
+        logger.debug(f"Hero settings for current mission: {hero_presence}") # TODO (Snarky): Disable on release
         nova_presence = calculate_nova_presence(self.ctx, mission)
         grant_story_tech = calculate_story_tech(self.ctx, mission)
         soa_options = calculate_soa_options(self.ctx, mission)
@@ -144,7 +144,7 @@ class MissionClient:
             f" {trade_options}"
             f" {self.ctx.difficulty_damage_modifier}"
             f" {self.ctx.mercenary_highlanders}" # TODO: Possibly rework into unit options
-            f" {self.ctx.war_council_nerfs}"
+            f" {self.ctx.show_war_council_nerfs}"
             f" {hero_presence}"
         )
         if isinstance(error, Error):
