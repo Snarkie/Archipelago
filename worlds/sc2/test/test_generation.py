@@ -951,6 +951,10 @@ class TestItemFiltering(Sc2SetupTestBase):
                             },
                             {
                                 'index': 1,
+                                'mission_pool': [SC2Mission.RENDEZVOUS.mission_name]
+                            },
+                            {
+                                'index': 2,
                                 'mission_pool': [SC2Mission.SUPREME.mission_name]
                             },
                         ]
