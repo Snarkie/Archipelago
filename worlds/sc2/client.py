@@ -838,11 +838,17 @@ class SC2Context(CommonContext):
             result[lookup_id_to_campaign[int(campaign)]][lookup_id_to_race[int(race)]] = int(value)
         return result
 
-    def default_hero_presence(self) -> dict[SC2Campaign, dict[SC2Race, int]] :
-        return {
-            SC2Campaign.HOTS: {SC2Race.ZERG : HeroFlag.KERRIGAN.value},
-            SC2Campaign.NCO: {SC2Race.TERRAN : HeroFlag.NOVA.value},
-        }
+    def default_hero_presence(self, kerrigan_present: bool=True) -> dict[SC2Campaign, dict[SC2Race, int]] :
+        if kerrigan_present: 
+            return {
+                SC2Campaign.HOTS: {SC2Race.ZERG : HeroFlag.KERRIGAN.value},
+                SC2Campaign.NCO: {SC2Race.TERRAN : HeroFlag.NOVA.value},
+            }
+        else:
+            return {
+                # only used by compat code
+                SC2Campaign.NCO: {SC2Race.TERRAN : HeroFlag.NOVA.value},
+            }
 
 
     def on_package(self, cmd: str, args: dict) -> None:
@@ -982,14 +988,20 @@ class SC2Context(CommonContext):
             if hero_presence_args != "0":
                 self.hero_presence = self.unpack_hero_presence(hero_presence_args)
             else:
-                self.hero_presence = self.default_hero_presence()
-            # # TODO (Snarky): Make work with Hero Presence
+                self.hero_presence = self.default_hero_presence(True)
+            # # TODO (Snarky): NCO Nova is currently disabled. Revisit if enabled.
+            # # Generic Nova presence never made it to live, so it doesn't need compat code
             # if self.slot_data_version < 4:
             #     if args["slot_data"].get("nova_covert_ops_only", True):
             #     else:
             # if self.slot_data_version < 5:
             #     if args["slot_data"].get("use_nova_wol_fallback", True):
             #     else:
+            if self.slot_data_version < 5:
+                if args["slot_data"].get("kerrigan_presence", True):
+                    self.hero_presence = self.default_hero_presence(True)
+                else:
+                    self.hero_presence = self.default_hero_presence(False)
             self.trade_enabled = args["slot_data"].get("enable_void_trade", EnableVoidTrade.option_false)
             self.trade_age_limit = args["slot_data"].get("void_trade_age_limit", VoidTradeAgeLimit.default)
             self.trade_workers_allowed = args["slot_data"].get("void_trade_workers", VoidTradeWorkers.default)
