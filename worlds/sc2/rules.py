@@ -2,11 +2,10 @@ from math import floor
 from typing import TYPE_CHECKING, Set, Optional, Callable, Dict, Tuple, Iterable
 
 from BaseClasses import CollectionState, Location
-from .item.item_groups import kerrigan_non_ulimates, kerrigan_logic_active_abilities
+from .item.item_groups import kerrigan_non_ulimates
 from .item.item_names import PROGRESSIVE_PROTOSS_AIR_WEAPON, PROGRESSIVE_PROTOSS_AIR_ARMOR, PROGRESSIVE_PROTOSS_SHIELDS
 from .options import (
     RequiredTactics,
-    kerrigan_unit_available,
     AllInMap,
     GrantStoryTech,
     GrantStoryLevels,
@@ -15,7 +14,6 @@ from .options import (
     MissionOrder,
     EnableMorphling,
     EnableRaceSwapVariants,
-    NovaPresence,
     EnabledHeroes,
     HeroPresence,
     get_enabled_campaigns,
@@ -31,7 +29,7 @@ from .item.item_tables import (
     WEAPON_ARMOR_UPGRADE_MAX_LEVEL,
 )
 from .mission_tables import SC2Race, SC2Campaign, SC2Mission
-from .tables import NovaPresenceOptions, HeroFlag
+from .tables import HeroFlag
 from .item import item_groups, item_names
 
 if TYPE_CHECKING:
@@ -52,7 +50,6 @@ class SC2Logic:
         self.logic_level: int = world.options.required_tactics.value if world else RequiredTactics.default
         self.advanced_tactics = self.logic_level != RequiredTactics.option_standard
         self.take_over_ai_allies = bool(world and world.options.take_over_ai_allies)
-        self.kerrigan_unit_available = False if world is None else (world.options.kerrigan_presence.value in kerrigan_unit_available)
         self.kerrigan_levels_per_mission_completed = 0 if world is None else world.options.kerrigan_levels_per_mission_completed.value
         self.kerrigan_levels_per_mission_completed_cap = -1 if world is None else world.options.kerrigan_levels_per_mission_completed_cap.value
         self.kerrigan_total_level_cap = -1 if world is None else world.options.kerrigan_total_level_cap.value
@@ -72,7 +69,6 @@ class SC2Logic:
         self.mission_order = MissionOrder.default if world is None else world.options.mission_order.value
         self.generic_upgrade_missions = 0 if world is None else world.options.generic_upgrade_missions.value
         self.all_in_map = AllInMap.option_ground if world is None else world.options.all_in_map.value
-        self.nova_presence = NovaPresence.default if world is None else world.options.nova_presence.value
         self.enabled_heroes = EnabledHeroes.default if world is None else world.options.enabled_heroes
         self.war_council_upgrades = True if world is None else not world.options.war_council_nerfs.value
         self.base_power_rating = 2 if self.advanced_tactics else 0
@@ -879,7 +875,7 @@ class SC2Logic:
         )
 
     def zerg_kerrigan_or_any_anti_air(self, state: CollectionState) -> bool:
-        return self.kerrigan_unit_available or self.zerg_any_anti_air(state)
+        return not self.kerrigan_items_granted or self.zerg_any_anti_air(state)
 
     def zerg_any_anti_air(self, state: CollectionState) -> bool:
         return (
@@ -912,7 +908,7 @@ class SC2Logic:
         )
 
     def zerg_basic_anti_air(self, state: CollectionState) -> bool:
-        return self.zerg_basic_kerriganless_anti_air(state) or self.kerrigan_unit_available
+        return self.zerg_basic_kerriganless_anti_air(state) or not self.kerrigan_items_granted
 
     def zerg_basic_kerriganless_anti_air(self, state: CollectionState) -> bool:
         return (
@@ -1214,7 +1210,7 @@ class SC2Logic:
         return False
 
     def basic_artanis(self, state: CollectionState, story_tech_available=True) -> bool:
-        return True # not yet implemented
+        return True # TODO (Snarky): Revisit once Artanis is implemented
 
     def two_kerrigan_actives(self, state: CollectionState, story_tech_available=True) -> bool:
         if story_tech_available or self.kerrigan_items_granted:
@@ -1260,7 +1256,7 @@ class SC2Logic:
     
     def competent_artanis(self, state: CollectionState) -> bool:
         return (
-            True # not yet implemented
+            True # TODO (Snarky): Revisit once Artanis is implemented
         )
 
     # Global Protoss
@@ -1929,14 +1925,15 @@ class SC2Logic:
     
     def ghost_of_a_chance_requirement(self, state: CollectionState) -> bool:
         return (
-            self.grant_story_tech == GrantStoryTech.option_grant
-            or NovaPresenceOptions.GHOST_OF_A_CHANCE not in self.nova_presence
-            or (
-                self.nova_ranged_weapon(state)
-                and state.has_any({item_names.NOVA_DOMINATION, item_names.NOVA_C20A_CANISTER_RIFLE}, self.player)
-                and (self.nova_full_stealth(state) or self.nova_heal(state))
-                and self.nova_anti_air_weapon(state)
-            )
+            True
+            # # TODO (Snarky): Make work with Hero Presence
+            # self.grant_story_tech == GrantStoryTech.option_grant
+            # or (
+            #     self.nova_ranged_weapon(state)
+            #     and state.has_any({item_names.NOVA_DOMINATION, item_names.NOVA_C20A_CANISTER_RIFLE}, self.player)
+            #     and (self.nova_full_stealth(state) or self.nova_heal(state))
+            #     and self.nova_anti_air_weapon(state)
+            # )
         )
 
     def terran_outbreak_requirement(self, state: CollectionState) -> bool:
@@ -2763,7 +2760,6 @@ class SC2Logic:
         return (
             # Note(mm): This check isn't necessary as self.kerrigan_levels cover it,
             # and it's not fully desirable in future when we support non-grant story tech + kerriganless.
-            # or not self.kerrigan_presence
             self.kerrigan_items_granted
             or state.has_any((
                 # Cases tested by Snarky
@@ -3923,7 +3919,7 @@ class SC2Logic:
             )
             or (
                 HeroFlag.ARTANIS in presence
-                and True # TODO: adjust after Artanis is implemented
+                and True # TODO (Snarky): Revisit once Artanis is implemented
             )
         )
 
@@ -3977,7 +3973,7 @@ class SC2Logic:
 
     def sudden_strike_artanis(self, state: CollectionState) -> bool:
         return (
-            True # TODO: adjust after Artanis is implemented
+            True # TODO (Snarky): Revisit once Artanis is implemented
         )
 
     def sudden_strike_hero(self, state: CollectionState, presence: HeroFlag) -> bool:
@@ -4177,7 +4173,7 @@ class SC2Logic:
             and (
                 self.terran_competent_comp(state)
                 or (
-                    NovaPresenceOptions.NCO_TERRAN in self.nova_presence
+                    self.basic_nova(state, SC2Mission.ENEMY_INTELLIGENCE, False)
                     and self.terran_common_unit(state) 
                     and self.terran_competent_anti_air(state) 
                     and state.has(item_names.NOVA_NUKE, self.player)
@@ -4189,7 +4185,7 @@ class SC2Logic:
     def zerg_enemy_intelligence_first_stage_requirement(self, state: CollectionState) -> bool:
         return (
             self.zerg_enemy_intelligence_garrisonable_unit(state) 
-            # TODO: adjust to hero presence, revisit defense ratings
+            # TODO: revisit defense ratings
             and self.zerg_competent_comp(state) 
             and self.zerg_defense_rating(state, True, True) >= 5
         )
@@ -4222,7 +4218,7 @@ class SC2Logic:
         )
     
     def enemy_intelligence_artanis(self, state: CollectionState) -> bool:
-        return True # TODO: adjust after Artanis is implemented
+        return True # TODO (Snarky): Revisit once Artanis is implemented
 
     def enemy_intelligence_hero(self, state: CollectionState, presence: HeroFlag) -> bool:
         if (

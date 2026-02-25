@@ -6,11 +6,9 @@ from .options import (
     get_option_value,
     RequiredTactics,
     LocationInclusion,
-    KerriganPresence,
     get_enabled_campaigns,
 )
 from .mission_tables import SC2Mission, SC2Campaign
-from .tables import NovaPresenceOptions
 
 from BaseClasses import Location
 from worlds.AutoWorld import World
@@ -139,10 +137,8 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
     # Note: rules which are ended with or True are rules identified as needed later when restricted units is an option
     if world is None:
         logic_level = int(RequiredTactics.default)
-        kerriganless = False
     else:
         logic_level = world.options.required_tactics.value
-        kerriganless = world.logic.kerrigan_items_granted
     adv_tactics = logic_level != RequiredTactics.option_standard
     if world is not None and world.logic is not None:
         logic = world.logic
@@ -150,6 +146,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
         from .rules import SC2Logic
 
         logic = SC2Logic(world)
+    kerriganless = logic.kerrigan_items_granted
     player = 1 if world is None else world.player
     location_table: List[LocationData] = [
         # WoL

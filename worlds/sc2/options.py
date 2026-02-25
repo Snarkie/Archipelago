@@ -18,7 +18,6 @@ from .mission_tables import (
 )
 from .mission_groups import mission_groups, MissionGroupNames
 from .mission_order.options import CustomMissionOrder
-from .tables import NovaPresenceOptions
 from .tables import HeroOptions
 
 if TYPE_CHECKING:
@@ -539,23 +538,6 @@ class MercenaryHighlanders(DefaultOnToggle):
     display_name = "Mercenary Highlanders"
 
 
-class KerriganPresence(Choice):
-    """
-    Determines whether Kerrigan is playable outside of missions that require her.
-
-    Vanilla: Kerrigan is playable as normal, appears in the same missions as in vanilla game.
-    Not Present:  Kerrigan is not playable, unless the mission requires her to be present.  Other hero units stay playable,
-        and locations normally requiring Kerrigan can be checked by any unit.
-        Kerrigan level items, active abilities and passive abilities affecting her will not appear.
-        In missions where the Kerrigan unit is required, story abilities are given in same way as Grant Story Tech is set to true
-
-    Note: Always set to "Not Present" if Heart of the Swarm campaign is disabled.
-    """
-    display_name = "Kerrigan Presence"
-    option_vanilla = 0
-    option_not_present = 1
-
-
 class KerriganLevelsPerMissionCompleted(Range):
     """
     Determines how many levels Kerrigan gains when a mission is beaten.
@@ -865,28 +847,6 @@ class GrantStoryLevels(Choice):
     option_additive = 1
     option_minimum = 2
     default = option_minimum
-
-class NovaPresence(OptionSet):
-    """
-    Determines which missions will use the NCO Nova hero
-    
-    Nova Covert Ops (Terran): Nova is present in vanilla NCO missions.
-    Nova Covert Ops (Zerg): Nova is present in Zerg NCO missions.
-    Nova Covert Ops (Protoss): Nova is present in Protoss NCO missions.
-    Ghost of a Chance: Vanilla WoL Nova is replaced with NCO Nova.
-    Ghost of a Chance (Auto): NCO Nova is used only if Nova is enabled in any build missions 
-
-    Not including any of the options will disable Nova for those missions.
-    """
-    display_name = "Nova Presence"
-    valid_keys = {
-        NovaPresenceOptions.NCO_TERRAN,
-        NovaPresenceOptions.NCO_ZERG,
-        NovaPresenceOptions.NCO_PROTOSS,
-        NovaPresenceOptions.GHOST_OF_A_CHANCE,
-        NovaPresenceOptions.GHOST_OF_A_CHANCE_AUTO,
-    }
-    default = frozenset((NovaPresenceOptions.NCO_TERRAN,))
 
 class EnabledHeroes(OptionSet):
     """
@@ -1426,7 +1386,6 @@ class Starcraft2Options(PerGameCommonOptions):
     generic_upgrade_research: GenericUpgradeResearch
     generic_upgrade_research_speedup: GenericUpgradeResearchSpeedup
     generic_upgrade_items: GenericUpgradeItems
-    kerrigan_presence: KerriganPresence
     kerrigan_levels_per_mission_completed: KerriganLevelsPerMissionCompleted
     kerrigan_levels_per_mission_completed_cap: KerriganLevelsPerMissionCompletedCap
     kerrigan_level_item_sum: KerriganLevelItemSum
@@ -1446,7 +1405,6 @@ class Starcraft2Options(PerGameCommonOptions):
     spear_of_adun_max_passive_abilities: SpearOfAdunMaxAutocastAbilities
     grant_story_tech: GrantStoryTech
     grant_story_levels: GrantStoryLevels
-    nova_presence: NovaPresence
     nova_max_weapons: NovaMaxWeapons
     nova_max_gadgets: NovaMaxGadgets
     enabled_heroes: EnabledHeroes
@@ -1518,7 +1476,6 @@ option_groups = [
         GenericUpgradeItems,
     ]),
     OptionGroup("Kerrigan", [
-        KerriganPresence,
         GrantStoryLevels,
         KerriganLevelsPerMissionCompleted,
         KerriganLevelsPerMissionCompletedCap,
@@ -1539,7 +1496,6 @@ option_groups = [
         SpearOfAdunMaxAutocastAbilities,
     ]),
     OptionGroup("Nova", [
-        NovaPresence,
         NovaMaxWeapons,
         NovaMaxGadgets,
     ]),
@@ -1734,10 +1690,6 @@ dynamic_mission_orders = [
 ]
 
 LEGACY_GRID_ORDERS = {3, 4, 8}  # Medium Grid, Mini Grid, and Tiny Grid respectively
-
-kerrigan_unit_available = [
-    KerriganPresence.option_vanilla,
-]
 
 # Names of upgrades to be included for different options
 upgrade_included_names: dict[int, set[str]] = {

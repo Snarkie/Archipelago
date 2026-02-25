@@ -107,7 +107,6 @@ class MissionClient:
         else:
             hero_presence = 0
         logger.debug(f"Hero settings for current mission: {hero_presence}") # TODO (Snarky): Disable on release
-        nova_presence = calculate_nova_presence(self.ctx, mission)
         grant_story_tech = calculate_story_tech(self.ctx, mission)
         soa_options = calculate_soa_options(self.ctx, mission)
         generic_upgrade_options = calculate_generic_upgrade_options(self.ctx)
@@ -124,7 +123,7 @@ class MissionClient:
             game_speed = self.ctx.game_speed
         skip_cutscenes = 1 if SC2World.settings.game_skip_cutscenes else 0
         disable_forced_camera = 1 if SC2World.settings.game_disable_forced_camera else 0
-
+        nova_presence = 0  # unused for now
         error = banks.send_options(
             f" {difficulty}"
             f" {generic_upgrade_options}"
@@ -137,7 +136,7 @@ class MissionClient:
             f" {self.ctx.take_over_ai_allies}"
             f" {soa_options}"
             f" {self.ctx.mission_order}"
-            f" {nova_presence}"
+            f" {nova_presence}" 
             f" {self.ctx.grant_story_levels}"
             f" {self.ctx.enable_morphling}"
             f" {mission_variant}"
@@ -886,32 +885,16 @@ def get_kerrigan_level(ctx: 'SC2Context', items: dict[SC2Race, list[int]], missi
 def calculate_kerrigan_options(ctx: 'SC2Context') -> int:
     result = 0
 
-    # Bits 0, 1
-    # Kerrigan unit available
-    if ctx.kerrigan_presence in options.kerrigan_unit_available:
-        result |= 1 << 0
+    # # Bits 0, 1
+    # # Kerrigan unit available
+    # if ctx.kerrigan_presence in options.kerrigan_unit_available:
+    #     result |= 1 << 0
 
     # Bit 2
     # Kerrigan primal status by map
     if ctx.kerrigan_primal_status == options.KerriganPrimalStatus.option_vanilla:
         result |= 1 << 2
 
-    return result
-
-
-def calculate_nova_presence(ctx: 'SC2Context', mission: SC2Mission) -> int:
-    result = 0
-    if mission.campaign == SC2Campaign.NCO:
-        if mission.race == SC2Race.TERRAN and options.NovaPresenceOptions.NCO_TERRAN in ctx.nova_presence:
-            result = 1
-        elif mission.race == SC2Race.ZERG and options.NovaPresenceOptions.NCO_ZERG in ctx.nova_presence:
-            result = 1
-        elif mission.race == SC2Race.PROTOSS and options.NovaPresenceOptions.NCO_PROTOSS in ctx.nova_presence:
-            result = 1
-    if (mission == SC2Mission.GHOST_OF_A_CHANCE
-        and options.NovaPresenceOptions.GHOST_OF_A_CHANCE in ctx.nova_presence
-    ):
-        result = 1
     return result
 
 
