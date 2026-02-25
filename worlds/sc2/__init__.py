@@ -40,7 +40,6 @@ from .regions import create_mission_order
 from .mission_order import SC2MissionOrder
 from worlds.LauncherComponents import components, Component, launch as launch_component
 from .presets import sc2_options_presets
-from .mission_groups import mission_groups
 
 logger = logging.getLogger("Starcraft 2")
 

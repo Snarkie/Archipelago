@@ -52,9 +52,7 @@ class SC2Logic:
         self.logic_level: int = world.options.required_tactics.value if world else RequiredTactics.default
         self.advanced_tactics = self.logic_level != RequiredTactics.option_standard
         self.take_over_ai_allies = bool(world and world.options.take_over_ai_allies)
-        self.kerrigan_unit_available = (
-            world is None or (world.options.kerrigan_presence.value in kerrigan_unit_available)
-        )
+        self.kerrigan_unit_available = False if world is None else (world.options.kerrigan_presence.value in kerrigan_unit_available)
         self.kerrigan_levels_per_mission_completed = 0 if world is None else world.options.kerrigan_levels_per_mission_completed.value
         self.kerrigan_levels_per_mission_completed_cap = -1 if world is None else world.options.kerrigan_levels_per_mission_completed_cap.value
         self.kerrigan_total_level_cap = -1 if world is None else world.options.kerrigan_total_level_cap.value
@@ -79,12 +77,12 @@ class SC2Logic:
         self.war_council_upgrades = True if world is None else not world.options.war_council_nerfs.value
         self.base_power_rating = 2 if self.advanced_tactics else 0
         self.hero_presence_option = HeroPresence.default if world is None else world.options.hero_presence
-        self.hero_presence = {} if world is None else world.hero_presence
-
+        
         # Must be set externally for accurate logic checking of upgrade level when generic_upgrade_missions is checked
         self.total_mission_count = 1
 
         # Conditionally changed by the world after finalizing missions
+        self.hero_presence = {}
         self.kerrigan_items_granted = False
         self.kerrigan_levels_granted = False
         self.kerrigan_build_missions = False
