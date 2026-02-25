@@ -7,8 +7,9 @@ from .test_base import Sc2SetupTestBase
 
 from .. import (
     mission_groups, mission_tables, options, locations, SC2Mission, SC2Campaign, SC2Race, unreleased_items,
-    RequiredTactics,
+    RequiredTactics, 
 )
+from ..mission_groups import MissionGroupNames
 from ..item import item_groups, item_tables, item_names
 from .. import get_all_missions, get_random_first_mission
 from ..options import (
@@ -141,9 +142,7 @@ class TestItemFiltering(Sc2SetupTestBase):
         world_options = {
             **self.ZERG_CAMPAIGNS,
             'enable_race_swap': options.EnableRaceSwapVariants.option_shuffle_all,
-            'excluded_missions': [
-                mission_groups.MissionGroupNames.HOTS_ZERUS_MISSIONS,
-            ],
+            'excluded_missions': mission_groups[MissionGroupNames.HOTS_ZERUS_MISSIONS],
             'mission_order': options.MissionOrder.option_grid,
         }
         self.generate_world(world_options)
@@ -943,7 +942,7 @@ class TestItemFiltering(Sc2SetupTestBase):
                     'goal': True,
                     'layout': {
                         'type': 'column',
-                        'size': 2,
+                        'size': 3,
                         'missions': [
                             {
                                 'index': 0,

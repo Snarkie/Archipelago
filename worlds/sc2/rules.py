@@ -1817,27 +1817,27 @@ class SC2Logic:
     def zerg_zero_hour_early_requirement(self, state: CollectionState) -> bool:
         return (
             self.zerg_common_unit(state)
-            or self.basic_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
+            or self.basic_hero(state, SC2Mission.ZERO_HOUR_Z, False)
         )
     def zerg_zero_hour_requirement(self, state: CollectionState) -> bool:
         return (
             self.zerg_common_unit(state)
             and self.zerg_defense_rating(state, True, True) >= 5
             and self.zerg_basic_kerriganless_anti_air(state)
-            and self.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
+            and self.basic_or_no_hero(state, SC2Mission.ZERO_HOUR_Z, False)
         )
     
     def protoss_zero_hour_early_requirement(self, state: CollectionState) -> bool:
         return (
             self.protoss_common_unit(state)
-            or self.basic_hero(state, SC2Mission.THE_OUTLAWS_P, False)
+            or self.basic_hero(state, SC2Mission.ZERO_HOUR_P, False)
         )
         
     def protoss_zero_hour_requirement(self, state: CollectionState) -> bool:
         return (
             self.protoss_common_unit(state)
             and self.protoss_anti_light_anti_air(state)
-            and self.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
+            and self.basic_or_no_hero(state, SC2Mission.ZERO_HOUR_P, False)
             and (
                 state.has(item_names.PHOTON_CANNON, self.player)
                 or self.protoss_basic_splash(state)
@@ -4239,7 +4239,7 @@ class SC2Logic:
         )
 
     def enemy_intelligence_second_stage_requirement(self, state: CollectionState) -> bool:
-        presence = self.get_hero_flag(SC2Mission.SUDDEN_STRIKE)
+        presence = self.get_hero_flag(SC2Mission.ENEMY_INTELLIGENCE)
         return (
             self.enemy_intelligence_first_stage_requirement(state)
             and self.enemy_intelligence_cliff_garrison(state)
@@ -4247,18 +4247,18 @@ class SC2Logic:
         )
     
     def zerg_enemy_intelligence_second_stage_requirement(self, state: CollectionState) -> bool:
-        presence = self.get_hero_flag(SC2Mission.SUDDEN_STRIKE_Z)
+        presence = self.get_hero_flag(SC2Mission.ENEMY_INTELLIGENCE_Z)
         return (
             self.zerg_enemy_intelligence_first_stage_requirement(state)
-            and self.enemy_intelligence_cliff_garrison(state)
+            and self.zerg_enemy_intelligence_cliff_garrison(state)
             and self.enemy_intelligence_hero(state, presence)
         )
     
     def protoss_enemy_intelligence_second_stage_requirement(self, state: CollectionState) -> bool:
-        presence = self.get_hero_flag(SC2Mission.SUDDEN_STRIKE_P)
+        presence = self.get_hero_flag(SC2Mission.ENEMY_INTELLIGENCE_P)
         return (
             self.protoss_enemy_intelligence_first_stage_requirement(state)
-            and self.enemy_intelligence_cliff_garrison(state)
+            and self.protoss_enemy_intelligence_cliff_garrison(state)
             and self.enemy_intelligence_hero(state, presence)
         )
 

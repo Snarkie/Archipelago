@@ -1139,10 +1139,7 @@ def prune_fillers(world):
             MissionFlag.Protoss in mission_flags
             or (world.options.take_over_ai_allies and (MissionFlag.AiProtossAlly in mission_flags))
     )
-    include_kerrigan = (
-            MissionFlag.Kerrigan in mission_flags
-            and world.options.kerrigan_presence in kerrigan_unit_available
-    )
+    include_kerrigan = not world.logic.kerrigan_items_granted
     generic_upgrade_research = world.options.generic_upgrade_research
     if not include_protoss:
         world.filler_items_distribution.pop(item_names.SHIELD_REGENERATION, 0)

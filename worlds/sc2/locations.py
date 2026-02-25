@@ -214,7 +214,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             LocationType.VICTORY,
             lambda state: (
                 logic.terran_common_unit(state)
-                and logic.basic_hero(state, SC2Mission.THE_OUTLAWS, False)
+                and logic.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS, False)
             ),
         ),
         make_location_data(
@@ -244,7 +244,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             LocationType.VANILLA,
             lambda state: (
                 logic.terran_common_unit(state)
-                and logic.basic_hero(state, SC2Mission.THE_OUTLAWS, False)
+                and logic.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS, False)
             ),
         ),
         make_location_data(
@@ -5836,7 +5836,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             LocationType.VICTORY,
             lambda state: (
                 logic.zerg_common_unit(state)
-                and logic.basic_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
+                and logic.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
             ),
         ),
         make_location_data(
@@ -5866,7 +5866,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             LocationType.VANILLA,
             lambda state: (
                 logic.zerg_common_unit(state)
-                and logic.basic_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
+                and logic.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS_Z, False)
             ),
         ),
         make_location_data(
@@ -5882,7 +5882,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             LocationType.VICTORY,
             lambda state: (
                 logic.protoss_common_unit(state)
-                and logic.basic_hero(state, SC2Mission.THE_OUTLAWS_P, False)
+                and logic.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS_P, False)
             ),
         ),
         make_location_data(
@@ -5912,7 +5912,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             LocationType.VANILLA,
             lambda state: (
                 logic.protoss_common_unit(state)
-                and logic.basic_hero(state, SC2Mission.THE_OUTLAWS_P, False)
+                and logic.basic_or_no_hero(state, SC2Mission.THE_OUTLAWS_P, False)
             ),
         ),
         make_location_data(
@@ -5939,7 +5939,7 @@ def get_locations(world: Optional["SC2World"]) -> Tuple[LocationData, ...]:
             "Second Group Rescued",
             SC2_RACESWAP_LOC_ID_OFFSET + 502,
             LocationType.VANILLA,
-            logic.protoss_zero_hour_early_requirement,
+            logic.zerg_zero_hour_early_requirement,
         ),
         make_location_data(
             SC2Mission.ZERO_HOUR_Z.mission_name,
