@@ -1209,6 +1209,11 @@ class SC2Logic:
     def basic_artanis(self, state: CollectionState, story_tech_available: bool = True) -> bool:
         return True # TODO (Snarky): Revisit once Artanis is implemented
 
+    def two_kerrigan_solo_actives(self, state: CollectionState, story_tech_available: bool = True) -> bool:
+        if story_tech_available or self.kerrigan_items_granted:
+            return True
+        return state.count_from_list(item_groups.kerrigan_solo_active_abilities, self.player) >= 2
+
     def two_kerrigan_actives(self, state: CollectionState, story_tech_available: bool = True) -> bool:
         if story_tech_available or self.kerrigan_items_granted:
             return True
