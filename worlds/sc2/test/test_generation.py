@@ -7,7 +7,7 @@ from .test_base import Sc2SetupTestBase
 
 from .. import (
     mission_groups, mission_tables, options, locations, SC2Mission, SC2Campaign, SC2Race, unreleased_items,
-    RequiredTactics, 
+    RequiredTactics,
 )
 from ..item import item_groups, item_tables, item_names
 from .. import get_all_missions, get_random_first_mission

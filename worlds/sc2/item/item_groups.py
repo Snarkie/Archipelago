@@ -701,14 +701,14 @@ item_name_groups[ItemGroupNames.KERRIGAN_TIER_7] = kerrigan_tier_7 = [
 item_name_groups[ItemGroupNames.KERRIGAN_ULTIMATES] = kerrigan_ultimates = [
     *kerrigan_tier_7, item_names.KERRIGAN_ASSIMILATION_AURA, item_names.KERRIGAN_IMMOBILIZATION_WAVE
 ]
-item_name_groups[ItemGroupNames.KERRIGAN_NON_ULTIMATES] = kerrigan_non_ulimates = [
+item_name_groups[ItemGroupNames.KERRIGAN_NON_ULTIMATES] = kerrigan_non_ultimates = [
     item for item in kerrigan_abilities if item not in kerrigan_ultimates
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_LOGIC_ULTIMATES] = kerrigan_logic_ultimates = [
     item for item in kerrigan_ultimates if item != item_names.KERRIGAN_ASSIMILATION_AURA
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_NON_ULTIMATE_ACTIVE_ABILITIES] = kerrigan_non_ulimate_active_abilities = [
-    item for item in kerrigan_non_ulimates if item in kerrigan_active_abilities
+    item for item in kerrigan_non_ultimates if item in kerrigan_active_abilities
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_HOTS_ABILITIES] = kerrigan_hots_abilities = [
     ability for tiers in [

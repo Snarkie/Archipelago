@@ -2,7 +2,7 @@ from math import floor
 from typing import TYPE_CHECKING, Set, Optional, Callable, Dict, Tuple, Iterable
 
 from BaseClasses import CollectionState, Location
-from .item.item_groups import kerrigan_non_ulimates
+from .item.item_groups import kerrigan_non_ultimates
 from .item.item_names import PROGRESSIVE_PROTOSS_AIR_WEAPON, PROGRESSIVE_PROTOSS_AIR_ARMOR, PROGRESSIVE_PROTOSS_SHIELDS
 from .options import (
     RequiredTactics,
@@ -1128,7 +1128,7 @@ class SC2Logic:
                 item_names.ROACH_CORPSER_STRAIN,
         ), self.player)
 
-    def kerrigan_levels(self, state: CollectionState, target: int, story_levels_available=True) -> bool:
+    def kerrigan_levels(self, state: CollectionState, target: int, story_levels_available: bool = True) -> bool:
         if (story_levels_available or self.kerrigan_levels_granted):
             return True  # Levels are granted
         if (
@@ -1155,37 +1155,34 @@ class SC2Logic:
         return levels >= target
     
     def get_hero_flag(self, mission: SC2Mission) -> HeroFlag:
-        if (mission.campaign in self.hero_presence and mission.race in self.hero_presence[mission.campaign]):
-            return self.hero_presence[mission.campaign][mission.race]
-        else:
-            return HeroFlag.NONE
+        return self.hero_presence.get(mission.campaign, {}).get(mission.race, HeroFlag.NONE)
 
     def active_hero(self, state: CollectionState, mission: SC2Mission) -> bool:
         return self.get_hero_flag(mission) != HeroFlag.NONE
 
-    def basic_hero(self, state: CollectionState, mission: SC2Mission, story_tech_available=True) -> bool:
+    def basic_hero(self, state: CollectionState, mission: SC2Mission, story_tech_available: bool = True) -> bool:
         presence = self.get_hero_flag(mission)
         return ((HeroFlag.KERRIGAN in presence and self.basic_kerrigan(state, story_tech_available))
             or (HeroFlag.NOVA in presence and self.nova_any_nobuild_damage(state))
             or (HeroFlag.ARTANIS in presence and self.basic_artanis(state, story_tech_available)))
 
-    def basic_or_no_hero(self, state: CollectionState, mission: SC2Mission, story_tech_available=True) -> bool:
+    def basic_or_no_hero(self, state: CollectionState, mission: SC2Mission, story_tech_available: bool = True) -> bool:
         presence = self.get_hero_flag(mission)
         return (presence == HeroFlag.NONE
             or self.basic_hero(state, mission, story_tech_available))
 
 
-    def basic_nova(self, state: CollectionState, mission: SC2Mission, story_tech_available=True) -> bool:
-        # Seperate check for Nova. Unlike Kerrigan and Artanis, Nova has no baseline attack
+    def basic_nova(self, state: CollectionState, mission: SC2Mission, story_tech_available: bool = True) -> bool:
+        # Separate check for Nova. Unlike Kerrigan and Artanis, Nova has no baseline attack
         presence = self.get_hero_flag(mission)
         return HeroFlag.NOVA in presence and self.nova_any_nobuild_damage(state)
 
-    def basic_or_no_nova(self, state: CollectionState, mission: SC2Mission, story_tech_available=True) -> bool:
+    def basic_or_no_nova(self, state: CollectionState, mission: SC2Mission, story_tech_available: bool = True) -> bool:
         presence = self.get_hero_flag(mission)
         return (HeroFlag.NOVA not in presence
                 or (HeroFlag.NOVA in presence and self.nova_any_nobuild_damage(state)))
 
-    def basic_kerrigan(self, state: CollectionState, story_tech_available=True) -> bool:
+    def basic_kerrigan(self, state: CollectionState, story_tech_available: bool = True) -> bool:
         if (story_tech_available or self.kerrigan_items_granted):
             return True
         # One active ability that can be used to defeat enemies directly
@@ -1202,26 +1199,20 @@ class SC2Logic:
             return False
         # Two non-ultimate abilities
         count = 0
-        for item in kerrigan_non_ulimates:
+        for item in kerrigan_non_ultimates:
             if state.has(item, self.player):
                 count += 1
             if count >= 2:
                 return True
         return False
 
-    def basic_artanis(self, state: CollectionState, story_tech_available=True) -> bool:
+    def basic_artanis(self, state: CollectionState, story_tech_available: bool = True) -> bool:
         return True # TODO (Snarky): Revisit once Artanis is implemented
 
-    def two_kerrigan_actives(self, state: CollectionState, story_tech_available=True) -> bool:
+    def two_kerrigan_actives(self, state: CollectionState, story_tech_available: bool = True) -> bool:
         if story_tech_available or self.kerrigan_items_granted:
             return True
         return state.count_from_list(item_groups.kerrigan_logic_active_abilities, self.player) >= 2
-    
-    def kerrigan_mobility(self, state: CollectionState) -> bool:
-        return state.has_any ((
-            item_names.KERRIGAN_LEAPING_STRIKE,
-            item_names.KERRIGAN_PSIONIC_SHIFT,
-        ), self.player)
 
     def competent_hero(self, state: CollectionState, mission: SC2Mission) -> bool:
         presence = self.get_hero_flag(mission)
@@ -1248,7 +1239,6 @@ class SC2Logic:
     def competent_kerrigan(self, state: CollectionState) -> bool:
         return (
             self.basic_kerrigan(state, False)
-            and self.kerrigan_mobility(state)
             and state.count_from_list(item_groups.kerrigan_logic_active_abilities, self.player) >= 2
             and state.count_from_list(item_groups.kerrigan_passives, self.player) >= 1
             and state.count_from_list(item_groups.kerrigan_logic_ultimates, self.player) >= 1
@@ -4084,7 +4074,6 @@ class SC2Logic:
                 item_names.ROACH,
                 item_names.HYDRALISK,
                 item_names.SWARM_QUEEN,
-                # item_names.INFESTED_MARINE, 
                 item_names.INFESTED_DIAMONDBACK,
                 item_names.INFESTED_SIEGE_TANK,
             ), self.player)
@@ -4214,7 +4203,6 @@ class SC2Logic:
     def enemy_intelligence_kerrigan(self, state: CollectionState) -> bool:
         return (
             self.two_kerrigan_actives(state)
-            and self.kerrigan_mobility(state)
         )
     
     def enemy_intelligence_artanis(self, state: CollectionState) -> bool:
@@ -4294,7 +4282,7 @@ class SC2Logic:
                 and self.terran_power_rating(state) >= 3
             )
         else:
-            return (                
+            return (
                 self.terran_beats_protoss_deathball(state)
                 # TODO: revisit defense ratings
                 and self.terran_defense_rating(state, True, True) >= 5

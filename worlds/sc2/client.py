@@ -838,16 +838,16 @@ class SC2Context(CommonContext):
             result[lookup_id_to_campaign[int(campaign)]][lookup_id_to_race[int(race)]] = int(value)
         return result
 
-    def default_hero_presence(self, kerrigan_present: bool=True) -> dict[SC2Campaign, dict[SC2Race, int]] :
+    def default_hero_presence(self, kerrigan_present: bool = True) -> dict[SC2Campaign, dict[SC2Race, int]]:
         if kerrigan_present: 
             return {
-                SC2Campaign.HOTS: {SC2Race.ZERG : HeroFlag.KERRIGAN.value},
-                SC2Campaign.NCO: {SC2Race.TERRAN : HeroFlag.NOVA.value},
+                SC2Campaign.HOTS: {SC2Race.ZERG: HeroFlag.KERRIGAN.value},
+                SC2Campaign.NCO: {SC2Race.TERRAN: HeroFlag.NOVA.value},
             }
         else:
             return {
                 # only used by compat code
-                SC2Campaign.NCO: {SC2Race.TERRAN : HeroFlag.NOVA.value},
+                SC2Campaign.NCO: {SC2Race.TERRAN: HeroFlag.NOVA.value},
             }
 
 

@@ -880,7 +880,6 @@ class HeroPresence(Choice):
     Same Race: Kerrigan in every Zerg Mission, Nova in every Terran Mission, Artanis in every Protoss Mission
     Original Race: Kerrigan in every HotS Mission, Nova in every WoL and NCO Mission, Artanis in every LotV Mission
     Anywhere: Every enabled Hero in all Missions
-    
     """
     display_name = "Hero Presence"
     option_vanilla = 1
