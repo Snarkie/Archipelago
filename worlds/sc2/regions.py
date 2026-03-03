@@ -90,8 +90,8 @@ def adjust_mission_pools(world: 'SC2World', pools: SC2MOGenMissionPools) -> None
     grant_story_levels = world.options.grant_story_levels.value
     war_council_nerfs = world.options.war_council_nerfs.value == WarCouncilNerfs.option_true
     assert world.logic
-    kerrigan_items_granted = world.logic.kerrigan_items_granted
-    nova_items_granted = world.logic.nova_items_granted
+    kerrigan_items_granted = grant_story_tech  # TODO (Snarky): revisit when handling NCO-only generation
+    nova_items_granted = grant_story_tech
     # General changes for standard tactics
     if world.options.required_tactics.value == RequiredTactics.option_standard:
         pools.move_mission(SC2Mission.SMASH_AND_GRAB, Difficulty.STARTER, Difficulty.EASY)
