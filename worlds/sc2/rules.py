@@ -4207,7 +4207,7 @@ class SC2Logic:
     
     def enemy_intelligence_kerrigan(self, state: CollectionState) -> bool:
         return (
-            self.two_kerrigan_actives(state)
+            self.two_kerrigan_solo_actives(state)
         )
     
     def enemy_intelligence_artanis(self, state: CollectionState) -> bool:
