@@ -135,8 +135,9 @@ parent_present[parent_names.TERRAN_MERCENARIES] = AnyOf(item_groups.terran_merce
 
 # Zerg
 parent_present[parent_names.ANY_NYDUS_WORM] = AnyOf((item_names.NYDUS_WORM, item_names.ECHIDNA_WORM), item_names.NYDUS_WORM)
+parent_present[parent_names.SCOURGE_SOURCE] = AnyOf((item_names.SCOURGE, item_names.SPAWN_SCOURGE), item_names.SCOURGE)
 parent_present[parent_names.BANELING_SOURCE] = AnyOf(
-    (item_names.BANELING, item_names.KERRIGAN_SPAWN_BANELINGS),
+    (item_names.BANELING, item_names.KERRIGAN_SPAWN_BANELINGS, item_names.SPAWN_BANELINGS),
     item_names.BANELING,
 )
 parent_present[parent_names.HIVE_QUEEN_OR_SWARM_QUEEN] = AnyOf((item_names.HIVE_QUEEN, item_names.SWARM_QUEEN), main_item=item_names.SWARM_QUEEN)
@@ -161,6 +162,9 @@ parent_present[parent_names.ZERG_OUROBOUROS_CONDITION] = AnyOfGroupAndOneOtherIt
     (item_names.ZERGLING, item_names.ROACH, item_names.HYDRALISK, item_names.ABERRATION),
     item_names.ECHIDNA_WORM
 )
+parent_present[parent_names.MORPH_FROM_HYDRALISK] = AnyOf((item_names.LURKER, item_names.IMPALER), item_names.LURKER)
+parent_present[parent_names.MORPH_GREATER_SPIRE] = AnyOf(
+    (item_names.BROOD_LORD, item_names.GUARDIAN, item_names.DEVOURER, item_names.VIPER), item_names.BROOD_LORD)
 
 # Protoss
 parent_present[parent_names.ARCHON_SOURCE] = AnyOf(

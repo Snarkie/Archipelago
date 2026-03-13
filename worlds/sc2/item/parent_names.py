@@ -21,6 +21,7 @@ TERRAN_MERCENARIES = "Terran Mercenaries"
 # Zerg
 ANY_NYDUS_WORM = "Any Nydus Worm"
 BANELING_SOURCE = "Any Baneling Source"  # Baneling aspect | Kerrigan Spawn Banelings
+SCOURGE_SOURCE = "Any Scourge Source"  # Scouuge | Spawn Scourge
 HIVE_QUEEN_OR_SWARM_QUEEN = "Hive Queen | Swarm Queen"
 INFESTED_UNITS = "Infested Units"
 INFESTED_FACTORY_OR_STARPORT = "Infested Factory or Starport"
@@ -29,6 +30,8 @@ MORPH_SOURCE_ROACH = "Roach Morph Source"  # Morphling | Roach
 MORPH_SOURCE_ZERGLING = "Zergling Morph Source"  # Morphling | Zergling
 MORPH_SOURCE_HYDRALISK = "Hydralisk Morph Source"  # Morphling | Hydralisk
 MORPH_SOURCE_ULTRALISK = "Ultralisk Morph Source"  # Morphling | Ultralisk
+MORPH_FROM_HYDRALISK = "Lurker | Impaler"
+MORPH_GREATER_SPIRE = "Brood Lord | Guardian | Devourer | Viper"
 ZERG_UPROOTABLE_BUILDINGS = "Zerg Uprootable Buildings"
 ZERG_MELEE_ATTACKER = "Zerg Melee Attacker"
 ZERG_MISSILE_ATTACKER = "Zerg Missile Attacker"
