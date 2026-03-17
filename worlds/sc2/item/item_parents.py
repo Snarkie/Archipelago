@@ -141,7 +141,7 @@ parent_present[parent_names.BANELING_SOURCE] = AnyOf(
     item_names.BANELING,
 )
 parent_present[parent_names.CREEP_TUMOR_SOURCE] = AnyOf(
-    (item_names.SWARM_QUEEN, item_names.OVERSEER, item_names.ECHIDNA_WURM),
+    (item_names.SWARM_QUEEN, item_names.OVERSEER, item_names.ECHIDNA_WORM),
     item_names.SWARM_QUEEN,
 )
 parent_present[parent_names.HIVE_QUEEN_OR_SWARM_QUEEN] = AnyOf((item_names.HIVE_QUEEN, item_names.SWARM_QUEEN), main_item=item_names.SWARM_QUEEN)
