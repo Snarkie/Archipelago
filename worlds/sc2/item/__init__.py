@@ -136,6 +136,7 @@ class FactionlessItemType(ItemTypeEnum):
     MaxSupplyTrap = "Max Supply Trap", 7
     ResearchSpeed = "Research Speed", 8
     ResearchCost = "Research Cost", 9
+    GhostSpawnTrap = "Ghost Spawn Trap", 10
     Keys = "Keys", -1
 
 

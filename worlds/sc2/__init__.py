@@ -8,7 +8,7 @@ from BaseClasses import Item, MultiWorld, Location, Tutorial, ItemClassification
 from Options import Accessibility, OptionError
 from worlds.AutoWorld import WebWorld, World
 from . import location_groups
-from .item.item_groups import unreleased_items, war_council_upgrades
+from .item.item_groups import unreleased_items, war_council_upgrades, disabled_items
 from .item import (
     item_groups, item_names, item_tables, item_parents,
     FilterItem, ItemFilterFlags, StarcraftItem,
@@ -189,6 +189,7 @@ class SC2World(World):
         flag_start_inventory(self, item_list)
         flag_unused_upgrade_types(self, item_list)
         flag_unreleased_items(item_list)
+        flag_disabled_items(item_list)
         flag_war_council_items(self, item_list)
         flag_and_add_resource_locations(self, item_list)
         flag_mission_order_required_items(self, item_list)
@@ -1026,10 +1027,23 @@ def flag_unused_upgrade_types(world: SC2World, item_list: list[FilterItem]) -> N
                 elif ItemFilterFlags.UserExcluded not in item.flags:
                     upgrade_included_counts[item.name] = included + 1
 
+
 def flag_unreleased_items(item_list: list[FilterItem]) -> None:
     """Remove all unreleased items unless they're explicitly locked"""
     for item in item_list:
         if (item.name in unreleased_items
+            and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory) & item.flags
+        ):
+            item.flags |= ItemFilterFlags.Removed
+
+
+def flag_disabled_items(item_list: list[FilterItem]) -> None:
+    """
+    Remove all disabled items unless they're explicitly locked.
+    Will be affected by options in the future.
+    """
+    for item in item_list:
+        if (item.name in disabled_items
             and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory) & item.flags
         ):
             item.flags |= ItemFilterFlags.Removed

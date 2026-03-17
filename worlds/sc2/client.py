@@ -1740,8 +1740,8 @@ def is_mod_update_available(owner: str, repo: str, api_version: str, metadata: s
 
         else:
             sc2_logger.warning("Failed to reach GitHub while checking for updates.")
-            sc2_logger.warning(f"Status code: {r1.status_code}")
-            sc2_logger.warning(f"text: {r1.text}")
+            # sc2_logger.warning(f"Status code: {r1.status_code}")
+            # sc2_logger.warning(f"text: {r1.text}")
             return False
     except Exception as ex:
         sc2_logger.warning(f"Failed to reach GitHub while checking for updates.")

@@ -601,6 +601,16 @@ item_descriptions = {
     item_names.STARTING_SUPPLY: "Increases the starting supply for all missions.",
     item_names.NOTHING: "Does nothing. Used to remove a location from the game.",
     item_names.MAX_SUPPLY: "Increases the maximum supply cap for all missions.",
+    item_names.TRAP_GHOST_SPAWN: inspect.cleandoc("""
+        Trap Item.
+
+        Creates a Ghost Academy building for an enemy player.
+        The Ghost Academy periodically spawns Ghost attack waves,
+        which will be able to use Nuclear Strikes.
+        May use additional abilities, based on difficulty level.
+
+        Only works in build missions.
+    """),
     item_names.REDUCED_MAX_SUPPLY: "Trap Item. Decreases the maximum supply cap for all missions.",
     item_names.SHIELD_REGENERATION: "Increases shield regeneration of all own units.",
     item_names.BUILDING_CONSTRUCTION_SPEED: "Increases building construction speed.",

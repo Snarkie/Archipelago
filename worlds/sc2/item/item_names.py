@@ -1050,6 +1050,7 @@ UPGRADE_RESEARCH_SPEED      = "Increased Upgrade Research Speed"
 UPGRADE_RESEARCH_COST       = "Reduced Upgrade Research Cost"
 
 # Trap
+TRAP_GHOST_SPAWN            = "Ghost Spawn Trap"
 REDUCED_MAX_SUPPLY          = "Decreased Maximum Supply"
 NOTHING                     = "Nothing"
 

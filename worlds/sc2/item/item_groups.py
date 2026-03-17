@@ -211,6 +211,7 @@ class ItemGroupNames:
 
     VANILLA_ITEMS = "Vanilla Items"
     OVERPOWERED_ITEMS = "Overpowered Items"
+    DISABLED_ITEMS = "Disabled Items"
     UNRELEASED_ITEMS = "Unreleased Items"
     LEGACY_ITEMS = "Legacy Items"
 
@@ -1263,6 +1264,14 @@ item_name_groups[ItemGroupNames.OVERPOWERED_ITEMS] = overpowered_items = [
     item_names.SPECTRE_BARGAIN_BIN_PRICES,
     item_names.REAVER_BARGAIN_BIN_PRICES,
     item_names.SCOUT_SUPPLY_EFFICIENCY,
+]
+
+# Opt-In items that do not show up by default.
+# These items need to be explicitly added, either by certain options
+# or by putting them into locked items or start inventory
+item_name_groups[ItemGroupNames.DISABLED_ITEMS] = disabled_items = [
+    # Trap items
+    item_names.TRAP_GHOST_SPAWN,
 ]
 
 # Items not aimed to be officially released

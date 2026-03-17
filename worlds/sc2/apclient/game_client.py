@@ -390,12 +390,18 @@ class MissionClient:
             current_items[SC2Race.ANY][get_item_flag_word(item_names.UPGRADE_RESEARCH_COST)],
         ))
 
+    def get_trap_items(self, current_items: dict[SC2Race, list[int]]) -> str:
+        return ("{}".format(
+            current_items[SC2Race.ANY][get_item_flag_word(item_names.TRAP_GHOST_SPAWN)],
+        ))
+
     def update_tech(self, current_items: dict[SC2Race, list[int]], kerrigan_level: int) -> None | Error[str]:
         return banks.send_items(
             self.get_terran_tech(current_items),
             self.get_zerg_tech(current_items, kerrigan_level),
             self.get_protoss_tech(current_items),
-            self.get_misc_tech(current_items)
+            self.get_misc_tech(current_items),
+            self.get_trap_items(current_items),
         )
 
     def update_core_options(self, current_items: dict[SC2Race, list[int]]) -> None | Error[str]:

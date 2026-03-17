@@ -32,6 +32,7 @@ BANK_ITEMS_KEY_TERRAN_ITEMS = "TerranItems"
 BANK_ITEMS_KEY_ZERG_ITEMS = "ZergItems"
 BANK_ITEMS_KEY_PROTOSS_ITEMS = "ProtossItems"
 BANK_ITEMS_KEY_MISC_ITEMS = "MiscItems"
+BANK_ITEMS_KEY_TRAP_ITEMS = "TrapItems"
 
 # Messages
 BANK_MESSAGES_FILE_NAME = "ArchipelagoMessages" # .SC2Bank
@@ -265,7 +266,8 @@ def send_items(
     zerg_items: str,
     protoss_items: str,
     misc_items: str,
-) -> None | Error[str]:
+    trap_items: str,
+    ) -> None | Error[str]:
     bank = SC2Bank(BANK_ITEMS_FILE_NAME)
     bank.add_entry(
         BANK_ITEMS_SECTION_ITEMS,
@@ -286,6 +288,11 @@ def send_items(
         BANK_ITEMS_SECTION_ITEMS,
         BANK_ITEMS_KEY_MISC_ITEMS,
         misc_items
+    )
+    bank.add_entry(
+        BANK_ITEMS_SECTION_ITEMS,
+        BANK_ITEMS_KEY_TRAP_ITEMS,
+        trap_items
     )
     return bank.write_file()
 

@@ -1024,11 +1024,14 @@ item_table = {
         ItemData(808 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.ResearchCost, 1, SC2Race.ANY, quantity=0,
                  classification=ItemClassification.filler),
 
-    # Trap Filler
+    # Traps
     item_names.REDUCED_MAX_SUPPLY:
         ItemData(850 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.MaxSupplyTrap, -1, SC2Race.ANY, quantity=0,
                  classification=ItemClassification.trap),
 
+    item_names.TRAP_GHOST_SPAWN:
+        ItemData(851 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.GhostSpawnTrap, 0, SC2Race.ANY, quantity=5,
+                 classification=ItemClassification.trap),
 
     # Nova gear
     item_names.NOVA_GHOST_VISOR:
