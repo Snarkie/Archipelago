@@ -1772,8 +1772,8 @@ class SC2Logic:
                 item_names.ZEALOT_WHIRLWIND,
                 item_names.SENTRY_DOUBLE_SHIELD_RECHARGE,
                 item_names.SLAYER_PHASE_BLINK,
-                item_names.STALKER_INSTIGATOR_SLAYER_DISINTEGRATING_PARTICLES,
-                item_names.STALKER_INSTIGATOR_SLAYER_PARTICLE_REFLECTION,
+                item_names.STALKER_DISINTEGRATING_PARTICLES,
+                item_names.STALKER_PARTICLE_REFLECTION,
         ), self.player)
 
     # endregion Global Protoss
@@ -3438,8 +3438,8 @@ class SC2Logic:
             self.advanced_tactics
             or state.has_any((
                 item_names.STALKER_PHASE_REACTOR,
-                item_names.STALKER_INSTIGATOR_SLAYER_DISINTEGRATING_PARTICLES,
-                item_names.STALKER_INSTIGATOR_SLAYER_PARTICLE_REFLECTION,
+                item_names.STALKER_DISINTEGRATING_PARTICLES,
+                item_names.STALKER_PARTICLE_REFLECTION,
             ), self.player)
         )
 

@@ -844,7 +844,7 @@ def flag_allowed_orphan_items(world: SC2World, item_list: list[FilterItem]) -> N
                 item.flags &= ~ItemFilterFlags.FilterExcluded
     if SC2Mission.EVIL_AWOKEN in missions and world.options.required_tactics == RequiredTactics.option_standard:
         for item in item_list:
-            if item.name in (item_names.STALKER_PHASE_REACTOR, item_names.STALKER_INSTIGATOR_SLAYER_DISINTEGRATING_PARTICLES, item_names.STALKER_INSTIGATOR_SLAYER_PARTICLE_REFLECTION):
+            if item.name in (item_names.STALKER_PHASE_REACTOR, item_names.STALKER_DISINTEGRATING_PARTICLES, item_names.STALKER_PARTICLE_REFLECTION):
                 item.flags |= ItemFilterFlags.AllowedOrphan
 
 
