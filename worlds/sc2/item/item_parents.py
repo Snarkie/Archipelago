@@ -247,6 +247,23 @@ parent_present[parent_names.MOTHERSHIP] = AnyOf(
     (item_names.MOTHERSHIP_AIUR, item_names.MOTHERSHIP_PURIFIER, item_names.MOTHERSHIP_TALDARIM),
     main_item=item_names.MOTHERSHIP_TALDARIM,
 )
+parent_present[parent_names.FLEET_BEACON_UNITS] = AnyOf(
+    (item_names.CARRIER, item_names.SKYLORD, item_names.TRIREME, item_names.TEMPEST, item_names.ARBITER,
+    item_names.MOTHERSHIP_AIUR, item_names.MOTHERSHIP_PURIFIER, item_names.MOTHERSHIP_TALDARIM),
+    main_item=item_names.CARRIER,
+)
+parent_present[parent_names.ROBOTICS_BAY_UNITS] = AnyOf(
+    (item_names.COLOSSUS, item_names.WRATHWALKER, item_names.REAVER),
+    main_item=item_names.COLOSSUS,
+)
+parent_present[parent_names.TEMPLAR_ARCHIVE_UNITS] = AnyOf(
+    (item_names.HIGH_TEMPLAR, item_names.SIGNIFIER, item_names.ASCENDANT, item_names.DARK_ARCHON),
+    main_item=item_names.HIGH_TEMPLAR,
+)
+parent_present[parent_names.DARK_SHRINE_UNITS] = AnyOf(
+    (item_names.DARK_TEMPLAR, item_names.AVENGER, item_names.BLOOD_HUNTER),
+    main_item=item_names.DARK_TEMPLAR,
+)
 
 
 parent_id_to_children: Dict[str, Sequence[str]] = {}

@@ -61,3 +61,7 @@ PROTOSS_ATTACKING_BUILDING = "Protoss Attacking Structure"
 MOTHERSHIP = "Mothership Class"
 SCOUT_CLASS = "Scout Class"
 SCOUT_OR_OPPRESSOR_OR_MISTWING = "Scout | Oppressor | Mist Wing"
+FLEET_BEACON_UNITS = "Fleet Beacon Units" # Carrier | Skylord | Trireme | Tempest | Arbiter | Mothership
+ROBOTICS_BAY_UNITS = "Robotics Bay Units" # Colossus | Wrathwalker | Reaver
+TEMPLAR_ARCHIVE_UNITS = "Templar Archive Units" # High Templar | Signifier | Ascendant | Dark Archon
+DARK_SHRINE_UNITS = "Dark Shrine Units" # Dark Templar | Avenger | Blood Hunter

@@ -1815,8 +1815,8 @@ item_table = {
     item_names.ADEPT_SHOCKWAVE: ItemData(303 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 3, SC2Race.PROTOSS, parent=item_names.ADEPT),
     item_names.ADEPT_RESONATING_GLAIVES: ItemData(304 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 4, SC2Race.PROTOSS, classification=ItemClassification.progression, parent=item_names.ADEPT),
     item_names.ADEPT_PHASE_BULWARK: ItemData(305 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 5, SC2Race.PROTOSS, parent=item_names.ADEPT),
-    item_names.STALKER_INSTIGATOR_SLAYER_DISINTEGRATING_PARTICLES: ItemData(306 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 6, SC2Race.PROTOSS, classification=ItemClassification.progression, parent=parent_names.STALKER_CLASS),
-    item_names.STALKER_INSTIGATOR_SLAYER_PARTICLE_REFLECTION: ItemData(307 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 7, SC2Race.PROTOSS, classification=ItemClassification.progression, parent=parent_names.STALKER_CLASS),
+    item_names.STALKER_DISINTEGRATING_PARTICLES: ItemData(306 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 6, SC2Race.PROTOSS, classification=ItemClassification.progression, parent=item_names.STALKER),
+    item_names.STALKER_PARTICLE_REFLECTION: ItemData(307 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 7, SC2Race.PROTOSS, classification=ItemClassification.progression, parent=item_names.STALKER),
     item_names.DRAGOON_CONCENTRATED_ANTIMATTER: ItemData(308 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 8, SC2Race.PROTOSS, parent=item_names.DRAGOON),
     item_names.DRAGOON_TRILLIC_COMPRESSION_SYSTEM: ItemData(309 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 9, SC2Race.PROTOSS, parent=item_names.DRAGOON),
     item_names.DRAGOON_SINGULARITY_CHARGE: ItemData(310 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_1, 10, SC2Race.PROTOSS, parent=item_names.DRAGOON),
@@ -1891,8 +1891,8 @@ item_table = {
     item_names.ENERGIZER_FORGED_CHASSIS: ItemData(373 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 13, SC2Race.PROTOSS, parent=item_names.ENERGIZER),
     item_names.HAVOC_DETECT_WEAKNESS: ItemData(374 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 14, SC2Race.PROTOSS, parent=item_names.HAVOC),
     item_names.HAVOC_BLOODSHARD_RESONANCE: ItemData(375 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 15, SC2Race.PROTOSS, parent=item_names.HAVOC),
-    item_names.ZEALOT_SENTINEL_CENTURION_LEG_ENHANCEMENTS: ItemData(376 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 16, SC2Race.PROTOSS, parent=parent_names.ZEALOT_OR_SENTINEL_OR_CENTURION),
-    item_names.ZEALOT_SENTINEL_CENTURION_SHIELD_CAPACITY: ItemData(377 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 17, SC2Race.PROTOSS, classification=ItemClassification.progression_skip_balancing, parent=parent_names.ZEALOT_OR_SENTINEL_OR_CENTURION),
+    item_names.ZEALOT_LEG_ENHANCEMENTS: ItemData(376 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 16, SC2Race.PROTOSS, parent=item_names.ZEALOT),
+    item_names.ZEALOT_SHIELD_CAPACITY: ItemData(377 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 17, SC2Race.PROTOSS, classification=ItemClassification.progression_skip_balancing, parent=item_names.ZEALOT),
     item_names.ORACLE_BOSONIC_CORE: ItemData(378 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 18, SC2Race.PROTOSS, parent=item_names.ORACLE),
     item_names.SCOUT_RESOURCE_EFFICIENCY: ItemData(379 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 19, SC2Race.PROTOSS, parent=item_names.SCOUT),
     item_names.IMMORTAL_ANNIHILATOR_DISRUPTOR_DISPERSION: ItemData(380 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_3, 20, SC2Race.PROTOSS, parent=parent_names.IMMORTAL_OR_ANNIHILATOR),
@@ -1943,6 +1943,15 @@ item_table = {
     item_names.MOTHERSHIP_TALDARIM_BLOOD_FUSED_PARTICLES: ItemData(425 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 5, SC2Race.PROTOSS, parent=item_names.MOTHERSHIP_TALDARIM),
     item_names.ORACLE_SURFACE_STABILIZER: ItemData(426 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 6, SC2Race.PROTOSS, parent=item_names.ORACLE),
     item_names.TEMPEST_DISTRIBUTED_ATTACK: ItemData(427 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 7, SC2Race.PROTOSS, parent=item_names.TEMPEST),
+    item_names.CENTURION_VORAZUNS_TEACHINGS: ItemData(428 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 8, SC2Race.PROTOSS, parent=item_names.CENTURION),
+    item_names.CENTURION_QUANTUM_DODGE: ItemData(429 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 9, SC2Race.PROTOSS, parent=item_names.CENTURION),
+    item_names.SENTINEL_COMBAT_RECONSTRUCTION: ItemData(430 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 10, SC2Race.PROTOSS, parent=item_names.SENTINEL),
+    item_names.SENTINEL_ADANIUM_CASING: ItemData(431 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 11, SC2Race.PROTOSS, parent=item_names.SENTINEL),
+    item_names.SLAYER_NYON_OVERCHARGE: ItemData(432 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 12, SC2Race.PROTOSS, parent=item_names.SLAYER),
+    item_names.SLAYER_PHASE_ALIGNMENT: ItemData(433 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 13, SC2Race.PROTOSS, parent=item_names.SLAYER),
+    item_names.INSTIGATOR_IHAN_COIL: ItemData(434 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 14, SC2Race.PROTOSS, parent=item_names.INSTIGATOR),
+    item_names.STALWART_IMPROVED_BARRIER: ItemData(435 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 15, SC2Race.PROTOSS, parent=item_names.STALWART),
+    item_names.PROBE_NERAZIM_COATING: ItemData(436 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 16, SC2Race.PROTOSS),
 
 
     # War Council
@@ -2049,6 +2058,24 @@ item_table = {
         ItemData(814 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 13, SC2Race.PROTOSS, classification=ItemClassification.progression),
     item_names.ELDER_PROBES:
         ItemData(815 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 14, SC2Race.PROTOSS, classification=ItemClassification.progression),
+    item_names.PYLON_PSI_ENHANCEMENT: ItemData(816 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 15, SC2Race.PROTOSS),
+    item_names.NEXUS_KHAYDARIN_CORE: ItemData(817 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 16, SC2Race.PROTOSS),
+    item_names.OPERATIONAL_EFFICIENCY_FLEET_BEACON:
+        ItemData(818 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 17, SC2Race.PROTOSS, parent=parent_names.FLEET_BEACON_UNITS),
+    item_names.OPERATIONAL_EFFICIENCY_ROBOTICS_BAY:
+        ItemData(819 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 18, SC2Race.PROTOSS, parent=parent_names.ROBOTICS_BAY_UNITS),
+    item_names.OPERATIONAL_EFFICIENCY_TEMPLAR_ARCHIVE:
+        ItemData(820 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 19, SC2Race.PROTOSS, parent=parent_names.TEMPLAR_ARCHIVE_UNITS),
+    item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE:
+        ItemData(821 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 20, SC2Race.PROTOSS, parent=parent_names.DARK_SHRINE_UNITS),
+    item_names.OPERATIONAL_EFFICIENCY_PRODUCTION:
+        ItemData(822 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 21, SC2Race.PROTOSS),
+    item_names.WARP_HARMONIZATION_STARGATE:
+        ItemData(823 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 22, SC2Race.PROTOSS),
+    item_names.NEXUS_CHRONO_EFFICIENCY:
+        ItemData(824 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 23, SC2Race.PROTOSS),
+    item_names.PROTOSS_BUILDING_SHIELDS:
+        ItemData(825 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 24, SC2Race.PROTOSS),
 }
 
 # Add keys to item table

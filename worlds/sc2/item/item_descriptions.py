@@ -958,6 +958,7 @@ item_descriptions = {
     item_names.PHOTON_CANNON: "Protoss defensive structure. Can attack ground and air units.",
     item_names.KHAYDARIN_MONOLITH: "Advanced Protoss defensive structure. Has superior range and damage, but is very expensive and attacks slowly.",
     item_names.SHIELD_BATTERY: "Protoss defensive structure. Restores shields to nearby friendly units and structures.",
+    item_names.PROBE_NERAZIM_COATING: "Probes are permanently cloaked.",
     item_names.SUPPLICANT_BLOOD_SHIELD: "Increases the armor value of Supplicant shields.",
     item_names.SUPPLICANT_SOUL_AUGMENTATION: "Increases Supplicant max shields by +25.",
     item_names.SUPPLICANT_ENDLESS_SERVITUDE: "Increases Supplicant shield regeneration rate.",
@@ -965,8 +966,8 @@ item_descriptions = {
     item_names.ADEPT_SHOCKWAVE: "When Adepts deal a finishing blow, their projectiles can jump onto 2 additional targets.",
     item_names.ADEPT_RESONATING_GLAIVES: "Increases Adept attack speed.",
     item_names.ADEPT_PHASE_BULWARK: "Increases Adept shield maximum by +50.",
-    item_names.STALKER_INSTIGATOR_SLAYER_DISINTEGRATING_PARTICLES: "Increases weapon damage of Stalkers, Instigators, and Slayers.",
-    item_names.STALKER_INSTIGATOR_SLAYER_PARTICLE_REFLECTION: "Attacks fired by Stalkers, Instigators, and Slayers have a chance to bounce to additional targets for reduced damage.",
+    item_names.STALKER_DISINTEGRATING_PARTICLES: "Increases weapon damage of Stalkers.",
+    item_names.STALKER_PARTICLE_REFLECTION: "Attacks fired by Stalkers have a chance to bounce to additional targets for reduced damage.",
     item_names.INSTIGATOR_BLINK_OVERDRIVE: "Instigators gain +2 maximum blink charges and +1 blink range.",
     item_names.INSTIGATOR_RECONSTRUCTION: "Instigators gain the Reconstruction ability, allowing them to be reconstructed on death with a 240 seconds cooldown. Using Blink reduces the cooldown.",
     item_names.DRAGOON_CONCENTRATED_ANTIMATTER: "Dragoons deal increased damage.",
@@ -1052,6 +1053,7 @@ item_descriptions = {
     item_names.STALWART_REINTEGRATED_FRAMEWORK: "Increases the movement speed of Stalwarts.",
     item_names.STALWART_STABILIZED_ELECTRODES: "Allows Stalwarts to attack while moving, and increases attack range by +1.",
     item_names.STALWART_LATTICED_SHIELDING: "Increases Stalwart max shields by +50.",
+    item_names.STALWART_IMPROVED_BARRIER: "Hardened Shields reduce damage to 5.",
     item_names.DISRUPTOR_CLOAKING_MODULE: "Disruptors are permanently cloaked.",
     item_names.DISRUPTOR_PERFECTED_POWER: "Allows Purification Nova to hit air units. Bonus damage to shields is now baseline for enemies (friendly damage unaffected).",
     item_names.DISRUPTOR_RESTRAINED_DESTRUCTION: "Purification Nova does 50% reduced damage to friendly units and structures.",
@@ -1087,18 +1089,33 @@ item_descriptions = {
     item_names.ENERGIZER_FORGED_CHASSIS: "Increases Energizer Life by +20.",
     item_names.HAVOC_DETECT_WEAKNESS: "Havocs' Target Lock gives an additional +15% damage bonus.",
     item_names.HAVOC_BLOODSHARD_RESONANCE: "Havocs gain increased range for Squad Sight, Target Lock, and Force Field.",
-    item_names.ZEALOT_SENTINEL_CENTURION_LEG_ENHANCEMENTS: "Zealots, Sentinels, and Centurions gain increased movement speed.",
-    item_names.ZEALOT_SENTINEL_CENTURION_SHIELD_CAPACITY: "Zealots, Sentinels, and Centurions gain +30 maximum shields.",
+    item_names.ZEALOT_LEG_ENHANCEMENTS: "Zealots gain increased movement speed.",
+    item_names.ZEALOT_SHIELD_CAPACITY: "Zealots gain +30 maximum shields. Additionally, they gain +2 shield armor while using Whirlwind.",
     item_names.ZEALOT_WHIRLWIND: "Zealot War Council ability.\nGives Zealots the whirlwind ability, dealing damage in an area over 3 seconds.",
     item_names.CENTURION_RESOURCE_EFFICIENCY: "Centurion War Council upgrade.\n" + _get_resource_efficiency_desc(
         item_names.CENTURION),
+    item_names.CENTURION_VORAZUNS_TEACHINGS: "After using Darkcoil, Centurions stay cloaked for an additional 5 seconds.",
+    item_names.CENTURION_QUANTUM_DODGE: "Centurions gain 25% chance to dodge any damage.",
     item_names.SENTINEL_RESOURCE_EFFICIENCY: "Sentinel War Council upgrade.\n" + _get_resource_efficiency_desc(
         item_names.SENTINEL),
+    item_names.SENTINEL_COMBAT_RECONSTRUCTION: "Attacking an enemy restores 1 second of Reconstruction cooldown.\nCannot occur more than once per second.",
+    item_names.SENTINEL_ADANIUM_CASING: "Sentinels gain +30 maximum life and +1 armor.",
     item_names.STALKER_PHASE_REACTOR: "Stalker War Council upgrade.\nStalkers restore 80 shields over 5 seconds after they Blink.",
     item_names.DRAGOON_PHALANX_SUIT: "Dragoon War Council upgrade.\nDragoons gain +1 range, move slightly faster, and can form tighter formations.",
     item_names.INSTIGATOR_MODERNIZED_SERVOS: "Instigator War Council upgrade.\nInstigators move 28% faster.",
+    item_names.INSTIGATOR_IHAN_COIL: "Whenever the Instigator uses Blink, it will fire an additional Particle Disruptor shot at enemies in front of it.",
     item_names.ADEPT_DISRUPTIVE_TRANSFER: "Adept War Council upgrade.\nAdept shades apply a debuff to enemies they touch, increasing damage taken by +5.",
-    item_names.SLAYER_PHASE_BLINK: "Slayer War Council ability.\nSlayers can now blink. After blinking, the Slayer's next attack within 8 seconds deals double damage.",
+    item_names.SLAYER_PHASE_BLINK: inspect.cleandoc("""
+        Slayer War Council ability.
+        Slayers can now blink. After blinking, the Slayer's next attack within 8 seconds is overcharged.
+        Overcharged attacks deal double damage.
+    """),
+    item_names.SLAYER_NYON_OVERCHARGE: inspect.cleandoc("""
+        Slayers gain an overcharged attack every 14 seconds.
+        Overcharged attacks deal double damage.
+        Additionally causes all overcharged attacks to deal damage in a small area.
+    """),
+    item_names.SLAYER_PHASE_ALIGNMENT: "Reduces Phasing Armor cooldown by 1 second.",
     item_names.AVENGER_KRYHAS_CLOAK: "Avenger War Council upgrade.\nAvengers are now permanently cloaked.",
     item_names.DARK_TEMPLAR_LESSER_SHADOW_FURY: "Dark Templar War Council ability.\nDark Templar gain two strikes of their Shadow Fury ability.",
     item_names.DARK_TEMPLAR_GREATER_SHADOW_FURY: "Dark Templar War Council ability.\nDark Templar gain three strikes of their Shadow Fury ability.",
@@ -1164,7 +1181,8 @@ item_descriptions = {
     item_names.QUATRO: "All friendly Protoss units gain the equivalent of their +1 armor, attack, and shield upgrades.",
     item_names.NEXUS_OVERCHARGE: "The Protoss Nexus gains a long-range auto-attack.",
     item_names.ORBITAL_ASSIMILATORS: "Assimilators automatically harvest Vespene Gas without the need for Probes.",
-    item_names.WARP_HARMONIZATION: "Stargates and Robotics Facilities can transform to utilize Warp In technology. Warp In cooldowns are 20% faster than original build times.",
+    item_names.WARP_HARMONIZATION: "Robotics Facilities can transform to utilize Warp In technology. Warp In cooldowns are 20% faster than original build times.",
+    item_names.WARP_HARMONIZATION_STARGATE: "Stargates can transform to utilize Warp In technology. Warp In cooldowns are 20% faster than original build times.",
     item_names.GUARDIAN_SHELL: "The Spear of Adun passively shields friendly Protoss units before death, making them invulnerable for 5 seconds. Each unit can only be shielded once every 60 seconds.",
     item_names.RECONSTRUCTION_BEAM: "The Spear of Adun will passively heal mechanical units for 5 and non-biological structures for 10 life per second. Up to 3 targets can be repaired at once.",
     item_names.OVERWATCH: "Once per second, the Spear of Adun will last-hit a damaged enemy unit that is below 50 health.",
@@ -1178,7 +1196,16 @@ item_descriptions = {
         Level 2: No longer consumes or requires charges.
     """),
     item_names.PROBE_WARPIN: "You can warp in additonal Probes from your Nexus to any visible location within a Pylon's power field. Has a 30 second cooldown and can store up to 2 charges.",
-    item_names.ELDER_PROBES: "You can warp in a group of 5 Elder Probes, tough builders from the Brood War. Elder Probes can provide a Power Field and get reconstructed on death. Can only be used once per mission.",
+    item_names.ELDER_PROBES: "You can warp in a group of 5 Elder Probes, tough builders from the Brood War.\nElder Probes can provide a Power Field and get reconstructed on death.\nCan only be used once per mission.",
+    item_names.PYLON_PSI_ENHANCEMENT: "Pylons provide 50% more supply and a larger power field.",
+    item_names.NEXUS_KHAYDARIN_CORE: "Each Nexus provides a power field.",
+    item_names.NEXUS_CHRONO_EFFICIENCY: "Doubles the effect of Nexus Chrono Boost.",
+    item_names.PROTOSS_BUILDING_SHIELDS: "Protoss structures gain +2 shield armor and can regenerate shield in combat.",
+    item_names.OPERATIONAL_EFFICIENCY_PRODUCTION: "Reduces the cost of Gateways by 50 minerals.\nReduces the cost of Robotics Facilities and Stargates by 50 vespene.",
+    item_names.OPERATIONAL_EFFICIENCY_FLEET_BEACON: "Removes the vespene cost and halves the mineral cost of Fleet Beacons.\nAlso allows building a Fleet Beacon without a Stargate.",
+    item_names.OPERATIONAL_EFFICIENCY_ROBOTICS_BAY: "Removes the vespene cost and halves the mineral cost of Robotics Bays.\nAlso allows building a Robotics Bay without a Robotics Facility.",
+    item_names.OPERATIONAL_EFFICIENCY_TEMPLAR_ARCHIVE: "Removes the vespene cost and halves the mineral cost of Templar Archives.\nAlso allows building a Templar Archive without a Gateway.",
+    item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE: "Removes the vespene cost and halves the mineral cost of Dark Shrines.\nAlso allows building a Dark Shrine without a Gateway.",
 }
 
 # Key descriptions
