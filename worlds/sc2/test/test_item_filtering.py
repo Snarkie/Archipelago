@@ -38,12 +38,14 @@ class ItemFilterTests(Sc2SetupTestBase):
     def test_excluding_one_item_of_multi_parent_doesnt_filter_children(self) -> None:
         world_options = {
             'locked_items': {
-                item_names.SENTINEL: 1,
-                item_names.CENTURION: 1,
+                item_names.DARK_TEMPLAR: 1,
+                item_names.AVENGER: 1,
             },
             'excluded_items': {
-                item_names.ZEALOT: 1,
+                item_names.BLOOD_HUNTER: 1,
                 # Exclude more items to make space
+                item_names.CENTURION: 1,
+                item_names.SENTINEL: 1,
                 item_names.WRATHWALKER: 1,
                 item_names.ENERGIZER: 1,
                 item_names.AVENGER: 1,
@@ -53,7 +55,7 @@ class ItemFilterTests(Sc2SetupTestBase):
                 item_names.DESTROYER: 1,
                 item_names.DAWNBRINGER: 1,
             },
-            'min_number_of_upgrades': 2,
+            'min_number_of_upgrades': 5,
             'required_tactics': 'standard',
             **self.ALL_CAMPAIGNS,
             'selected_races': {
@@ -65,17 +67,16 @@ class ItemFilterTests(Sc2SetupTestBase):
         self.generate_world(world_options)
         self.assertTrue(self.multiworld.itempool)
         itempool = [item.name for item in self.multiworld.itempool]
-        self.assertIn(item_names.ZEALOT_SENTINEL_CENTURION_SHIELD_CAPACITY, itempool)
-        self.assertIn(item_names.ZEALOT_SENTINEL_CENTURION_LEG_ENHANCEMENTS, itempool)
+        self.assertIn(item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE, itempool)
 
     def test_excluding_all_items_in_multiparent_excludes_child_items(self) -> None:
         world_options = {
             'excluded_items': {
-                item_names.ZEALOT: 1,
-                item_names.SENTINEL: 1,
-                item_names.CENTURION: 1,
+                item_names.DARK_TEMPLAR: 1,
+                item_names.AVENGER: 1,
+                item_names.BLOOD_HUNTER: 1,
             },
-            'min_number_of_upgrades': 2,
+            'min_number_of_upgrades': 5,
             'required_tactics': 'standard',
             **self.PROTOSS_CAMPAIGNS,
             'selected_races': {
@@ -86,6 +87,4 @@ class ItemFilterTests(Sc2SetupTestBase):
         self.generate_world(world_options)
         self.assertTrue(self.multiworld.itempool)
         itempool = [item.name for item in self.multiworld.itempool]
-        self.assertNotIn(item_names.ZEALOT_SENTINEL_CENTURION_SHIELD_CAPACITY, itempool)
-        self.assertNotIn(item_names.ZEALOT_SENTINEL_CENTURION_LEG_ENHANCEMENTS, itempool)
-
+        self.assertNotIn(item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE, itempool)
