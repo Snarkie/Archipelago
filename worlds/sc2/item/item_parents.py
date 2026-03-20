@@ -166,9 +166,9 @@ parent_present[parent_names.ZERG_OUROBOUROS_CONDITION] = AnyOfGroupAndOneOtherIt
     (item_names.ZERGLING, item_names.ROACH, item_names.HYDRALISK, item_names.ABERRATION),
     item_names.ECHIDNA_WORM
 )
-parent_present[parent_names.MORPH_FROM_HYDRALISK] = AnyOf((item_names.LURKER, item_names.IMPALER), item_names.LURKER)
+parent_present[parent_names.MORPH_FROM_HYDRALISK] = AnyOf((item_names.LURKER, item_names.IMPALER))
 parent_present[parent_names.MORPH_GREATER_SPIRE] = AnyOf(
-    (item_names.BROOD_LORD, item_names.GUARDIAN, item_names.DEVOURER, item_names.VIPER), item_names.BROOD_LORD)
+    (item_names.BROOD_LORD, item_names.GUARDIAN, item_names.DEVOURER, item_names.VIPER))
 
 # Protoss
 parent_present[parent_names.ARCHON_SOURCE] = AnyOf(
@@ -249,20 +249,16 @@ parent_present[parent_names.MOTHERSHIP] = AnyOf(
 )
 parent_present[parent_names.FLEET_BEACON_UNITS] = AnyOf(
     (item_names.CARRIER, item_names.SKYLORD, item_names.TRIREME, item_names.TEMPEST, item_names.ARBITER,
-    item_names.MOTHERSHIP_AIUR, item_names.MOTHERSHIP_PURIFIER, item_names.MOTHERSHIP_TALDARIM),
-    main_item=item_names.CARRIER,
+    item_names.MOTHERSHIP_AIUR, item_names.MOTHERSHIP_PURIFIER, item_names.MOTHERSHIP_TALDARIM)
 )
 parent_present[parent_names.ROBOTICS_BAY_UNITS] = AnyOf(
-    (item_names.COLOSSUS, item_names.WRATHWALKER, item_names.REAVER),
-    main_item=item_names.COLOSSUS,
+    (item_names.COLOSSUS, item_names.WRATHWALKER, item_names.REAVER)
 )
 parent_present[parent_names.TEMPLAR_ARCHIVE_UNITS] = AnyOf(
-    (item_names.HIGH_TEMPLAR, item_names.SIGNIFIER, item_names.ASCENDANT, item_names.DARK_ARCHON),
-    main_item=item_names.HIGH_TEMPLAR,
+    (item_names.HIGH_TEMPLAR, item_names.SIGNIFIER, item_names.ASCENDANT, item_names.DARK_ARCHON)
 )
 parent_present[parent_names.DARK_SHRINE_UNITS] = AnyOf(
-    (item_names.DARK_TEMPLAR, item_names.AVENGER, item_names.BLOOD_HUNTER),
-    main_item=item_names.DARK_TEMPLAR,
+    (item_names.DARK_TEMPLAR, item_names.AVENGER, item_names.BLOOD_HUNTER)
 )
 
 
