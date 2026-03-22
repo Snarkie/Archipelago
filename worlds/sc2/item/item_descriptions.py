@@ -1053,7 +1053,7 @@ item_descriptions = {
     item_names.STALWART_REINTEGRATED_FRAMEWORK: "Increases the movement speed of Stalwarts.",
     item_names.STALWART_STABILIZED_ELECTRODES: "Allows Stalwarts to attack while moving, and increases attack range by +1.",
     item_names.STALWART_LATTICED_SHIELDING: "Increases Stalwart max shields by +50.",
-    item_names.STALWART_IMPROVED_BARRIER: "Hardened Shields reduce damage to 5.",
+    item_names.STALWART_SOLARITE_SCREEN: "Hardened Shields reduce damage to 5.",
     item_names.DISRUPTOR_CLOAKING_MODULE: "Disruptors are permanently cloaked.",
     item_names.DISRUPTOR_PERFECTED_POWER: "Allows Purification Nova to hit air units. Bonus damage to shields is now baseline for enemies (friendly damage unaffected).",
     item_names.DISRUPTOR_RESTRAINED_DESTRUCTION: "Purification Nova does 50% reduced damage to friendly units and structures.",

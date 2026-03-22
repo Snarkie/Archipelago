@@ -1950,7 +1950,7 @@ item_table = {
     item_names.SLAYER_NYON_OVERCHARGE: ItemData(432 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 12, SC2Race.PROTOSS, parent=item_names.SLAYER),
     item_names.SLAYER_PHASE_ALIGNMENT: ItemData(433 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 13, SC2Race.PROTOSS, parent=item_names.SLAYER),
     item_names.INSTIGATOR_IHAN_COIL: ItemData(434 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 14, SC2Race.PROTOSS, parent=item_names.INSTIGATOR),
-    item_names.STALWART_IMPROVED_BARRIER: ItemData(435 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 15, SC2Race.PROTOSS, parent=item_names.STALWART),
+    item_names.STALWART_SOLARITE_SCREEN: ItemData(435 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 15, SC2Race.PROTOSS, parent=item_names.STALWART),
     item_names.PROBE_NERAZIM_COATING: ItemData(436 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_5, 16, SC2Race.PROTOSS),
 
 
