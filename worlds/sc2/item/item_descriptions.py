@@ -1094,11 +1094,11 @@ item_descriptions = {
     item_names.ZEALOT_WHIRLWIND: "Zealot War Council ability.\nGives Zealots the whirlwind ability, dealing damage in an area over 3 seconds.",
     item_names.CENTURION_RESOURCE_EFFICIENCY: "Centurion War Council upgrade.\n" + _get_resource_efficiency_desc(
         item_names.CENTURION),
-    item_names.CENTURION_VORAZUNS_TEACHINGS: "After using Darkcoil, Centurions stay cloaked for an additional 5 seconds.",
-    item_names.CENTURION_QUANTUM_DODGE: "Centurions gain 25% chance to dodge any damage.",
+    item_names.CENTURION_VORAZUNS_TEACHINGS: "Cloaks the Centurion for 5 seconds after using Darkcoil.",
+    item_names.CENTURION_QUANTUM_DODGE: "Centurions dodge every 4th instance of damage.",
     item_names.SENTINEL_RESOURCE_EFFICIENCY: "Sentinel War Council upgrade.\n" + _get_resource_efficiency_desc(
         item_names.SENTINEL),
-    item_names.SENTINEL_COMBAT_RECONSTRUCTION: "Attacking an enemy restores 1 second of Reconstruction cooldown.\nCannot occur more than once per second.",
+    item_names.SENTINEL_COMBAT_RECONSTRUCTION: "Attacking an enemy restores 1 second of Reconstruction cooldown.",
     item_names.SENTINEL_ADANIUM_CASING: "Sentinels gain +30 maximum life and +1 armor.",
     item_names.STALKER_PHASE_REACTOR: "Stalker War Council upgrade.\nStalkers restore 80 shields over 5 seconds after they Blink.",
     item_names.DRAGOON_PHALANX_SUIT: "Dragoon War Council upgrade.\nDragoons gain +1 range, move slightly faster, and can form tighter formations.",
@@ -1201,7 +1201,7 @@ item_descriptions = {
     item_names.NEXUS_KHAYDARIN_CORE: "Each Nexus provides a power field.",
     item_names.NEXUS_CHRONO_EFFICIENCY: "Doubles the effect of Nexus Chrono Boost.",
     item_names.PROTOSS_BUILDING_SHIELDS: "Protoss structures gain +2 shield armor and can regenerate shield in combat.",
-    item_names.OPERATIONAL_EFFICIENCY_PRODUCTION: "Reduces the cost of Gateways by 50 minerals.\nReduces the cost of Robotics Facilities and Stargates by 50 vespene.",
+    item_names.PRODUCTION_EFFICIENCY: "Reduces the cost of Gateways by 50 minerals.\nReduces the cost of Robotics Facilities and Stargates by 50 vespene.",
     item_names.OPERATIONAL_EFFICIENCY_FLEET_BEACON: "Removes the vespene cost and halves the mineral cost of Fleet Beacons.\nAlso allows building a Fleet Beacon without a Stargate.",
     item_names.OPERATIONAL_EFFICIENCY_ROBOTICS_BAY: "Removes the vespene cost and halves the mineral cost of Robotics Bays.\nAlso allows building a Robotics Bay without a Robotics Facility.",
     item_names.OPERATIONAL_EFFICIENCY_TEMPLAR_ARCHIVE: "Removes the vespene cost and halves the mineral cost of Templar Archives.\nAlso allows building a Templar Archive without a Gateway.",

@@ -2068,7 +2068,7 @@ item_table = {
         ItemData(820 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 19, SC2Race.PROTOSS, parent=parent_names.TEMPLAR_ARCHIVE_UNITS),
     item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE:
         ItemData(821 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 20, SC2Race.PROTOSS, parent=parent_names.DARK_SHRINE_UNITS),
-    item_names.OPERATIONAL_EFFICIENCY_PRODUCTION:
+    item_names.PRODUCTION_EFFICIENCY:
         ItemData(822 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 21, SC2Race.PROTOSS),
     item_names.WARP_HARMONIZATION_STARGATE:
         ItemData(823 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Solarite_Core, 22, SC2Race.PROTOSS),
