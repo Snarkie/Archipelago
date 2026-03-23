@@ -1099,7 +1099,7 @@ item_descriptions = {
     item_names.SENTINEL_RESOURCE_EFFICIENCY: "Sentinel War Council upgrade.\n" + _get_resource_efficiency_desc(
         item_names.SENTINEL),
     item_names.SENTINEL_COMBAT_RECONSTRUCTION: "Attacking an enemy restores 1 second of Reconstruction cooldown.",
-    item_names.SENTINEL_ADANIUM_CASING: "Sentinels gain +30 maximum life and +1 armor.",
+    item_names.SENTINEL_ADANIUM_CASING: "Sentinels gain +20 maximum life and +1 armor.",
     item_names.STALKER_PHASE_REACTOR: "Stalker War Council upgrade.\nStalkers restore 80 shields over 5 seconds after they Blink.",
     item_names.DRAGOON_PHALANX_SUIT: "Dragoon War Council upgrade.\nDragoons gain +1 range, move slightly faster, and can form tighter formations.",
     item_names.INSTIGATOR_MODERNIZED_SERVOS: "Instigator War Council upgrade.\nInstigators move 28% faster.",
