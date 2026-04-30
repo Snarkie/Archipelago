@@ -511,7 +511,7 @@ item_descriptions = {
     item_names.VIKING_AESIR_TURBINES: "Increases Viking movement speed by 55%.",
     item_names.MEDIVAC_RESOURCE_EFFICIENCY: _get_resource_efficiency_desc(item_names.MEDIVAC),
     item_names.EMPERORS_SHADOW_SOVEREIGN_TACTICAL_MISSILES: "Tactical Missile Strikes no longer need to be channeled.",
-    item_names.DOMINION_TROOPER_B2_HIGH_CAL_LMG: "Equipping the B-2 High-Cal LMG increases life points by 10 and damage by 2.",
+    item_names.DOMINION_TROOPER_B2_HIGH_CAL_LMG: "Equipping the B-2 High-Cal LMG increases life by 10 and damage by an additional 2.",
     item_names.DOMINION_TROOPER_HAILSTORM_LAUNCHER: "Allows the Troopers to arm with a more powerful weapon, especially effective against armored air units.",
     item_names.DOMINION_TROOPER_CPO7_SALAMANDER_FLAMETHROWER: "Allows the Troopers to arm with a more powerful weapon, especially effective against light ground units.",
     item_names.DOMINION_TROOPER_ADVANCED_ALLOYS: "Trooper weapons cost 20 fewer gas and now last for 5 minutes when dropped on death.",
