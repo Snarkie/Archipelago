@@ -159,8 +159,10 @@ item_descriptions = {
     item_names.CYCLONE: "Mobile assault vehicle. Can use Lock On to quickly fire while moving.",
     item_names.HERC: "Front-line infantry. Can use Grapple.",
     item_names.WARHOUND: "Anti-vehicle mech. Haywire missiles do bonus damage to mechanical units.",
-    item_names.DOMINION_TROOPER:
-        "General-purpose infantry. Can be outfitted with weapons for different combat situations.",
+    item_names.DOMINION_TROOPER: inspect.cleandoc("""
+        General-purpose infantry. Can be outfitted with a B-2 High-Cal LMG, effective against all units.
+        Can equip other weapons for different combat situations, if available.
+    """),
     item_names.PRIDE_OF_AUGUSTRGRAD: "Powerful Royal Guard warship.",
     item_names.SKY_FURY: inspect.cleandoc("""
         Durable Royal Guard support flyer. Loaded with strong anti-capital air missiles.
@@ -509,7 +511,7 @@ item_descriptions = {
     item_names.VIKING_AESIR_TURBINES: "Increases Viking movement speed by 55%.",
     item_names.MEDIVAC_RESOURCE_EFFICIENCY: _get_resource_efficiency_desc(item_names.MEDIVAC),
     item_names.EMPERORS_SHADOW_SOVEREIGN_TACTICAL_MISSILES: "Tactical Missile Strikes no longer need to be channeled.",
-    item_names.DOMINION_TROOPER_B2_HIGH_CAL_LMG: "Allows the Troopers to arm with a more powerful weapon, effective against all unit types.",
+    item_names.DOMINION_TROOPER_B2_HIGH_CAL_LMG: "Equipping the B-2 High-Cal LMG increases life points by 10 and damage by 2.",
     item_names.DOMINION_TROOPER_HAILSTORM_LAUNCHER: "Allows the Troopers to arm with a more powerful weapon, especially effective against armored air units.",
     item_names.DOMINION_TROOPER_CPO7_SALAMANDER_FLAMETHROWER: "Allows the Troopers to arm with a more powerful weapon, especially effective against light ground units.",
     item_names.DOMINION_TROOPER_ADVANCED_ALLOYS: "Trooper weapons cost 20 fewer gas and now last for 5 minutes when dropped on death.",
