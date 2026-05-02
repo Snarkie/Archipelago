@@ -1582,8 +1582,8 @@ class SC2Logic:
             state.has_any({item_names.STALKER, item_names.INSTIGATOR}, self.player)
             or state.has_all({item_names.SLAYER, item_names.SLAYER_PHASE_BLINK}, self.player)
             or (
-                state.has(item_names.DARK_TEMPLAR_AVENGER_BLOOD_HUNTER_BLINK, self.player)
-                and state.has_any({item_names.DARK_TEMPLAR, item_names.BLOOD_HUNTER, item_names.AVENGER}, self.player)
+                state.has(item_names.DARK_TEMPLAR_BLINK, self.player)
+                and state.has(item_names.DARK_TEMPLAR, self.player)
             )
         )
 
@@ -1822,7 +1822,7 @@ class SC2Logic:
             or (self.advanced_tactics and state.has(item_names.ARTANIS_TEMPERED_IN_TWILIGHT))
             or self.artanis_aspect_damage_boost(state)
         )
-    
+
     def artanis_any_defensive_upgrade(self, state: CollectionState) -> bool:
         return state.has_any(
             {
@@ -1831,21 +1831,21 @@ class SC2Logic:
                 item_names.ARTANIS_SHIELD_OVERLOAD,
             },
             self.player,
-        ) or self.advanced_tactics and state.has_any( 
+        ) or self.advanced_tactics and state.has_any(
             {
                 item_names.ARTANIS_RESURGENCE, #need to actively use revive to get value out of this
             },
             self.player
         )
 
-    
+
 
     def artanis_anti_air(self, state: CollectionState) -> bool:
         # Require a weapon on standard tactics, or an anti-air ability on advanced tactics
         return state.has(item_names.ARTANIS_PSIONIC_ASSAULT, self.player) \
             or (self.advanced_tactics and state.has_any({item_names.ARTANIS_VOLTAIC_SHOCK, item_names.ARTANIS_SHADOW_SLICE}, self.player))
 
- 
+
     # endregion Global Protoss
 
     # ###################################################################################################### #
@@ -2354,11 +2354,7 @@ class SC2Logic:
                         self.player,
                     )
                     or (
-                        state.has(item_names.DARK_TEMPLAR_AVENGER_BLOOD_HUNTER_BLINK, self.player)
-                        and (
-                            state.has_any((item_names.DARK_TEMPLAR, item_names.AVENGER), self.player)
-                            or state.has_all((item_names.BLOOD_HUNTER, item_names.BLOOD_HUNTER_BRUTAL_EFFICIENCY), self.player)
-                        )
+                        self.protoss_has_blink(state)
                     )
                 )
             )
