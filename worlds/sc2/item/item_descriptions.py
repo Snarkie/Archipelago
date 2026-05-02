@@ -1083,7 +1083,7 @@ item_descriptions = {
     item_names.AVENGER_STRATEGIC_RETREAT: "On Recall, Avengers grant armor and shield armor to nearby allied units.",
     item_names.AVENGER_ACCELERATED_WARP: "Avengers gain increased training and warp-in speed.",
     item_names.BLOOD_HUNTER_FROZEN_IN_AGONY: "Increases the duration of Void Stasis. The target can be attacked towards the end of the duration.\nAlso allows casting Void Stasis on air units.",
-    item_names.BLOOD_HUNTER_ESSENCE_DRAIN: "Blood Hunters recover life and shields over time on attacking,\nwhile a nearby enemy is affected by Void Stasis",
+    item_names.BLOOD_HUNTER_ESSENCE_DRAIN: "Blood Hunters recover life and shields over time on attacking,\nwhile a nearby enemy is affected by Void Stasis.",
     item_names.BLOOD_HUNTER_ALARAKS_CALL: "The first 5 Blood Hunters in a mission do not cost any vespene gas.",
     item_names.HIGH_TEMPLAR_SIGNIFIER_UNSHACKLED_PSIONIC_STORM: "High Templar and Signifiers deal increased damage with Psi Storm.",
     item_names.HIGH_TEMPLAR_SIGNIFIER_HALLUCINATION: _ability_desc("High Templar and Signifiers", "Hallucination", "creates 2 hallucinated copies of a target unit"),
