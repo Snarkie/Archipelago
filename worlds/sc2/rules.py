@@ -1445,7 +1445,7 @@ class SC2Logic:
             or state.has_all((item_names.WARP_PRISM, item_names.WARP_PRISM_PHASE_BLASTER), self.player)
             or state.has_all((item_names.WRATHWALKER, item_names.WRATHWALKER_AERIAL_TRACKING), self.player)
             or state.has_all((item_names.DISRUPTOR, item_names.DISRUPTOR_PERFECTED_POWER), self.player)
-            or state.has_all((item_names.IMMORTAL, item_names.IMMORTAL_ANNIHILATOR_ADVANCED_TARGETING), self.player)
+            or state.has_all((item_names.IMMORTAL, item_names.IMMORTAL_ADVANCED_TARGETING), self.player)
             or state.has_all((item_names.SKIRMISHER, item_names.SKIRMISHER_PEER_CONTEMPT), self.player)
             or (
                 state.has(item_names.DARK_TEMPLAR, self.player)
@@ -1495,8 +1495,12 @@ class SC2Logic:
             self.protoss_competent_anti_air(state)
             or state.has_any((item_names.SCOUT, item_names.MISTWING, item_names.DRAGOON), self.player)
             or (
-                state.has_any({item_names.IMMORTAL, item_names.ANNIHILATOR}, self.player)
-                and state.has(item_names.IMMORTAL_ANNIHILATOR_ADVANCED_TARGETING, self.player)
+                state.has(item_names.IMMORTAL, self.player)
+                and state.has(item_names.IMMORTAL_ADVANCED_TARGETING, self.player)
+            )
+            or (
+                state.has(item_names.ANNIHILATOR, self.player)
+                and state.has(item_names.ANNIHILATOR_ADVANCED_TARGETING, self.player)
             )
             or state.has_all({item_names.WRATHWALKER, item_names.WRATHWALKER_AERIAL_TRACKING}, self.player)
         )
@@ -1543,10 +1547,14 @@ class SC2Logic:
         )
 
     def protoss_competent_anti_air(self, state: CollectionState) -> bool:
-        aa_immortals = (
-            state.has_any((item_names.IMMORTAL, item_names.ANNIHILATOR), self.player)
-            and state.has(item_names.IMMORTAL_ANNIHILATOR_ADVANCED_TARGETING, self.player)
-        )
+        aa_immortals = ((
+                state.has(item_names.IMMORTAL, self.player)
+                and state.has(item_names.IMMORTAL_ADVANCED_TARGETING, self.player)
+            )
+            or (
+                state.has(item_names.ANNIHILATOR, self.player)
+                and state.has(item_names.ANNIHILATOR_ADVANCED_TARGETING, self.player)
+            ))
         return (
             state.has_any((
                 item_names.STALKER,

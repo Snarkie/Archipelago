@@ -334,7 +334,7 @@ item_name_groups[ItemGroupNames.TERRAN_ROYAL_GUARD_UNITS] = [
     item_names.SON_OF_KORHAL, item_names.FIELD_RESPONSE_THETA,
     item_names.AEGIS_GUARD, item_names.EMPERORS_SHADOW,
     # Elite Factory
-    item_names.BULWARK_COMPANY, 
+    item_names.BULWARK_COMPANY,
     item_names.SHOCK_DIVISION, item_names.BLACKHAMMER,
     # Elite Starport
     item_names.PRIDE_OF_AUGUSTRGRAD, item_names.SKY_FURY,
@@ -509,8 +509,8 @@ item_name_groups[ItemGroupNames.NCO_UNIT_TECHNOLOGY] = nco_unit_technology = [
     item_names.LIBERATOR_SMART_SERVOS,
     item_names.LIBERATOR_OPTIMIZED_LOGISTICS,
     # Liberators can't get laser targeting system in NCO
-    item_names.RAVEN_SPIDER_MINES, 
-    item_names.RAVEN_INTERNAL_TECH_MODULE, 
+    item_names.RAVEN_SPIDER_MINES,
+    item_names.RAVEN_INTERNAL_TECH_MODULE,
     item_names.RAVEN_RAILGUN_TURRET,        # Raven Magrail Munitions
     item_names.RAVEN_HUNTER_SEEKER_WEAPON,  # Raven Special Ordnance
     item_names.BATTLECRUISER_INTERNAL_TECH_MODULE,
@@ -1005,7 +1005,7 @@ item_name_groups[ItemGroupNames.PROTOSS_BUILDINGS] = protoss_buildings = [
 ]
 item_name_groups[ItemGroupNames.AIUR_UNITS] = [
     item_names.ZEALOT, item_names.DRAGOON, item_names.SENTRY, item_names.AVENGER, item_names.HIGH_TEMPLAR,
-    item_names.IMMORTAL, item_names.REAVER, item_names.MOTHERSHIP_AIUR, 
+    item_names.IMMORTAL, item_names.REAVER, item_names.MOTHERSHIP_AIUR,
     item_names.PHOENIX, item_names.SCOUT, item_names.ARBITER, item_names.CARRIER,
 ]
 item_name_groups[ItemGroupNames.NERAZIM_UNITS] = [
@@ -1254,7 +1254,6 @@ item_name_groups[ItemGroupNames.OVERPOWERED_ITEMS] = overpowered_items = [
     # Protoss general
     item_names.QUATRO,
     item_names.MOTHERSHIP_TALDARIM_INTEGRATED_POWER,
-    item_names.IMMORTAL_ANNIHILATOR_ADVANCED_TARGETING,
 
     # Mindless Broodwar garbage
     item_names.GHOST_BARGAIN_BIN_PRICES,
@@ -1284,7 +1283,7 @@ item_name_groups[ItemGroupNames.KEYS] = keys = [
 
 # ####################### #
 #   Internal-use groups   #
-# ####################### # 
+# ####################### #
 ENEMY_WITHIN_ZERG_STANDARD_UNITS = (
     item_names.ZERGLING, item_names.ROACH, item_names.HYDRALISK,
 )
