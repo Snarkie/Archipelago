@@ -1275,6 +1275,7 @@ item_name_groups[ItemGroupNames.UNRELEASED_ITEMS] = unreleased_items = [
 # Don't place here anything that's present in the vanilla campaigns (if it's overpowered, use overpowered items instead)
 item_name_groups[ItemGroupNames.LEGACY_ITEMS] = legacy_items = [
     item_names.ASCENDANT_ARCHON_MERGE,
+    item_names.IMMORTAL_ADVANCED_TARGETING,
 ]
 
 item_name_groups[ItemGroupNames.KEYS] = keys = [
