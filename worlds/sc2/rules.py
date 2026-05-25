@@ -555,7 +555,7 @@ class SC2Logic:
                 item_names.MARINE_MEDPACK,
                 item_names.MEDIC_STABILIZER_MEDPACKS,
             ), self.player)
-            or (state.has_all((item_names.MARINE_STIMPACK, item_names.MARINE_MEDPACK),self.player)
+            or (state.has_all((item_names.MARINE_STIMPACK, item_names.MARINE_MEDPACK), self.player)
                 and state.has_group("Missions", self.player, 1)
             )
             or (self.advanced_tactics
