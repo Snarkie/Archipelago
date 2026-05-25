@@ -765,6 +765,10 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
         if item_data.type.flag_word < 0:
             continue
 
+        if ctx.slot_data_version < 5:
+            if name in item_groups.item_name_groups[item_groups.ItemGroupNames.TERRAN_STIMPACKS]:
+                stimpack_count[name] = stimpack_count.get(name, 0) + 1
+
         # exists exactly once
         if item_data.quantity == 1 or name in item_groups.item_name_groups[item_groups.ItemGroupNames.UNRELEASED_ITEMS]:
             accumulators[item_data.race][item_data.type.flag_word] |= 1 << item_data.number
@@ -795,8 +799,6 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
         else:
             if name == item_names.PROGRESSIVE_ORBITAL_COMMAND:
                 orbital_command_count += 1
-            elif name in item_groups.item_name_groups[item_groups.ItemGroupNames.TERRAN_STIMPACKS]:
-                stimpack_count[name] = stimpack_count.get(name, 0) + 1
             elif item_data.type == ZergItemType.Level:
                 accumulators[item_data.race][item_data.type.flag_word] += item_data.number
             elif name == item_names.STARTING_MINERALS:
@@ -847,7 +849,10 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
     for name, count in stimpack_count:
         if count > 1:
             # stimpack level 2, grant medpack to upgrade to super stim
-            items.append(create_network_item(compat_stimpack_to_medpack[name]))
+            medpack_item_data: item.ItemData = item_list[compat_stimpack_to_medpack[name]]
+            accumulators[medpack_item_data.race][medpack_item_data.type.flag_word] |= (
+                1 << medpack_item_data.number
+            )
 
 
     # Upgrades from completed missions
