@@ -136,7 +136,7 @@ class MissionClient:
             f" {self.ctx.take_over_ai_allies}"
             f" {soa_options}"
             f" {self.ctx.mission_order}"
-            f" {nova_presence}" 
+            f" {nova_presence}"
             f" {self.ctx.grant_story_levels}"
             f" {self.ctx.enable_morphling}"
             f" {mission_variant}"
@@ -702,6 +702,14 @@ def compat_item_to_network_items(compat_item: CompatItemHolder) -> list[NetworkI
     network_item = NetworkItem(item_id, 0, 0, 0)
     return compat_item.quantity * [network_item]
 
+compat_stimpack_to_medpack: dict[str, str] = {
+    item_names.MARINE_STIMPACK: item_names.MARINE_MEDPACK,
+    item_names.MARAUDER_STIMPACK: item_names.MARAUDER_MEDPACK,
+    item_names.FIREBAT_STIMPACK: item_names.FIREBAT_MEDPACK,
+    item_names.REAPER_STIMPACK: item_names.REAPER_MEDPACK,
+    item_names.HELLION_STIMPACK: item_names.HELLION_MEDPACK,
+}
+
 
 # ################################################################################################ #
 #     Calculation helpers
@@ -735,6 +743,8 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
 
     # API < 4 Orbital Command Count (Deprecated item)
     orbital_command_count: int = 0
+    # API < 5 Stimpack Count (split into non-progressive)
+    stimpack_count: dict[str, int] = {}
 
     network_item: NetworkItem
     accumulators: dict[SC2Race, list[int]] = {
@@ -785,6 +795,8 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
         else:
             if name == item_names.PROGRESSIVE_ORBITAL_COMMAND:
                 orbital_command_count += 1
+            elif name in item_groups.item_name_groups[item_groups.ItemGroupNames.TERRAN_STIMPACKS]:
+                stimpack_count[name] = stimpack_count.get(name, 0) + 1
             elif item_data.type == ZergItemType.Level:
                 accumulators[item_data.race][item_data.type.flag_word] += item_data.number
             elif name == item_names.STARTING_MINERALS:
@@ -830,6 +842,13 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
                 planetary_orbital_module_data = item_tables.item_table[item_names.PLANETARY_FORTRESS_ORBITAL_MODULE]
                 accumulators[planetary_orbital_module_data.race][planetary_orbital_module_data.type.flag_word] += \
                     1 << planetary_orbital_module_data.number
+
+    # Progressive Stimpack handling (Backwards compatibility):
+    for name, count in stimpack_count:
+        if count > 1:
+            # stimpack level 2, grant medpack to upgrade to super stim
+            items.append(create_network_item(compat_stimpack_to_medpack[name]))
+
 
     # Upgrades from completed missions
     if ctx.generic_upgrade_missions > 0:
