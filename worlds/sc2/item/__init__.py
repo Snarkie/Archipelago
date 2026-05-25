@@ -122,7 +122,6 @@ class ProtossItemType(ItemTypeEnum):
     ShieldRegeneration = "Shield Regeneration Group", 14
     Artanis_Items = "Artanis Ability", 15
     Forge_6 = "Forge", 16
-    """General Protoss unit upgrades"""
 
 
 class FactionlessItemType(ItemTypeEnum):
