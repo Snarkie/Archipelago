@@ -400,7 +400,7 @@ item_name_groups[ItemGroupNames.WOL_UPGRADES] = wol_upgrades = [
     item_names.SCV_ADVANCED_CONSTRUCTION, item_names.SCV_DUAL_FUSION_WELDERS,
     item_names.PROGRESSIVE_FIRE_SUPPRESSION_SYSTEM, item_names.COMMAND_CENTER_MULE, item_names.COMMAND_CENTER_SCANNER_SWEEP,
     # Armory Infantry
-    item_names.MARINE_PROGRESSIVE_STIMPACK, item_names.MARINE_COMBAT_SHIELD,
+    item_names.MARINE_STIMPACK, item_names.MARINE_COMBAT_SHIELD,
     item_names.MEDIC_ADVANCED_MEDIC_FACILITIES, item_names.MEDIC_STABILIZER_MEDPACKS,
     item_names.FIREBAT_INCINERATOR_GAUNTLETS, item_names.FIREBAT_JUGGERNAUT_PLATING,
     item_names.MARAUDER_CONCUSSIVE_SHELLS, item_names.MARAUDER_KINETIC_FOAM,
@@ -433,15 +433,14 @@ item_name_groups[ItemGroupNames.WOL_UPGRADES] = wol_upgrades = [
     # Other level is units (Raven, Science Vessel)
 ]
 item_name_groups[ItemGroupNames.TERRAN_STIMPACKS] = terran_stimpacks = [
-    item_names.MARINE_PROGRESSIVE_STIMPACK,
-    item_names.MARAUDER_PROGRESSIVE_STIMPACK,
-    item_names.REAPER_PROGRESSIVE_STIMPACK,
-    item_names.FIREBAT_PROGRESSIVE_STIMPACK,
-    item_names.HELLION_PROGRESSIVE_STIMPACK,
+    item_names.MARINE_STIMPACK,
+    item_names.MARAUDER_STIMPACK,
+    item_names.REAPER_STIMPACK,
+    item_names.FIREBAT_STIMPACK,
+    item_names.HELLION_STIMPACK,
 ]
 item_name_groups[ItemGroupNames.TERRAN_ORIGINAL_PROGRESSIVE_UPGRADES] = terran_original_progressive_upgrades = [
     item_names.PROGRESSIVE_FIRE_SUPPRESSION_SYSTEM,
-    item_names.MARINE_PROGRESSIVE_STIMPACK,
     item_names.VULTURE_PROGRESSIVE_REPLENISHABLE_MAGAZINE,
     item_names.DIAMONDBACK_PROGRESSIVE_TRI_LITHIUM_POWER_CELL,
     item_names.WRAITH_PROGRESSIVE_TOMAHAWK_POWER_CELLS,
@@ -475,20 +474,20 @@ item_name_groups[ItemGroupNames.NCO_BASELINE_UPGRADES] = nco_baseline_upgrades =
 ] + nco_buildings
 item_name_groups[ItemGroupNames.NCO_UNIT_TECHNOLOGY] = nco_unit_technology = [
     item_names.MARINE_LASER_TARGETING_SYSTEM,
-    item_names.MARINE_PROGRESSIVE_STIMPACK,
+    item_names.MARINE_STIMPACK,
     item_names.MARINE_MAGRAIL_MUNITIONS,
     item_names.MARINE_OPTIMIZED_LOGISTICS,
     item_names.MARAUDER_LASER_TARGETING_SYSTEM,
     item_names.MARAUDER_INTERNAL_TECH_MODULE,
-    item_names.MARAUDER_PROGRESSIVE_STIMPACK,
+    item_names.MARAUDER_STIMPACK,
     item_names.MARAUDER_MAGRAIL_MUNITIONS,
     item_names.REAPER_SPIDER_MINES,
     item_names.REAPER_LASER_TARGETING_SYSTEM,
-    item_names.REAPER_PROGRESSIVE_STIMPACK,
+    item_names.REAPER_STIMPACK,
     item_names.REAPER_ADVANCED_CLOAKING_FIELD,
     # Reaper special ordnance gives anti-building attack, which is baseline in AP
     item_names.HELLION_JUMP_JETS,
-    item_names.HELLION_PROGRESSIVE_STIMPACK,
+    item_names.HELLION_STIMPACK,
     item_names.HELLION_SMART_SERVOS,
     item_names.HELLION_OPTIMIZED_LOGISTICS,
     item_names.HELLION_THERMITE_FILAMENTS,  # Called Infernal Pre-Igniter in NCO

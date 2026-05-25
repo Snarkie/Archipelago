@@ -52,19 +52,17 @@ class TestItemFiltering(Sc2SetupTestBase):
             'grant_story_tech': options.GrantStoryTech.option_grant,
             'excluded_items': {
                 item_groups.ItemGroupNames.NOVA_EQUIPMENT: -1,
-                item_names.MARINE_PROGRESSIVE_STIMPACK: 1,
-                item_names.MARAUDER_PROGRESSIVE_STIMPACK: 2,
-                item_names.FIREBAT_PROGRESSIVE_STIMPACK: -1,
-                item_names.MARINE: -1,
-                item_names.MARAUDER: -1,
-                item_names.FIREBAT: -1,
-                item_names.REAPER: 1,
+                item_names.VULTURE_PROGRESSIVE_REPLENISHABLE_MAGAZINE: 1,
+                item_names.DIAMONDBACK_PROGRESSIVE_TRI_LITHIUM_POWER_CELL: 2,
+                item_names.THOR_PROGRESSIVE_HIGH_IMPACT_PAYLOAD: -1,
+                item_names.VULTURE: -1,
                 item_names.DIAMONDBACK: -1,
-                item_names.HELLION: 1,
+                item_names.THOR: -1,
+                item_names.REAPER: 1,
+                item_names.MARINE: 1,
                 # Additional excludes to increase the likelihood that unexcluded items actually appear
                 item_groups.ItemGroupNames.STARPORT_UNITS: -1,
                 item_names.WARHOUND: -1,
-                item_names.VULTURE: -1,
                 item_names.WIDOW_MINE: -1,
                 item_names.THOR: -1,
                 item_names.GHOST: -1,
@@ -76,12 +74,12 @@ class TestItemFiltering(Sc2SetupTestBase):
                 item_names.NOVA_PLASMA_RIFLE: 1,       # Necessary to pass logic
                 item_names.NOVA_PULSE_GRENADES: -1,    # Necessary to pass logic
                 item_names.NOVA_JUMP_SUIT_MODULE: -1,  # Necessary to pass logic
-                item_groups.ItemGroupNames.BARRACKS_UNITS: -1,
+                item_groups.ItemGroupNames.FACTORY_UNITS: -1,
                 item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE: 2,
-                item_names.HELLION: 1,
-                item_names.MARINE_PROGRESSIVE_STIMPACK: 1,
-                item_names.MARAUDER_PROGRESSIVE_STIMPACK: -1,
-                item_names.FIREBAT_PROGRESSIVE_STIMPACK: 1,
+                item_names.MARINE: 1,
+                item_names.VULTURE_PROGRESSIVE_REPLENISHABLE_MAGAZINE: 1,
+                item_names.DIAMONDBACK_PROGRESSIVE_TRI_LITHIUM_POWER_CELL: -1,
+                item_names.THOR_PROGRESSIVE_HIGH_IMPACT_PAYLOAD: 1,
                 # Additional unexcludes for logic
                 item_names.MEDIVAC: -1,
                 item_names.BATTLECRUISER: -1,
@@ -96,15 +94,15 @@ class TestItemFiltering(Sc2SetupTestBase):
         self.generate_world(world_options)
         self.assertTrue(self.multiworld.itempool)
         itempool = [item.name for item in self.multiworld.itempool]
-        self.assertIn(item_names.MARINE, itempool)
-        self.assertIn(item_names.MARAUDER, itempool)
-        self.assertIn(item_names.REAPER, itempool)
+        self.assertIn(item_names.VULTURE, itempool)
+        self.assertIn(item_names.DIAMONDBACK, itempool)
+        self.assertIn(item_names.THOR, itempool)
         self.assertEqual(itempool.count(item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE), 2, "Stealth suit occurred the wrong number of times")
-        self.assertIn(item_names.HELLION, itempool)
-        self.assertEqual(itempool.count(item_names.MARINE_PROGRESSIVE_STIMPACK), 2, f"Marine stimpacks weren't unexcluded  (seed {self.multiworld.seed})")
-        self.assertEqual(itempool.count(item_names.MARAUDER_PROGRESSIVE_STIMPACK), 2, f"Marauder stimpacks weren't unexcluded (seed {self.multiworld.seed})")
-        self.assertEqual(itempool.count(item_names.FIREBAT_PROGRESSIVE_STIMPACK), 1, f"Firebat stimpacks occured the wrong number of times (seed {self.multiworld.seed})")
-        self.assertNotIn(item_names.DIAMONDBACK, itempool)
+        self.assertIn(item_names.MARINE, itempool)
+        self.assertEqual(itempool.count(item_names.VULTURE_PROGRESSIVE_REPLENISHABLE_MAGAZINE), 2, f"Vulture Magazine wasn't unexcluded  (seed {self.multiworld.seed})")
+        self.assertEqual(itempool.count(item_names.DIAMONDBACK_PROGRESSIVE_TRI_LITHIUM_POWER_CELL), 2, f"Diamondback Powercell wasn't unexcluded (seed {self.multiworld.seed})")
+        self.assertEqual(itempool.count(item_names.THOR_PROGRESSIVE_HIGH_IMPACT_PAYLOAD), 1, f"Thor Payload occured the wrong number of times (seed {self.multiworld.seed})")
+        self.assertNotIn(item_names.GHOST, itempool)
         self.assertNotIn(item_names.NOVA_BLAZEFIRE_GUNBLADE, itempool)
         self.assertNotIn(item_names.NOVA_ENERGY_SUIT_MODULE, itempool)
 
@@ -382,8 +380,8 @@ class TestItemFiltering(Sc2SetupTestBase):
         self.assertNotIn(item_names.MARAUDER_MAGRAIL_MUNITIONS, world_items)
         self.assertEqual(world_items.count(item_names.PROGRESSIVE_FIRE_SUPPRESSION_SYSTEM), 2)
         self.assertIn(item_names.WARHOUND, world_items)
-        self.assertIn(item_names.MARAUDER_PROGRESSIVE_STIMPACK, world_items)
-        self.assertIn(item_names.REAPER_PROGRESSIVE_STIMPACK, world_items)
+        self.assertIn(item_names.MARAUDER_STIMPACK, world_items)
+        self.assertIn(item_names.REAPER_STIMPACK, world_items)
 
     def test_vanilla_items_only_and_exclude_op_items_together_allow_one_level_of_regen_biosteel(self) -> None:
         world_options = {
@@ -1363,9 +1361,12 @@ class TestItemFiltering(Sc2SetupTestBase):
             'required_tactics': RequiredTactics.option_standard
         }
         mm_logic_upgrades = {
-            item_names.MARINE_COMBAT_SHIELD, item_names.MARINE_MAGRAIL_MUNITIONS,
+            item_names.MARINE_COMBAT_SHIELD,
+            item_names.MARINE_MAGRAIL_MUNITIONS,
             item_names.MARINE_LASER_TARGETING_SYSTEM,
-            item_names.MARINE_PROGRESSIVE_STIMPACK, item_names.MEDIC_STABILIZER_MEDPACKS
+            item_names.MARINE_STIMPACK,
+            item_names.MARINE_MEDPACK,
+            item_names.MEDIC_STABILIZER_MEDPACKS
         }
 
         self.generate_world(world_options)

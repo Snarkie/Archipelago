@@ -117,7 +117,7 @@ class TestSupportedUseCases(Sc2SetupTestBase):
         self.assertNotIn(item_names.HELLION_INFERNAL_PLATING, world_item_names)
         self.assertNotIn(item_names.CELLULAR_REACTOR, world_item_names)
         self.assertNotIn(item_names.TECH_REACTOR, world_item_names)
-    
+
     def test_nco_and_2_wol_missions_only_can_generate_with_vanilla_items_only(self) -> None:
         world_options = {
             'enabled_campaigns': {
@@ -140,10 +140,10 @@ class TestSupportedUseCases(Sc2SetupTestBase):
 
         self.assertTrue(item_names)
         self.assertNotIn(item_names.LIBERATOR, world_item_names)
-        self.assertNotIn(item_names.MARAUDER_PROGRESSIVE_STIMPACK, world_item_names)
+        self.assertNotIn(item_names.MARAUDER_STIMPACK, world_item_names)
         self.assertNotIn(item_names.HELLION_HELLBAT, world_item_names)
         self.assertNotIn(item_names.BATTLECRUISER_CLOAK, world_item_names)
-    
+
     def test_free_protoss_only_generates(self) -> None:
         world_options = {
             'enabled_campaigns': {
@@ -202,7 +202,7 @@ class TestSupportedUseCases(Sc2SetupTestBase):
         for item_name in world_item_names:
             self.assertNotEqual(item_tables.item_table[item_name].race, mission_tables.SC2Race.PROTOSS, f"{item_name} is a PROTOSS item!")
         for region in world_regions:
-            self.assertNotIn(mission_tables.lookup_name_to_mission[region].campaign, 
+            self.assertNotIn(mission_tables.lookup_name_to_mission[region].campaign,
                              (mission_tables.SC2Campaign.LOTV, mission_tables.SC2Campaign.PROPHECY, mission_tables.SC2Campaign.PROLOGUE),
                              f"{region} is a PROTOSS mission!")
 
@@ -561,7 +561,7 @@ class TestSupportedUseCases(Sc2SetupTestBase):
         nova_gadgets = [item_name for item_name in world_item_names if item_name in item_groups.nova_gadgets]
 
         self.assertLessEqual(len(nova_gadgets), target_number)
-    
+
     def test_mercs_only(self) -> None:
         world_options = {
             **self.ALL_CAMPAIGNS,

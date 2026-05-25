@@ -831,8 +831,12 @@ def flag_allowed_orphan_items(world: SC2World, item_list: list[FilterItem]) -> N
     if SC2Mission.PIERCING_OF_THE_SHROUD in missions:
         for item in item_list:
             if item.name in (
-                    item_names.MARINE_COMBAT_SHIELD, item_names.MARINE_PROGRESSIVE_STIMPACK, item_names.MARINE_MAGRAIL_MUNITIONS,
-                    item_names.MEDIC_STABILIZER_MEDPACKS, item_names.MARINE_LASER_TARGETING_SYSTEM,
+                    item_names.MARINE_COMBAT_SHIELD,
+                    item_names.MARINE_STIMPACK,
+                    item_names.MARINE_MEDPACK,
+                    item_names.MARINE_MAGRAIL_MUNITIONS,
+                    item_names.MEDIC_STABILIZER_MEDPACKS,
+                    item_names.MARINE_LASER_TARGETING_SYSTEM,
             ):
                 item.flags |= ItemFilterFlags.AllowedOrphan
                 item.flags &= ~ItemFilterFlags.FilterExcluded
@@ -840,9 +844,16 @@ def flag_allowed_orphan_items(world: SC2World, item_list: list[FilterItem]) -> N
     if SC2Mission.BELLY_OF_THE_BEAST in missions and world.options.required_tactics == RequiredTactics.option_standard:
         for item in item_list:
             if item.name in (
-                    item_names.MARINE_COMBAT_SHIELD, item_names.MARINE_PROGRESSIVE_STIMPACK, item_names.MARINE_MAGRAIL_MUNITIONS,
-                    item_names.MEDIC_STABILIZER_MEDPACKS, item_names.MARINE_LASER_TARGETING_SYSTEM,
-                    item_names.FIREBAT_NANO_PROJECTORS, item_names.FIREBAT_JUGGERNAUT_PLATING, item_names.FIREBAT_PROGRESSIVE_STIMPACK
+                    item_names.MARINE_COMBAT_SHIELD,
+                    item_names.MARINE_STIMPACK,
+                    item_names.MARINE_MEDPACK,
+                    item_names.MARINE_MAGRAIL_MUNITIONS,
+                    item_names.MEDIC_STABILIZER_MEDPACKS,
+                    item_names.MARINE_LASER_TARGETING_SYSTEM,
+                    item_names.FIREBAT_NANO_PROJECTORS,
+                    item_names.FIREBAT_JUGGERNAUT_PLATING,
+                    item_names.FIREBAT_STIMPACK,
+                    item_names.FIREBAT_MEDPACK,
             ):
                 item.flags |= ItemFilterFlags.AllowedOrphan
                 item.flags &= ~ItemFilterFlags.FilterExcluded

@@ -179,9 +179,9 @@ item_table = {
     item_names.PROGRESSIVE_ORBITAL_COMMAND:
         ItemData(207 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.Deprecated, -1, SC2Race.TERRAN,
                  quantity=0, classification=ItemClassification.progression),
-    item_names.MARINE_PROGRESSIVE_STIMPACK:
-        ItemData(208 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Progressive, 0, SC2Race.TERRAN,
-                 classification=ItemClassification.progression, parent=item_names.MARINE, quantity=2),
+    item_names.MARINE_STIMPACK:
+        ItemData(208 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 0, SC2Race.TERRAN,
+                 classification=ItemClassification.progression, parent=item_names.MARINE),
     item_names.MARINE_COMBAT_SHIELD:
         ItemData(209 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_1, 9, SC2Race.TERRAN,
                  classification=ItemClassification.progression, parent=item_names.MARINE),
@@ -233,15 +233,15 @@ item_table = {
     item_names.MEDIC_RESOURCE_EFFICIENCY:
         ItemData(225 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_1, 24, SC2Race.TERRAN,
                  parent=item_names.MEDIC),
-    item_names.FIREBAT_PROGRESSIVE_STIMPACK:
-        ItemData(226 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Progressive, 6, SC2Race.TERRAN,
-                 classification=ItemClassification.progression, parent=item_names.FIREBAT, quantity=2),
+    item_names.FIREBAT_STIMPACK:
+        ItemData(226 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 2, SC2Race.TERRAN,
+                 classification=ItemClassification.progression, parent=item_names.FIREBAT),
     item_names.FIREBAT_RESOURCE_EFFICIENCY:
         ItemData(227 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_1, 25, SC2Race.TERRAN,
                  parent=item_names.FIREBAT),
-    item_names.MARAUDER_PROGRESSIVE_STIMPACK:
-        ItemData(228 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Progressive, 8, SC2Race.TERRAN,
-                 parent=item_names.MARAUDER, quantity=2),
+    item_names.MARAUDER_STIMPACK:
+        ItemData(228 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 1, SC2Race.TERRAN,
+                 parent=item_names.MARAUDER),
     item_names.MARAUDER_LASER_TARGETING_SYSTEM:
         ItemData(229 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_1, 26, SC2Race.TERRAN,
                  parent=item_names.MARAUDER),
@@ -304,9 +304,9 @@ item_table = {
     item_names.MEDIVAC_SCATTER_VEIL:
         ItemData(249 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_2, 16, SC2Race.TERRAN,
                  parent=item_names.MEDIVAC),
-    item_names.REAPER_PROGRESSIVE_STIMPACK:
-        ItemData(250 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Progressive, 10, SC2Race.TERRAN,
-                 parent=item_names.REAPER, quantity=2),
+    item_names.REAPER_STIMPACK:
+        ItemData(250 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 3, SC2Race.TERRAN,
+                 parent=item_names.REAPER),
     item_names.REAPER_LASER_TARGETING_SYSTEM:
         ItemData(251 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_2, 17, SC2Race.TERRAN,
                  parent=item_names.REAPER),
@@ -332,9 +332,9 @@ item_table = {
     item_names.HELLION_JUMP_JETS:
         ItemData(258 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_2, 24, SC2Race.TERRAN,
                  parent=item_names.HELLION),
-    item_names.HELLION_PROGRESSIVE_STIMPACK:
-        ItemData(259 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Progressive, 12, SC2Race.TERRAN,
-                 parent=item_names.HELLION, quantity=2),
+    item_names.HELLION_STIMPACK:
+        ItemData(259 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 4, SC2Race.TERRAN,
+                 parent=item_names.HELLION),
     item_names.VULTURE_ION_THRUSTERS:
         ItemData(260 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_2, 25, SC2Race.TERRAN,
                  parent=item_names.VULTURE),
@@ -974,6 +974,25 @@ item_table = {
     item_names.BUNKER_EMERGENCY_PROVISIONS:
         ItemData(774 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 28, SC2Race.TERRAN,
                  parent=item_names.BUNKER),
+    # reserved
+    # item_names.EMPERORS_SHADOW_EMP_BLAST:
+    #    ItemData(775 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_7, 29, SC2Race.TERRAN,
+    #             parent=item_names.EMPERORS_SHADOW),
+    item_names.MARINE_MEDPACK:
+        ItemData(776 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 5, SC2Race.TERRAN,
+                 classification=ItemClassification.progression, parent=item_names.MARINE),
+    item_names.MARAUDER_MEDPACK:
+        ItemData(777 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 6, SC2Race.TERRAN,
+                 parent=item_names.MARAUDER),
+    item_names.FIREBAT_MEDPACK:
+        ItemData(778 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 7, SC2Race.TERRAN,
+                 classification=ItemClassification.progression, parent=item_names.FIREBAT),
+    item_names.REAPER_MEDPACK:
+        ItemData(779 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 8, SC2Race.TERRAN,
+                 parent=item_names.REAPER),
+    item_names.HELLION_MEDPACK:
+        ItemData(780 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 9, SC2Race.TERRAN,
+                 parent=item_names.HELLION),
 
     # Filler items to fill remaining spots
     item_names.STARTING_MINERALS:

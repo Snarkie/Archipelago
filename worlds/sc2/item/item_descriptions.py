@@ -15,15 +15,21 @@ PROTOSS = "Protoss"
 
 LASER_TARGETING_SYSTEMS_DESCRIPTION = "Increases vision by 2 and weapon range by 1."
 STIMPACK_SMALL_COST = 10
-STIMPACK_SMALL_HEAL = 30
 STIMPACK_LARGE_COST = 20
-STIMPACK_LARGE_HEAL = 60
 STIMPACK_TEMPLATE = inspect.cleandoc("""
-    Level 1: Stimpack: Increases unit movement and attack speed for 15 seconds. Injures the unit for {} life.
-    Level 2: Super Stimpack: Instead of injuring the unit, heals the unit for {} life instead.
+    Increases unit movement and attack speed for 15 seconds. Injures the unit for {} life.
+    Combines with Medpack into Super Stimpack.
 """)
-STIMPACK_SMALL_DESCRIPTION = STIMPACK_TEMPLATE.format(STIMPACK_SMALL_COST, STIMPACK_SMALL_HEAL)
-STIMPACK_LARGE_DESCRIPTION = STIMPACK_TEMPLATE.format(STIMPACK_LARGE_COST, STIMPACK_LARGE_HEAL)
+STIMPACK_SMALL_DESCRIPTION = STIMPACK_TEMPLATE.format(STIMPACK_SMALL_COST)
+STIMPACK_LARGE_DESCRIPTION = STIMPACK_TEMPLATE.format(STIMPACK_LARGE_COST)
+MEDPACK_SMALL_HEAL = 30
+MEDPACK_LARGE_HEAL = 60
+MEDPACK_TEMPLATE = inspect.cleandoc("""
+    Heals the unit for {} life over 2 seconds.
+    Combines with Stimpack into Super Stimpack.
+""")
+MEDPACK_SMALL_DESCRIPTION = MEDPACK_TEMPLATE.format(MEDPACK_SMALL_HEAL)
+MEDPACK_LARGE_DESCRIPTION = MEDPACK_TEMPLATE.format(MEDPACK_LARGE_HEAL)
 SMART_SERVOS_DESCRIPTION = "Increases transformation speed between modes."
 INTERNAL_TECH_MODULE_DESCRIPTION_TEMPLATE = "{} can be trained from a {} without an attached Tech Lab."
 CLOAK_DESCRIPTION_TEMPLATE = "Allows {} to use the Cloak ability."
@@ -216,7 +222,8 @@ item_descriptions = {
     """),
     item_names.JUGGERNAUT_THRUSTERS: "Increases the movement speed of flying Terran buildings.",
     item_names.SUPPLY_DEPOT_COVERT_STOCKS: "Supply Depots are cloaked while lowered.",
-    item_names.MARINE_PROGRESSIVE_STIMPACK: STIMPACK_SMALL_DESCRIPTION,
+    item_names.MARINE_STIMPACK: STIMPACK_SMALL_DESCRIPTION,
+    item_names.MARINE_MEDPACK: MEDPACK_SMALL_DESCRIPTION,
     item_names.MARINE_COMBAT_SHIELD: "Increases Marine life by 10.",
     item_names.MEDIC_ADVANCED_MEDIC_FACILITIES: INTERNAL_TECH_MODULE_DESCRIPTION_TEMPLATE.format("Medics", "Barracks"),
     item_names.MEDIC_STABILIZER_MEDPACKS: "Increases Medic heal speed. Reduces the amount of energy required for each heal.",
@@ -237,9 +244,11 @@ item_descriptions = {
     item_names.MEDIC_RESTORATION: _ability_desc("Medics", "Restoration", "removes negative status effects from a target allied unit"),
     item_names.MEDIC_OPTICAL_FLARE: _ability_desc("Medics", "Optical Flare", "reduces vision range of target enemy unit. Disables detection"),
     item_names.MEDIC_RESOURCE_EFFICIENCY: _get_resource_efficiency_desc(item_names.MEDIC),
-    item_names.FIREBAT_PROGRESSIVE_STIMPACK: STIMPACK_LARGE_DESCRIPTION,
+    item_names.FIREBAT_STIMPACK: STIMPACK_LARGE_DESCRIPTION,
+    item_names.FIREBAT_MEDPACK: MEDPACK_LARGE_DESCRIPTION,
     item_names.FIREBAT_RESOURCE_EFFICIENCY: _get_resource_efficiency_desc(item_names.FIREBAT),
-    item_names.MARAUDER_PROGRESSIVE_STIMPACK: STIMPACK_LARGE_DESCRIPTION,
+    item_names.MARAUDER_STIMPACK: STIMPACK_LARGE_DESCRIPTION,
+    item_names.MARAUDER_MEDPACK: MEDPACK_LARGE_DESCRIPTION,
     item_names.MARAUDER_LASER_TARGETING_SYSTEM: LASER_TARGETING_SYSTEMS_DESCRIPTION,
     item_names.MARAUDER_MAGRAIL_MUNITIONS: "Deals 20 damage to target unit. Autocast on attack with a cooldown.",
     item_names.MARAUDER_INTERNAL_TECH_MODULE: INTERNAL_TECH_MODULE_DESCRIPTION_TEMPLATE.format("Marauders", "Barracks"),
@@ -264,7 +273,8 @@ item_descriptions = {
     item_names.PREDATOR_CLOAK: "Allows Predators to briefly cloak. Predators ignore unit collision while cloaked.",
     item_names.PREDATOR_CHARGE: "Allows Predators to intercept enemy ground units, and applies an AoE slow on arrival.",
     item_names.MEDIVAC_SCATTER_VEIL: "Medivacs get 100 shields.",
-    item_names.REAPER_PROGRESSIVE_STIMPACK: STIMPACK_SMALL_DESCRIPTION,
+    item_names.REAPER_STIMPACK: STIMPACK_SMALL_DESCRIPTION,
+    item_names.REAPER_MEDPACK: MEDPACK_SMALL_DESCRIPTION,
     item_names.REAPER_LASER_TARGETING_SYSTEM: LASER_TARGETING_SYSTEMS_DESCRIPTION,
     item_names.REAPER_ADVANCED_CLOAKING_FIELD: "Reapers are permanently cloaked.",
     item_names.REAPER_SPIDER_MINES: "Allows Reapers to lay Spider Mines. 3 charges per Reaper.",
@@ -276,7 +286,8 @@ item_descriptions = {
         Increases movement speed in Hellion mode.
         In Hellbat mode, launches the Hellbat toward enemy ground units and briefly stuns them.
     """),
-    item_names.HELLION_PROGRESSIVE_STIMPACK: STIMPACK_LARGE_DESCRIPTION,
+    item_names.HELLION_STIMPACK: STIMPACK_LARGE_DESCRIPTION,
+    item_names.HELLION_MEDPACK: MEDPACK_LARGE_DESCRIPTION,
     item_names.VULTURE_ION_THRUSTERS: "Increases Vulture movement speed.",
     item_names.VULTURE_AUTO_LAUNCHERS: "Allows Vultures to attack while moving.",
     item_names.SPIDER_MINE_HIGH_EXPLOSIVE_MUNITION: "Increases Spider mine damage.",

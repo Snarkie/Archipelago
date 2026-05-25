@@ -552,9 +552,10 @@ class SC2Logic:
             state.has_any((
                 item_names.MARINE_COMBAT_SHIELD,
                 item_names.MARINE_MAGRAIL_MUNITIONS,
+                item_names.MARINE_MEDPACK,
                 item_names.MEDIC_STABILIZER_MEDPACKS,
             ), self.player)
-            or (state.count(item_names.MARINE_PROGRESSIVE_STIMPACK, self.player) >= 2
+            or (state.has_all((item_names.MARINE_STIMPACK, item_names.MARINE_MEDPACK),self.player)
                 and state.has_group("Missions", self.player, 1)
             )
             or (self.advanced_tactics
@@ -565,7 +566,7 @@ class SC2Logic:
     def marine_medic_firebat_upgrade(self, state: CollectionState) -> bool:
         return (
             self.marine_medic_upgrade(state)
-            or state.count(item_names.FIREBAT_PROGRESSIVE_STIMPACK, self.player) >= 2
+            or state.has_all((item_names.FIREBAT_STIMPACK, item_names.FIREBAT_MEDPACK),self.player)
             or state.has_any((item_names.FIREBAT_NANO_PROJECTORS, item_names.FIREBAT_JUGGERNAUT_PLATING), self.player)
         )
 
@@ -5134,8 +5135,8 @@ class SC2Logic:
                     self.advanced_tactics
                     and (
                         (
-                            state.has_all((item_names.MARINE, item_names.MARINE_PROGRESSIVE_STIMPACK), self.player)
-                            and (self.terran_bio_heal(state) or state.count(item_names.MARINE_PROGRESSIVE_STIMPACK, self.player) >= 2)
+                            state.has_all((item_names.MARINE, item_names.MARINE_STIMPACK), self.player)
+                            and (self.terran_bio_heal(state) or state.has(item_names.MARINE_MEDPACK, self.player) >= 2)
                         )
                         or (state.has(item_names.DOMINION_TROOPER, self.player) and self.terran_bio_heal(state))
                         or state.has_all(
