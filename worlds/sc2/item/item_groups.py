@@ -475,19 +475,23 @@ item_name_groups[ItemGroupNames.NCO_BASELINE_UPGRADES] = nco_baseline_upgrades =
 item_name_groups[ItemGroupNames.NCO_UNIT_TECHNOLOGY] = nco_unit_technology = [
     item_names.MARINE_LASER_TARGETING_SYSTEM,
     item_names.MARINE_STIMPACK,
+    item_names.MARINE_MEDPACK,
     item_names.MARINE_MAGRAIL_MUNITIONS,
     item_names.MARINE_OPTIMIZED_LOGISTICS,
     item_names.MARAUDER_LASER_TARGETING_SYSTEM,
     item_names.MARAUDER_INTERNAL_TECH_MODULE,
     item_names.MARAUDER_STIMPACK,
+    item_names.MARAUDER_MEDPACK,
     item_names.MARAUDER_MAGRAIL_MUNITIONS,
     item_names.REAPER_SPIDER_MINES,
     item_names.REAPER_LASER_TARGETING_SYSTEM,
     item_names.REAPER_STIMPACK,
+    item_names.REAPER_MEDPACK,
     item_names.REAPER_ADVANCED_CLOAKING_FIELD,
     # Reaper special ordnance gives anti-building attack, which is baseline in AP
     item_names.HELLION_JUMP_JETS,
     item_names.HELLION_STIMPACK,
+    item_names.HELLION_MEDPACK,
     item_names.HELLION_SMART_SERVOS,
     item_names.HELLION_OPTIMIZED_LOGISTICS,
     item_names.HELLION_THERMITE_FILAMENTS,  # Called Infernal Pre-Igniter in NCO
