@@ -846,13 +846,14 @@ def calculate_items(ctx: 'SC2Context') -> dict[SC2Race, list[int]]:
                     1 << planetary_orbital_module_data.number
 
     # Progressive Stimpack handling (Backwards compatibility):
-    for name, count in stimpack_count:
-        if count > 1:
-            # stimpack level 2, grant medpack to upgrade to super stim
-            medpack_item_data: item.ItemData = item_list[compat_stimpack_to_medpack[name]]
-            accumulators[medpack_item_data.race][medpack_item_data.type.flag_word] |= (
-                1 << medpack_item_data.number
-            )
+    if ctx.slot_data_version < 5:
+        for name, count in stimpack_count:
+            if count > 1:
+                # stimpack level 2, grant medpack to upgrade to super stim
+                medpack_item_data: item.ItemData = item_list[compat_stimpack_to_medpack[name]]
+                accumulators[medpack_item_data.race][medpack_item_data.type.flag_word] |= (
+                    1 << medpack_item_data.number
+                )
 
 
     # Upgrades from completed missions
