@@ -4167,6 +4167,8 @@ class SC2Logic:
             self.terran_very_hard_mission_weapon_armor_level(state) and self.zerg_very_hard_mission_weapon_armor_level(state)
         ):
             return False
+        if not self.competent_or_no_hero(state,SC2Mission.INTO_THE_VOID):
+            return False
         return self.protoss_competent_comp(state) or (
             self.take_over_ai_allies
             and (
@@ -4182,7 +4184,11 @@ class SC2Logic:
             self.zerg_very_hard_mission_weapon_armor_level(state) and self.protoss_very_hard_mission_weapon_armor_level(state)
         ):
             return False
-        return self.terran_competent_comp(state) and self.terran_competent_anti_air(state) and self.terran_power_rating(state) >= 6
+        return (self.terran_competent_comp(state)
+            and self.terran_competent_anti_air(state)
+            and self.terran_power_rating(state) >= 6
+            and self.competent_or_no_hero(state,SC2Mission.INTO_THE_VOID_T)
+        )
 
     def zerg_into_the_void_requirement(self, state: CollectionState) -> bool:
         if not self.zerg_very_hard_mission_weapon_armor_level(state):
@@ -4191,7 +4197,11 @@ class SC2Logic:
             self.terran_very_hard_mission_weapon_armor_level(state) and self.protoss_very_hard_mission_weapon_armor_level(state)
         ):
             return False
-        return self.zerg_competent_comp(state) and self.zerg_competent_anti_air(state) and self.zerg_power_rating(state) >= 6
+        return (self.zerg_competent_comp(state)
+            and self.zerg_competent_anti_air(state)
+            and self.zerg_power_rating(state) >= 6
+            and self.competent_or_no_hero(state,SC2Mission.INTO_THE_VOID_Z)
+        )
 
     def essence_of_eternity_requirement(self, state: CollectionState) -> bool:
         if not self.terran_very_hard_mission_weapon_armor_level(state):
