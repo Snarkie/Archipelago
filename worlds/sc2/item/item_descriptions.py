@@ -604,10 +604,10 @@ item_descriptions = {
     item_names.TRAP_GHOST_SPAWN: inspect.cleandoc("""
         Trap Item.
 
-        Creates a Ghost Academy building for an enemy player.
-        The Ghost Academy periodically spawns Ghost attack waves,
+        Creates a Nuclear Silo building for an enemy player.
+        The Nuclear Silo periodically spawns Ghost attack waves,
         which will be able to use Nuclear Strikes.
-        May use additional abilities, based on difficulty level.
+        Ghosts may use additional abilities, based on difficulty level.
 
         Only works in build missions.
     """),
