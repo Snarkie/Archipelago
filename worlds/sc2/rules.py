@@ -4275,6 +4275,8 @@ class SC2Logic:
             return False
         if self.zerg_power_rating(state) < 6:
             return False
+        if not self.competent_or_no_hero(state,SC2Mission.AMON_S_FALL):
+            return False
         if self.take_over_ai_allies and not (
             self.terran_very_hard_mission_weapon_armor_level(state) and self.protoss_very_hard_mission_weapon_armor_level(state)
         ):
@@ -4331,6 +4333,8 @@ class SC2Logic:
             return False
         if self.terran_power_rating(state) < 6:
             return False
+        if not self.competent_or_no_hero(state,SC2Mission.AMON_S_FALL_T):
+            return False
         if self.take_over_ai_allies and not (
             self.zerg_very_hard_mission_weapon_armor_level(state) and self.protoss_very_hard_mission_weapon_armor_level(state)
         ):
@@ -4349,6 +4353,8 @@ class SC2Logic:
         if not self.protoss_competent_anti_air(state):
             return False
         if self.protoss_power_rating(state) < 6:
+            return False
+        if not self.competent_or_no_hero(state,SC2Mission.AMON_S_FALL_P):
             return False
         if self.take_over_ai_allies and not (
             self.terran_very_hard_mission_weapon_armor_level(state) and self.zerg_very_hard_mission_weapon_armor_level(state)
