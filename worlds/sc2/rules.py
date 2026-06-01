@@ -4206,6 +4206,8 @@ class SC2Logic:
     def essence_of_eternity_requirement(self, state: CollectionState) -> bool:
         if not self.terran_very_hard_mission_weapon_armor_level(state):
             return False
+        if not self.competent_or_no_hero(state,SC2Mission.THE_ESSENCE_OF_ETERNITY):
+            return False
         if self.take_over_ai_allies and not (
             self.protoss_very_hard_mission_weapon_armor_level(state) and self.zerg_very_hard_mission_weapon_armor_level(state)
         ):
@@ -4231,6 +4233,8 @@ class SC2Logic:
     def zerg_essence_of_eternity_requirement(self, state: CollectionState) -> bool:
         if not self.zerg_very_hard_mission_weapon_armor_level(state):
             return False
+        if not self.competent_or_no_hero(state,SC2Mission.THE_ESSENCE_OF_ETERNITY_Z):
+            return False
         if self.take_over_ai_allies and not (
             self.terran_very_hard_mission_weapon_armor_level(state) and self.protoss_very_hard_mission_weapon_armor_level(state)
         ):
@@ -4248,6 +4252,8 @@ class SC2Logic:
 
     def protoss_essence_of_eternity_requirement(self, state: CollectionState) -> bool:
         if not self.protoss_very_hard_mission_weapon_armor_level(state):
+            return False
+        if not self.competent_or_no_hero(state,SC2Mission.THE_ESSENCE_OF_ETERNITY_P):
             return False
         if self.take_over_ai_allies and not (
             self.terran_very_hard_mission_weapon_armor_level(state) and self.zerg_very_hard_mission_weapon_armor_level(state)
