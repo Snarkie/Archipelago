@@ -212,7 +212,7 @@ class SC2Mission(Enum):
     SALVATION = 71, "Salvation (Protoss)", SC2Campaign.LOTV, "Return to Aiur", SC2Race.PROTOSS, MissionPools.VERY_HARD, "ap_salvation", MissionFlag.Protoss|MissionFlag.VanillaSoa|MissionFlag.TimedDefense|MissionFlag.VsPZ|MissionFlag.AiProtossAlly|MissionFlag.HasRaceSwap
 
     # Epilogue
-    INTO_THE_VOID = 72, "Into the Void (Protoss)", SC2Campaign.EPILOGUE, "_1", SC2Race.PROTOSS, MissionPools.VERY_HARD, "ap_into_the_void", MissionFlag.Protoss|MissionFlag.VanillaSoa|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiZergAlly|MissionFlag.HasRaceSwap|MissionFlag.HeroSystemUnsupported
+    INTO_THE_VOID = 72, "Into the Void (Protoss)", SC2Campaign.EPILOGUE, "_1", SC2Race.PROTOSS, MissionPools.VERY_HARD, "ap_into_the_void", MissionFlag.Protoss|MissionFlag.VanillaSoa|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiZergAlly|MissionFlag.HasRaceSwap
     THE_ESSENCE_OF_ETERNITY = 73, "The Essence of Eternity (Terran)", SC2Campaign.EPILOGUE, "_2", SC2Race.TERRAN, MissionPools.VERY_HARD, "ap_the_essence_of_eternity", MissionFlag.Terran|MissionFlag.TimedDefense|MissionFlag.VsAll|MissionFlag.AiZergAlly|MissionFlag.AiProtossAlly|MissionFlag.HasRaceSwap|MissionFlag.HeroSystemUnsupported
     AMON_S_FALL = 74, "Amon's Fall (Zerg)", SC2Campaign.EPILOGUE, "_3", SC2Race.ZERG, MissionPools.VERY_HARD, "ap_amon_s_fall", MissionFlag.Zerg|MissionFlag.AutoScroller|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiProtossAlly|MissionFlag.HasRaceSwap|MissionFlag.HeroSystemUnsupported
 
@@ -371,8 +371,8 @@ class SC2Mission(Enum):
     SALVATION_Z = 225, "Salvation (Zerg)", SC2Campaign.LOTV, "Return to Aiur", SC2Race.ZERG, MissionPools.VERY_HARD, "ap_salvation", MissionFlag.Zerg|MissionFlag.TimedDefense|MissionFlag.VsPZ|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap
 
     # Epilogue (Race-Swapped)
-    INTO_THE_VOID_T = 226, "Into the Void (Terran)", SC2Campaign.EPILOGUE, "_1", SC2Race.TERRAN, MissionPools.VERY_HARD, "ap_into_the_void", MissionFlag.Terran|MissionFlag.VsAll|MissionFlag.AiZergAlly|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap|MissionFlag.HeroSystemUnsupported
-    INTO_THE_VOID_Z = 227, "Into the Void (Zerg)", SC2Campaign.EPILOGUE, "_1", SC2Race.ZERG, MissionPools.VERY_HARD, "ap_into_the_void", MissionFlag.Zerg|MissionFlag.Kerrigan|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap|MissionFlag.HeroSystemUnsupported
+    INTO_THE_VOID_T = 226, "Into the Void (Terran)", SC2Campaign.EPILOGUE, "_1", SC2Race.TERRAN, MissionPools.VERY_HARD, "ap_into_the_void", MissionFlag.Terran|MissionFlag.VsAll|MissionFlag.AiZergAlly|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap
+    INTO_THE_VOID_Z = 227, "Into the Void (Zerg)", SC2Campaign.EPILOGUE, "_1", SC2Race.ZERG, MissionPools.VERY_HARD, "ap_into_the_void", MissionFlag.Zerg|MissionFlag.Kerrigan|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap
     THE_ESSENCE_OF_ETERNITY_Z = 228, "The Essence of Eternity (Zerg)", SC2Campaign.EPILOGUE, "_2", SC2Race.ZERG, MissionPools.VERY_HARD, "ap_the_essence_of_eternity", MissionFlag.Zerg|MissionFlag.TimedDefense|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap|MissionFlag.HeroSystemUnsupported
     THE_ESSENCE_OF_ETERNITY_P = 229, "The Essence of Eternity (Protoss)", SC2Campaign.EPILOGUE, "_2", SC2Race.PROTOSS, MissionPools.VERY_HARD, "ap_the_essence_of_eternity", MissionFlag.Protoss|MissionFlag.TimedDefense|MissionFlag.VsAll|MissionFlag.AiTerranAlly|MissionFlag.AiZergAlly|MissionFlag.RaceSwap|MissionFlag.HeroSystemUnsupported
     AMON_S_FALL_T = 230, "Amon's Fall (Terran)", SC2Campaign.EPILOGUE, "_3", SC2Race.TERRAN, MissionPools.VERY_HARD, "ap_amon_s_fall", MissionFlag.Terran|MissionFlag.AutoScroller|MissionFlag.VsAll|MissionFlag.AiZergAlly|MissionFlag.AiProtossAlly|MissionFlag.RaceSwap|MissionFlag.HeroSystemUnsupported
