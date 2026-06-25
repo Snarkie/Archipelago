@@ -136,6 +136,7 @@ class FactionlessItemType(ItemTypeEnum):
     ResearchSpeed = "Research Speed", 8
     ResearchCost = "Research Cost", 9
     GhostSpawnTrap = "Ghost Spawn Trap", 10
+    VoidDuplicateTrap = "Void Duplicate Trap", 11
     Keys = "Keys", -1
 
 

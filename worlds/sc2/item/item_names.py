@@ -1079,6 +1079,7 @@ UPGRADE_RESEARCH_COST       = "Reduced Upgrade Research Cost"
 
 # Trap
 TRAP_GHOST_SPAWN            = "Ghost Spawn Trap"
+TRAP_VOID_DUPLICATE         = "Void Duplicate Trap"
 REDUCED_MAX_SUPPLY          = "Decreased Maximum Supply"
 NOTHING                     = "Nothing"
 

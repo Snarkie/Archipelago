@@ -386,8 +386,9 @@ class MissionClient:
         ))
 
     def get_trap_items(self, current_items: dict[SC2Race, list[int]]) -> str:
-        return ("{}".format(
+        return ("{} {}".format(
             current_items[SC2Race.ANY][get_item_flag_word(item_names.TRAP_GHOST_SPAWN)],
+            current_items[SC2Race.ANY][get_item_flag_word(item_names.TRAP_VOID_DUPLICATE)],
         ))
 
     def update_tech(self, current_items: dict[SC2Race, list[int]], kerrigan_level: int) -> None | Error[str]:

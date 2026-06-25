@@ -1065,6 +1065,9 @@ item_table = {
     item_names.TRAP_GHOST_SPAWN:
         ItemData(851 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.GhostSpawnTrap, 0, SC2Race.ANY, quantity=5,
                  classification=ItemClassification.trap),
+    item_names.TRAP_VOID_DUPLICATE:
+        ItemData(852 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.VoidDuplicateTrap, 0, SC2Race.ANY, quantity=5,
+                 classification=ItemClassification.trap),
 
     # Nova gear
     item_names.NOVA_GHOST_VISOR:

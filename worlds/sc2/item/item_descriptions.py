@@ -607,6 +607,13 @@ item_descriptions = {
 
         Only works in build missions.
     """),
+    item_names.TRAP_VOID_DUPLICATE: inspect.cleandoc("""
+        Trap Item.
+
+        Increases the size of enemy attack waves.
+        Wave units are duplicated as Void Shades.
+        +20% wave size per level, +100% wave size max.
+    """),
     item_names.REDUCED_MAX_SUPPLY: "Trap Item. Decreases the maximum supply cap for all missions.",
     item_names.SHIELD_REGENERATION: "Increases shield regeneration of all own units.",
     item_names.BUILDING_CONSTRUCTION_SPEED: "Increases building construction speed.",
