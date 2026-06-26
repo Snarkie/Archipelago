@@ -1716,6 +1716,7 @@ item_name_groups[ItemGroupNames.OVERPOWERED_ITEMS] = overpowered_items = [
 item_name_groups[ItemGroupNames.DISABLED_ITEMS] = disabled_items = [
     # Trap items
     item_names.TRAP_GHOST_SPAWN,
+    item_names.TRAP_VOID_DUPLICATE,
 ]
 
 # Items not aimed to be officially released
