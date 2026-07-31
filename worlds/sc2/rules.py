@@ -2906,6 +2906,24 @@ class SC2Logic:
                 or state.has_all((item_names.SCOUT, item_names.SCOUT_RESOURCE_EFFICIENCY), self.player)
             )
 
+    def terran_echoes_of_the_future_islands_requirement(self, state: CollectionState) -> bool:
+        """
+        Strong air to ground capabilities or drops, deal with Broodlords
+        """
+        return True
+
+    def zerg_echoes_of_the_future_islands_requirement(self, state: CollectionState) -> bool:
+        """
+        Strong air to ground capabilities or drops, deal with Broodlords
+        """
+        return True
+
+    def protoss_echoes_of_the_future_islands_requirement(self, state: CollectionState) -> bool:
+        """
+        Strong air to ground capabilities or drops, deal with Broodlords
+        """
+        return True
+
     # endregion WoL Missions
 
     # ###################################################################################################### #
@@ -4165,4 +4183,3 @@ def get_required_kerrigan_levels(missions: list[SC2Mission]) -> int:
     if SC2Mission.THE_INFINITE_CYCLE in missions:
         result = 70
     return result
-
