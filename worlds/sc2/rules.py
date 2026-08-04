@@ -1509,7 +1509,7 @@ class SC2Logic:
         )
 
     def zerg_basic_transport_or_air_comp(self, state: CollectionState) -> bool:
-        return self.zerg_basic_transport(state) or self.zerg_basic_transport(state)
+        return self.zerg_basic_transport(state) or self.zerg_basic_air_comp(state)
 
     def zerg_can_collect_pickup_across_gap(self, state: CollectionState) -> bool:
         """Any way for zerg to get any ground unit across gaps longer than viper yoink range to collect a pickup."""
@@ -2910,19 +2910,28 @@ class SC2Logic:
         """
         Strong air to ground capabilities or drops, deal with Broodlords
         """
-        return True
+        return (self.terran_competent_comp(state, 2)
+            and self.terran_basic_transport_or_air_comp(state)
+            and self.terran_competent_anti_air(state)
+        )
 
     def zerg_echoes_of_the_future_islands_requirement(self, state: CollectionState) -> bool:
         """
         Strong air to ground capabilities or drops, deal with Broodlords
         """
-        return True
+        return (self.zerg_competent_comp(state, 2)
+            and self.zerg_basic_transport_or_air_comp(state)
+            and self.zerg_competent_anti_air(state)
+        )
 
     def protoss_echoes_of_the_future_islands_requirement(self, state: CollectionState) -> bool:
         """
         Strong air to ground capabilities or drops, deal with Broodlords
         """
-        return True
+        return (self.protoss_competent_comp(state, 2)
+            and self.protoss_basic_transport_or_air_comp(state)
+            and self.protoss_competent_anti_air(state)
+        )
 
     # endregion WoL Missions
 
