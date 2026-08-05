@@ -556,7 +556,7 @@ LOCATION_TO_RULE: dict[Sc2Location, ProtoRule] = {
     Sc2Location.ECHOES_OF_THE_FUTURE_NEUTRAL_BUILDINGS: ProtoRule(hero_min=HERO_BASIC, aa_min=AA_BASIC),
     Sc2Location.ECHOES_OF_THE_FUTURE_NORTH_ISLAND: ProtoRule(rule=SC2Logic.protoss_echoes_of_the_future_islands_requirement),
     Sc2Location.ECHOES_OF_THE_FUTURE_EAST_ISLAND: ProtoRule(rule=SC2Logic.protoss_echoes_of_the_future_islands_requirement),
-    Sc2Location.IN_UTTER_DARKNESS_DEFEAT: ProtoRule(),
+    # Sc2Location.IN_UTTER_DARKNESS_DEFEAT: ProtoRule(),
     Sc2Location.IN_UTTER_DARKNESS_PROTOSS_ARCHIVE: ProtoRule(upgrades_min=2, comp_type=COMP_COMPETENT, aa_min=AA_COMPETENT, defense_rating=4),
     Sc2Location.IN_UTTER_DARKNESS_KILLS: ProtoRule(upgrades_min=2, comp_type=COMP_COMPETENT, aa_min=AA_COMPETENT, defense_rating=4),
     Sc2Location.IN_UTTER_DARKNESS_URUN: ProtoRule(flags=FLAG_NO_LOGIC_TRACKS),
