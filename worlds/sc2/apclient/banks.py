@@ -217,7 +217,7 @@ def file_cleanup() -> None | Error[str]:
     Path(f"{bank_folder}/{BANK_LOCATIONS_FILE_NAME}.SC2Bank").unlink(missing_ok=True)
     Path(f"{bank_folder}/{BANK_TRADE_RECEIVE_FILE_NAME}.SC2Bank").unlink(missing_ok=True)
     Path(f"{bank_folder}/{BANK_MESSAGES_FILE_NAME}.SC2Bank").unlink(missing_ok=True)
-    bank_backup_folder = bank_folder + "\\Backup"
+    bank_backup_folder = f"{bank_folder}\\Backup"
     if isinstance(bank_backup_folder, Error):
         return bank_backup_folder
     for i in range (1, BANK_BACKUP_FILE_LIMIT + 1):
