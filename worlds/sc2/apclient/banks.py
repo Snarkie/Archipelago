@@ -217,7 +217,7 @@ def file_cleanup() -> None | Error[str]:
     Path(f"{bank_folder}/{BANK_LOCATIONS_FILE_NAME}.SC2Bank").unlink(missing_ok=True)
     Path(f"{bank_folder}/{BANK_TRADE_RECEIVE_FILE_NAME}.SC2Bank").unlink(missing_ok=True)
     Path(f"{bank_folder}/{BANK_MESSAGES_FILE_NAME}.SC2Bank").unlink(missing_ok=True)
-    bank_backup_folder = f"{bank_folder}/Backup"
+    bank_backup_folder = f"{bank_folder}/{user_paths.BACKUP_DIRNAME}"
     for i in range (1, BANK_BACKUP_FILE_LIMIT + 1):
         # clean up client -> game banks to prevent sending the wrong info to the game
         # we need to clean up all backups that could exist here, but leave backups of other SC2maps untouched
