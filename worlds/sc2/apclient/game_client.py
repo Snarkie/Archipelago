@@ -227,6 +227,14 @@ class MissionClient:
                 if isinstance(error, Error):
                     logger.error(error.message)
                     return
+                
+        loaded_map_path = banks.load_game()
+        if isinstance(loaded_map_path, Error):
+            logger.error(loaded_map_path.message)
+        if loaded_map_path != "":
+            logger.info(f"Map load event detected: {loaded_map_path}")
+            
+
 
         if banks.update_prompt():
             self.last_received_update = 0
@@ -405,6 +413,16 @@ class MissionClient:
             self.get_resources(current_items),
             self.get_colors()
         )
+
+    def load_saved_game(self, current_items: dict[SC2Race, list[int]]) -> None | Error[str]:
+        error = banks.send_core_options(
+            self.get_resources(current_items),
+            self.get_colors(),
+            load_save_game=1,
+        )
+        if error:
+            return error
+        
 
 
 # ################################################################################################ #

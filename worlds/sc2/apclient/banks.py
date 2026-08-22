@@ -18,6 +18,7 @@ BANK_CORE_OPTIONS_KEY_STARTING_RESOURCES = "StartingResources"
 BANK_CORE_OPTIONS_KEY_FACTION_COLORS = "FactionColors"
 BANK_CORE_OPTIONS_KEY_UNCOLLECTED_LOCATIONS = "UncollectedLocations"
 BANK_CORE_OPTIONS_KEY_LOAD_FINISHED = "LoadFinished"
+BANK_CORE_OPTIONS_KEY_LOAD_SAVE_GAME = "LoadSaveGame"
 
 # Options
 # 2 types of options because they are handled in different mod files by SC2
@@ -54,6 +55,9 @@ BANK_LOCATIONS_KEY_GAME_STATE = "GameState"
 # Update
 # Doesn't need sections or keys. The existence of the file is used as an update prompt for now
 BANK_UPDATE_FILE_NAME = "ArchipelagoUpdate" #.SC2Bank
+BANK_UPDATE_SECTION_UPDATE = "Update"
+BANK_UPDATE_KEY_ITEMS = "Items"
+BANK_UPDATE_KEY_LOAD = "Load"
 
 # Void Trade Send (messages sent by SC2)
 BANK_TRADE_SEND_FILE_NAME = "ArchipelagoVoidTradeSend"
@@ -247,7 +251,8 @@ def send_core_options(
     start_resources: str,
     colors: str,
     uncollected_objectives: str | None = None,
-    finished_loading: str | None = None
+    finished_loading: str | None = None,
+    load_save_game: str | None = None,
 ) -> None | Error[str]:
     bank = SC2Bank(BANK_CORE_OPTIONS_FILE_NAME)
     bank.add_entry(
@@ -270,6 +275,12 @@ def send_core_options(
         bank.add_entry(
             BANK_CORE_OPTIONS_SECTION_CORE_OPTIONS,
             BANK_CORE_OPTIONS_KEY_LOAD_FINISHED,
+            finished_loading
+        )
+    if load_save_game:
+        bank.add_entry(
+            BANK_CORE_OPTIONS_SECTION_CORE_OPTIONS,
+            BANK_CORE_OPTIONS_KEY_LOAD_SAVE_GAME,
             finished_loading
         )
     return bank.write_file()
@@ -348,19 +359,27 @@ def send_ap_message(messages: list[str]) -> None | Error[str]:
 
 
 def update_prompt() -> bool:
-    """Checks to see if the game has requested an update by writing the ArchipelagoUpdate file"""
-    bank_folder = user_paths.get_bank_folder()
-    if isinstance(bank_folder, Error):
-        return False
+    """Update AP items"""
+    bank = SC2Bank(BANK_UPDATE_FILE_NAME)
     result = False
-    path = f"{user_paths.get_bank_folder()}/{BANK_UPDATE_FILE_NAME}.SC2Bank"
-    if os.path.isfile(path):
-        # if bank exists, we want an update prompt. No need to check the values
-        os.remove(path)
+    if error := bank.read_file():
+        return error
+    if bank.get_value(BANK_UPDATE_SECTION_UPDATE, BANK_UPDATE_KEY_ITEMS) != "":
+        bank.remove_entry_from_file(BANK_UPDATE_KEY_ITEMS)
         result = True
     return result
 
-
+def load_game() -> str | Error[str]:
+    """Triggers upon loading a save game"""
+    bank = SC2Bank(BANK_UPDATE_FILE_NAME)
+    if error := bank.read_file():
+        return error
+    mission_file_path = bank.get_value(BANK_UPDATE_SECTION_UPDATE, BANK_UPDATE_KEY_LOAD)
+    if mission_file_path != "":
+        bank.remove_entry_from_file(BANK_UPDATE_KEY_LOAD)
+        logger.info(f"mission file passed: {mission_file_path}")
+    return ""#mission_file_path
+    
 def read_locations() -> str | Error[str]:
     bank = SC2Bank(BANK_LOCATIONS_FILE_NAME)
     if error := bank.read_file():
