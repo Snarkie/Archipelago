@@ -415,9 +415,9 @@ item_table = {
     item_names.REAPER_BALLISTIC_FLIGHTSUIT:
         ItemData(288 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_6, 19, SC2Race.TERRAN,
                  parent=item_names.REAPER),
-    item_names.SIEGE_TANK_PROGRESSIVE_TRANSPORT_HOOK:
-        ItemData(289 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Progressive_2, 6, SC2Race.TERRAN,
-                 classification=ItemClassification.progression, parent=parent_names.SIEGE_TANK_AND_TRANSPORT, quantity=2),
+    item_names.SIEGE_TANK_TRANSPORT_HOOK:
+        ItemData(289 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 10, SC2Race.TERRAN,
+                 classification=ItemClassification.progression, parent=parent_names.SIEGE_TANK_AND_TRANSPORT),
     item_names.SIEGE_TANK_ALLTERRAIN_TREADS :
         ItemData(290 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_6, 20, SC2Race.TERRAN,
                  parent=item_names.SIEGE_TANK),
@@ -1038,6 +1038,9 @@ item_table = {
     item_names.NIGHT_WOLF_ELUSIVE_ROTORS:
         ItemData(798 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 27, SC2Race.TERRAN,
                  parent=item_names.NIGHT_WOLF),
+    item_names.SHOCK_DIVISION_SMART_SERVOS:
+        ItemData(799 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 28, SC2Race.TERRAN,
+                 parent=item_names.SHOCK_DIVISION),
 
     # Filler items to fill remaining spots
     item_names.STARTING_MINERALS:
@@ -1137,6 +1140,40 @@ item_table = {
     item_names.NOVA_NUKE:
         ItemData(918 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Nova_Gear, 17, SC2Race.TERRAN,
                  classification=ItemClassification.progression),
+
+    item_names.SHOCK_DIVISION_NAPALM_STRIKE:
+        ItemData(950 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_8, 29, SC2Race.TERRAN,
+                 parent=item_names.SHOCK_DIVISION),
+    item_names.SHOCK_DIVISION_RETROFITTED_CANNONS:
+        ItemData(951 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 0, SC2Race.TERRAN,
+                 parent=item_names.SHOCK_DIVISION),
+    item_names.SHOCK_DIVISION_ARMAMENT_STABILIZERS:
+        ItemData(952 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 1, SC2Race.TERRAN, classification=ItemClassification.progression,
+                 parent=item_names.SHOCK_DIVISION),
+    item_names.BULWARK_COMPANY_MOEBIUS_SHIELDING:
+        ItemData(953 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 2, SC2Race.TERRAN,
+                 parent=item_names.BULWARK_COMPANY),
+    item_names.BULWARK_COMPANY_ARES_CLASS_TARGETING_ADDON:
+        ItemData(954 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 3, SC2Race.TERRAN,
+                 parent=item_names.BULWARK_COMPANY),
+    item_names.BULWARK_COMPANY_JUMP_JETS_MKII:
+        ItemData(955 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 4, SC2Race.TERRAN,
+                 parent=item_names.BULWARK_COMPANY),
+    item_names.BULWARK_COMPANY_NEURAL_SHUTDOWN:
+        ItemData(956 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 5, SC2Race.TERRAN,
+                 parent=item_names.BULWARK_COMPANY),
+    item_names.BLACKHAMMER_HAMMER_OF_THE_LAW:
+        ItemData(957 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 6, SC2Race.TERRAN,
+                 parent=item_names.BLACKHAMMER),
+    item_names.BLACKHAMMER_INFERNO_BLITZ:
+        ItemData(958 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 7, SC2Race.TERRAN,
+                 parent=item_names.BLACKHAMMER),
+    item_names.BLACKHAMMER_SMART_SERVOS:
+        ItemData(959 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 8, SC2Race.TERRAN,
+                 parent=item_names.BLACKHAMMER),
+    item_names.BLACKHAMMER_BULWARK_FIELD:
+        ItemData(960 + SC2WOL_ITEM_ID_OFFSET, TerranItemType.Armory_9, 9, SC2Race.TERRAN,
+                 parent=item_names.BLACKHAMMER),
 
     # HotS
     item_names.ZERGLING:

@@ -505,14 +505,6 @@ class ValidInventory:
                 item.filter_flags |= ItemFilterFlags.StartInventory
                 start_inventory_size += 1
 
-        # Removing extra dependencies
-        # Transport Hook
-        if not self.logical_inventory.get(item_names.MEDIVAC):
-            # Don't allow L2 Siege Tank Transport Hook without Medivac
-            inventory_transport_hooks = [item for item in inventory if item.name == item_names.SIEGE_TANK_PROGRESSIVE_TRANSPORT_HOOK]
-            removable_transport_hooks = [item for item in inventory_transport_hooks if not (ItemFilterFlags.Unexcludable & item.filter_flags)]
-            if len(inventory_transport_hooks) > 1 and removable_transport_hooks:
-                inventory.remove(removable_transport_hooks[0])
 
         # Weapon/Armour upgrades
         def exclude_wa(prefix: str) -> list[StarcraftItem]:

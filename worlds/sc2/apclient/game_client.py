@@ -747,6 +747,8 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     orbital_command_count: int = 0
     # API < 5 Stimpack Count (split into non-progressive)
     stimpack_count: dict[str, int] = {}
+    # API < 5 Progressive Transport Hook count (split into non-progressive)
+    transport_hook_count = 0
 
     # Keep track of items that impact automated grant story tech
     nova_weapon_count = 0
@@ -775,6 +777,8 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
                 stimpack_count[name] = stimpack_count.get(name, 0) + 1
             elif name in item_groups.nova_weapons:
                 nova_weapon_count += 1
+        if ctx.slot_data_version < 5 and name == item_names.SIEGE_TANK_TRANSPORT_HOOK:
+            transport_hook_count += 1
 
         # exists exactly once
         if item_data.quantity == 1 or name in item_groups.item_name_groups[item_groups.ItemGroupNames.UNRELEASED_ITEMS]:
@@ -867,6 +871,17 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
                 medpack_item_data: item.ItemData = item_list[compat_stimpack_to_medpack[name]]
                 accumulators[medpack_item_data.race][medpack_item_data.type.flag_word] |= (
                     1 << medpack_item_data.number
+                )
+    # Progressive Transport Hook handling (Backwards compatibility):
+        if transport_hook_count >= 2:
+            transport_hook_replacement_items = (
+                item_names.SHOCK_DIVISION,
+                item_names.SHOCK_DIVISION_ARMAMENT_STABILIZERS,
+            )
+            for replacement_item_name in transport_hook_replacement_items:
+                replacement_item_data = item_list[replacement_item_name]
+                accumulators[replacement_item_data.race][replacement_item_data.type.flag_word] |= (
+                    1 << replacement_item_data.number
                 )
 
 

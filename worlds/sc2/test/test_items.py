@@ -122,6 +122,8 @@ class TestItems(unittest.TestCase):
             item_tables.TerranItemType.Armory_5,
             item_tables.TerranItemType.Armory_6,
             item_tables.TerranItemType.Armory_7,
+            item_tables.TerranItemType.Armory_8,
+            item_tables.TerranItemType.Armory_9,
             item_tables.TerranItemType.Building,
             item_tables.TerranItemType.Laboratory,
             item_tables.TerranItemType.Nova_Gear,

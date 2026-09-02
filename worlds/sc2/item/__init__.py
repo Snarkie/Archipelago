@@ -78,6 +78,7 @@ class TerranItemType(ItemTypeEnum):
     Progressive_2 = "Progressive Upgrade", 14
     Unit_2 = "Unit", 15
     Armory_8 = "Armory", 16
+    Armory_9 = "Armory", 17
 
 
 class ZergItemType(ItemTypeEnum):
