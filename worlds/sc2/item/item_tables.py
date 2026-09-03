@@ -2097,7 +2097,7 @@ item_table = {
     item_names.MIRAGE_ETERNAL_DUTY: ItemData(458 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 8, SC2Race.PROTOSS, parent=item_names.MIRAGE),
     item_names.MIRAGE_PHASE_ALIGNMENT: ItemData(459 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 9, SC2Race.PROTOSS, parent=item_names.MIRAGE),
     item_names.MIRAGE_AFTERIMAGE: ItemData(460 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 10, SC2Race.PROTOSS, parent=item_names.MIRAGE),
-    item_names.MIRAGE_OBSERVER_MODULE: ItemData(461 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 11, SC2Race.PROTOSS, parent=item_names.MIRAGE),
+    item_names.MIRAGE_OBSERVER_MODULE: ItemData(461 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 11, SC2Race.PROTOSS, classification=ItemClassification.progression, parent=item_names.MIRAGE),
     item_names.SKIRMISHER_ULTIMATE_SACRIFICE: ItemData(462 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 12, SC2Race.PROTOSS, parent=item_names.SKIRMISHER),
     item_names.SKIRMISHER_RESOURCE_EFFICIENCY: ItemData(463 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 13, SC2Race.PROTOSS, parent=item_names.SKIRMISHER),
     item_names.SKIRMISHER_ESSENCE_DRAIN: ItemData(464 + SC2LOTV_ITEM_ID_OFFSET, ProtossItemType.Forge_6, 14, SC2Race.PROTOSS, parent=item_names.SKIRMISHER),
