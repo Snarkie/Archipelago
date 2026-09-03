@@ -1693,7 +1693,6 @@ class MutatorRate(Range):
 
     Trap Items: No Effect
     Depth Scaling: Apply all Mutators up to this depth percentage (1-100)
-    Difficulty Scaling: Apply all Mutators up to this difficulty (1-5)
     Progression Scaling: Apply all Mutators up to this percentage of mission completions (1-100)
     """
     display_name = "Mutator Rate"
