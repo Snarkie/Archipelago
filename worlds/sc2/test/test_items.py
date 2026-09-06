@@ -94,7 +94,6 @@ class TestItems(unittest.TestCase):
         """
         progressive_groups: list[ItemType] = [
             item_tables.TerranItemType.Progressive,
-            item_tables.TerranItemType.Progressive_2,
             item_tables.ProtossItemType.Progressive,
             item_tables.ZergItemType.Progressive
         ]
@@ -113,20 +112,7 @@ class TestItems(unittest.TestCase):
         non_progressive_single_entity_groups: list[ItemType] = [
             # Terran
             item_tables.TerranItemType.Unit,
-            item_tables.TerranItemType.Unit_2,
-            item_tables.TerranItemType.Mercenary,
-            item_tables.TerranItemType.Armory_1,
-            item_tables.TerranItemType.Armory_2,
-            item_tables.TerranItemType.Armory_3,
-            item_tables.TerranItemType.Armory_4,
-            item_tables.TerranItemType.Armory_5,
-            item_tables.TerranItemType.Armory_6,
-            item_tables.TerranItemType.Armory_7,
-            item_tables.TerranItemType.Armory_8,
-            item_tables.TerranItemType.Armory_9,
-            item_tables.TerranItemType.Building,
-            item_tables.TerranItemType.Laboratory,
-            item_tables.TerranItemType.Nova_Gear,
+            item_tables.TerranItemType.Upgrade,
             # Zerg
             item_tables.ZergItemType.Unit,
             item_tables.ZergItemType.Mercenary,
@@ -172,4 +158,3 @@ class TestItems(unittest.TestCase):
         for item in items_to_check:
             item_number = item_tables.item_table[item].number
             self.assertLess(item_number, 30)
-

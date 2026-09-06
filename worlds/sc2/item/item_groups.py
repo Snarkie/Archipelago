@@ -39,12 +39,9 @@ item_name_groups["WoL Missions"] = (
 unlisted_item_name_groups = {
     "Missions", "WoL Missions",
     item_tables.TerranItemType.Progressive.display_name,
-    item_tables.TerranItemType.Nova_Gear.display_name,
-    item_tables.TerranItemType.Mercenary.display_name,
     item_tables.ZergItemType.Ability.display_name,
     item_tables.ZergItemType.Morph.display_name,
     item_tables.ZergItemType.Strain.display_name,
-    item_tables.ProtossItemType.Artanis_Items.display_name,
 }
 
 # Some item names only differ in bracketed parts
@@ -278,8 +275,7 @@ item_name_groups[ItemGroupNames.TERRAN_ITEMS] = terran_items = [
 
 item_name_groups[ItemGroupNames.TERRAN_UNITS] = terran_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in (
-    item_tables.TerranItemType.Unit, item_tables.TerranItemType.Unit_2, item_tables.TerranItemType.Mercenary)
+    if item_data.type in [item_tables.TerranItemType.Unit]
 ]
 _terran_core_units = {
     item_names.MARINE: LogicRating.BASIC_STARTER,
@@ -462,10 +458,8 @@ terran_chaos_ship_units = (
     item_names.MIDNIGHT_RIDERS,
     item_names.BRYNHILDS,
 )
-item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = tuple(
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.TerranItemType.Mercenary
-)
+item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [
+]
 item_name_groups[ItemGroupNames.NCO_UNITS] = nco_units = [
     item_names.MARINE, item_names.MARAUDER, item_names.REAPER,
     item_names.HELLION, item_names.GOLIATH, item_names.SIEGE_TANK,
@@ -476,9 +470,6 @@ item_name_groups[ItemGroupNames.NCO_BUILDINGS] = nco_buildings = [
     item_names.BUNKER, item_names.MISSILE_TURRET, item_names.PLANETARY_FORTRESS,
 ]
 item_name_groups[ItemGroupNames.NOVA_EQUIPMENT] = nova_equipment = [
-    *[item_name for item_name, item_data in item_tables.item_table.items()
-      if item_data.type == item_tables.TerranItemType.Nova_Gear],
-    item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE,
 ]
 item_name_groups[ItemGroupNames.NOVA_WEAPONS] = nova_weapons = [
     item_names.NOVA_C20A_CANISTER_RIFLE,
@@ -520,8 +511,7 @@ item_name_groups[ItemGroupNames.WOL_BUILDINGS] = wol_buildings = [
 ]
 item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = [
     *[
-        item_name for item_name, item_data in item_tables.item_table.items()
-        if item_data.type == item_tables.TerranItemType.Building or item_name in wol_buildings
+
     ],
     item_names.PSI_SCREEN,
     item_names.SONIC_DISRUPTER,
@@ -725,7 +715,7 @@ item_name_groups[ItemGroupNames.NCO_MAX_PROGRESSIVE_ITEMS] = nco_unit_technology
 item_name_groups[ItemGroupNames.NCO_MIN_PROGRESSIVE_ITEMS] = nco_units + nco_baseline_upgrades
 item_name_groups[ItemGroupNames.TERRAN_PROGRESSIVE_UPGRADES] = terran_progressive_items = [
     item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in (item_tables.TerranItemType.Progressive, item_tables.TerranItemType.Progressive_2)
+    if item_data.type in [item_tables.TerranItemType.Progressive]
 ]
 item_name_groups[ItemGroupNames.WOL_ITEMS] = vanilla_wol_items = (
     wol_units
@@ -1249,7 +1239,7 @@ item_name_groups[ItemGroupNames.PROTOSS_ITEMS] = protoss_items = [
 ]
 item_name_groups[ItemGroupNames.PROTOSS_UNITS] = protoss_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in (item_tables.ProtossItemType.Unit, item_tables.ProtossItemType.Unit_2)
+    if item_data.type in [item_tables.ProtossItemType.Unit]
 ]
 _protoss_core_units = {
     item_names.ZEALOT: LogicRating.BASIC_STARTER,
@@ -1454,8 +1444,6 @@ item_name_groups[ItemGroupNames.NEXUS_UNITS] = nexus_units = [
     item_names.MOTHERSHIP_AIUR, item_names.MOTHERSHIP_PURIFIER,
 ]
 item_name_groups[ItemGroupNames.PROTOSS_BUILDINGS] = protoss_buildings = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.ProtossItemType.Building
 ]
 item_name_groups[ItemGroupNames.AIUR_UNITS] = [
     item_names.ZEALOT, item_names.DRAGOON, item_names.SENTRY, item_names.AVENGER, item_names.HIGH_TEMPLAR,
@@ -1484,8 +1472,6 @@ item_name_groups[ItemGroupNames.SOA_PASSIVES] = spear_of_adun_passives = [
     item_names.GUARDIAN_SHELL,
 ]
 spear_of_adun_actives = [
-    *[item_name for item_name, item_data in item_tables.item_table.items() if item_data.type == item_tables.ProtossItemType.Spear_Of_Adun],
-    item_names.SOA_PROGRESSIVE_PROXY_PYLON,
 ]
 item_name_groups[ItemGroupNames.SOA_ITEMS] = soa_items = spear_of_adun_actives + spear_of_adun_passives
 lotv_soa_items = [
@@ -1494,7 +1480,6 @@ lotv_soa_items = [
     if item_name not in (item_names.SOA_PYLON_OVERCHARGE, item_names.OVERWATCH)
 ]
 item_name_groups[ItemGroupNames.PROTOSS_GLOBAL_UPGRADES] = [
-    item_name for item_name, item_data in item_tables.item_table.items() if item_data.type == item_tables.ProtossItemType.Solarite_Core
 ]
 item_name_groups[ItemGroupNames.LOTV_GLOBAL_UPGRADES] = lotv_global_upgrades = [
     item_names.NEXUS_OVERCHARGE,
@@ -1505,8 +1490,6 @@ item_name_groups[ItemGroupNames.LOTV_GLOBAL_UPGRADES] = lotv_global_upgrades = [
     item_names.RECONSTRUCTION_BEAM,
 ]
 item_name_groups[ItemGroupNames.WAR_COUNCIL] = war_council_upgrades = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in (item_tables.ProtossItemType.War_Council, item_tables.ProtossItemType.War_Council_2)
 ]
 
 lotv_war_council_upgrades = [

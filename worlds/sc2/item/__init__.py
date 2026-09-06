@@ -60,25 +60,10 @@ class ItemTypeEnum(enum.Enum):
 
 
 class TerranItemType(ItemTypeEnum):
-    Armory_1 = "Armory", 0
-    """General Terran unit upgrades"""
-    Armory_2 = "Armory", 1
-    Armory_3 = "Armory", 2
-    Armory_4 = "Armory", 3
-    Armory_5 = "Armory", 4
-    Armory_6 = "Armory", 5
-    Armory_7 = "Armory", 6
-    Progressive = "Progressive Upgrade", 7
-    Laboratory = "Laboratory", 8
-    Upgrade = "Upgrade", 9
-    Unit = "Unit", 10
-    Building = "Building", 11
-    Mercenary = "Mercenary", 12
-    Nova_Gear = "Nova Gear", 13
-    Progressive_2 = "Progressive Upgrade", 14
-    Unit_2 = "Unit", 15
-    Armory_8 = "Armory", 16
-    Armory_9 = "Armory", 17
+    Unit = "Unit", 0
+    Armory = "Armory", 1
+    Upgrade = "Upgrade", 2
+    Progressive = "Progressive Upgrade", 3
 
 
 class ZergItemType(ItemTypeEnum):
@@ -105,24 +90,10 @@ class ZergItemType(ItemTypeEnum):
 
 class ProtossItemType(ItemTypeEnum):
     Unit = "Unit", 0
-    Unit_2 = "Unit", 1
+    Forge_1 = "Forge", 1
     Upgrade = "Upgrade", 2
-    Building = "Building", 3
-    Progressive = "Progressive Upgrade", 4
-    Spear_Of_Adun = "Spear of Adun", 5
-    Solarite_Core = "Solarite Core", 6
-    """Protoss global effects, such as reconstruction beam or automated assimilators"""
-    Forge_1 = "Forge", 7
-    """General Protoss unit upgrades"""
-    Forge_2 = "Forge", 8
-    Forge_3 = "Forge", 9
-    Forge_4 = "Forge", 10
-    Forge_5 = "Forge", 11
-    War_Council = "War Council", 12
-    War_Council_2 = "War Council", 13
-    ShieldRegeneration = "Shield Regeneration Group", 14
-    Artanis_Items = "Artanis Ability", 15
-    Forge_6 = "Forge", 16
+    Progressive = "Progressive Upgrade", 3
+    ShieldRegeneration = "Shield Regeneration Group", 4
 
 
 class FactionlessItemType(ItemTypeEnum):

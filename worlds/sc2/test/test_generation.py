@@ -164,7 +164,6 @@ class TestItemFiltering(Sc2SetupTestBase):
         for item_name, item_data in world_items:
             self.assertNotIn(item_data.type, item_tables.ProtossItemType)
             self.assertNotIn(item_data.type, item_tables.ZergItemType)
-            self.assertNotEqual(item_data.type, item_tables.TerranItemType.Nova_Gear)
             self.assertNotEqual(item_name, item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE)
 
     def test_starter_unit_populates_start_inventory(self) -> None:
@@ -218,8 +217,6 @@ class TestItemFiltering(Sc2SetupTestBase):
         world_items = [(item.name, item_tables.item_table[item.name]) for item in self.multiworld.itempool]
         for item_name, item_data in world_items:
             self.assertNotEqual(item_data.type, item_tables.TerranItemType.Unit, f"Item '{item_name}' included when all terran build missions are excluded")
-            self.assertNotEqual(item_data.type, item_tables.TerranItemType.Mercenary, f"Item '{item_name}' included when all terran build missions are excluded")
-            self.assertNotEqual(item_data.type, item_tables.TerranItemType.Building, f"Item '{item_name}' included when all terran build missions are excluded")
 
     def test_excluding_all_zerg_and_kerrigan_missions_excludes_all_zerg_items(self) -> None:
         world_options = {

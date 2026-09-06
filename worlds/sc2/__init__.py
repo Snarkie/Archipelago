@@ -627,11 +627,9 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             # Note(mm): This doesn't handle categories containing e.g. automated assimilators
             # or warp gate improvements because that item type is mixed in with
             # e.g. Reconstruction Beam and Overwatch
-            and item.data.type in (
-                ProtossItemType.Unit,
-                ProtossItemType.Unit_2,
-                ProtossItemType.Building,
-            )
+            and item.data.type in [
+                ProtossItemType.Unit
+            ]
             and item.name not in allowed_remaining_protoss_units
         ):
             # Note(mm): This doesn't exclude things like automated assimilators or warp gate improvements
@@ -765,16 +763,16 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
             item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Artanis items if there's no Artanis
-        if item.data.type == ProtossItemType.Artanis_Items and remove_artanis_items:
-            item.flags |= ItemFilterFlags.FilterExcluded
+        # if item.data.type == ProtossItemType.Artanis_Items and remove_artanis_items:
+        #     item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Spear of Adun if it's off
-        if item.name in item_tables.spear_of_adun_calldowns and not soa_presence:
-            item.flags |= ItemFilterFlags.FilterExcluded
+        # if item.name in item_tables.spear_of_adun_calldowns and not soa_presence:
+        #     item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Spear of Adun passives
-        if item.name in item_groups.spear_of_adun_passives and not soa_passive_presence:
-            item.flags |= ItemFilterFlags.FilterExcluded
+        # if item.name in item_groups.spear_of_adun_passives and not soa_passive_presence:
+        #     item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove matchup-specific items if you don't play that matchup
         if (item.name in (item_names.HIVE_MIND_EMULATOR, item_names.PSI_DISRUPTER)

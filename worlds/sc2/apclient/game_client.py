@@ -361,7 +361,7 @@ class MissionClient:
 
     def get_terran_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
         terran_items = current_items[SC2Race.TERRAN]
-        return (" ".join(map(str, terran_items)))
+        return (" ".join(f'{i:02x}' for i in terran_items))
 
     def get_zerg_tech(self, current_items: dict[SC2Race, list[int]], kerrigan_level: int) -> str:
         zerg_items = current_items[SC2Race.ZERG]
@@ -376,7 +376,7 @@ class MissionClient:
 
     def get_protoss_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
         protoss_items = current_items[SC2Race.PROTOSS]
-        return (" ".join(map(str, protoss_items)))
+        return (" ".join(f'{i:02x}' for i in protoss_items))
 
     def get_misc_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
         return ("{} {} {}".format(
@@ -787,10 +787,14 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         # exists multiple times
         elif item_data.quantity > 1:
             flaggroup = item_data.type.flag_word
-
             # Generic upgrades apply only to Weapon / Armor upgrades
             if item_data.number >= 0:
-                accumulators[item_data.race][flaggroup] += 1 << item_data.number
+                mask = ((1 << item_data.quantity.bit_length()) - 1 ) << item_data.number
+                amount = accumulators[item_data.race][flaggroup] & mask
+                new = amount + (1 << item_data.number)
+                max = item_data.quantity << item_data.number
+                if new <= max:
+                    accumulators[item_data.race][flaggroup] += 1 << item_data.number
             else:
                 if name == item_names.PROGRESSIVE_PROTOSS_GROUND_UPGRADE:
                     shields_from_ground_upgrade += 1

@@ -62,7 +62,7 @@ second_pass_placeable_items: tuple[str, ...] = (
     item_names.ROGUE_FORCES,
     # Mercenaries (All races)
     *[item_name for item_name, item_data in item_table.items()
-      if item_data.type in (TerranItemType.Mercenary, ZergItemType.Mercenary)],
+      if item_data.type in [ZergItemType.Mercenary]],
     # Kerrigan and Nova levels, abilities and generally useful stuff
     *[
         item_name for item_name, item_data in item_table.items()
@@ -70,7 +70,6 @@ second_pass_placeable_items: tuple[str, ...] = (
             ZergItemType.Level,
             ZergItemType.Ability,
             ZergItemType.Evolution_Pit,
-            TerranItemType.Nova_Gear
         )
     ],
     item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE,
