@@ -39,9 +39,6 @@ item_name_groups["WoL Missions"] = (
 unlisted_item_name_groups = {
     "Missions", "WoL Missions",
     item_tables.TerranItemType.Progressive.display_name,
-    item_tables.ZergItemType.Ability.display_name,
-    item_tables.ZergItemType.Morph.display_name,
-    item_tables.ZergItemType.Strain.display_name,
 }
 
 # Some item names only differ in bracketed parts
@@ -801,13 +798,12 @@ item_name_groups[ItemGroupNames.ZERG_BUILDINGS] = zerg_buildings = [
     item_names.ECHIDNA_WORM]
 item_name_groups[ItemGroupNames.ZERG_NONMORPH_UNITS] = zerg_nonmorph_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in (
-        item_tables.ZergItemType.Unit, item_tables.ZergItemType.Mercenary
-    )
+    if item_data.type in [
+        item_tables.ZergItemType.Unit
+    ]
        and item_name not in zerg_buildings
 ]
 item_name_groups[ItemGroupNames.ZERG_MORPHS] = zerg_morphs = [
-    item_name for item_name, item_data in item_tables.item_table.items() if item_data.type == item_tables.ZergItemType.Morph
 ]
 item_name_groups[ItemGroupNames.ZERG_UNITS] = zerg_units = zerg_nonmorph_units + zerg_morphs
 # For W/A upgrades
@@ -986,10 +982,8 @@ item_name_groups[ItemGroupNames.HOTS_MORPHS] = hots_morphs = [
     item_names.BROOD_LORD,
 ]
 item_name_groups[ItemGroupNames.ZERG_MERCENARIES] = zerg_mercenaries = [
-    item_name for item_name, item_data in item_tables.item_table.items() if item_data.type == item_tables.ZergItemType.Mercenary
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_ABILITIES] = kerrigan_abilities = [
-    item_name for item_name, item_data in item_tables.item_table.items() if item_data.type == item_tables.ZergItemType.Ability
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_PASSIVES] = kerrigan_passives = [
     item_names.KERRIGAN_HEROIC_FORTITUDE, item_names.KERRIGAN_CHAIN_REACTION,
@@ -1086,7 +1080,6 @@ item_name_groups[ItemGroupNames.ZERG_LADDER_UNITS] = [
 
 # Zerg Upgrades
 item_name_groups[ItemGroupNames.HOTS_STRAINS] = hots_strains = [
-    item_name for item_name, item_data in item_tables.item_table.items() if item_data.type == item_tables.ZergItemType.Strain
 ]
 item_name_groups[ItemGroupNames.HOTS_MUTATIONS] = hots_mutations = [
     item_names.ZERGLING_HARDENED_CARAPACE, item_names.ZERGLING_ADRENAL_OVERLOAD, item_names.ZERGLING_METABOLIC_BOOST,

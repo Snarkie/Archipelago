@@ -67,26 +67,11 @@ class TerranItemType(ItemTypeEnum):
 
 
 class ZergItemType(ItemTypeEnum):
-    Ability = "Ability", 0
-    """Kerrigan abilities"""
+    Unit = "Unit", 0
     Mutation_1 = "Mutation", 1
-    Strain = "Strain", 2
-    Morph = "Morph", 3
-    Upgrade = "Upgrade", 4
-    Mercenary = "Mercenary", 5
-    Unit = "Unit", 6
-    Level = "Level", 7
-    """Kerrigan level packs"""
-    Primal_Form = "Primal Form", 8
-    Evolution_Pit = "Evolution Pit", 9
-    """Zerg global economy upgrades, like automated extractors"""
-    Mutation_2 = "Mutation", 10
-    Mutation_3 = "Mutation", 11
-    Mutation_4 = "Mutation", 12
-    Progressive = "Progressive Upgrade", 13
-    Mutation_5 = "Mutation", 14
-    Mutation_6 = "Mutation", 15
-
+    Upgrade = "Upgrade", 2
+    Progressive = "Progressive Upgrade", 3
+    Level = "Level", 4
 
 class ProtossItemType(ItemTypeEnum):
     Unit = "Unit", 0

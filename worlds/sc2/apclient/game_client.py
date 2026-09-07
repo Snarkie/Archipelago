@@ -363,16 +363,14 @@ class MissionClient:
         terran_items = current_items[SC2Race.TERRAN]
         return (" ".join(f'{i:02x}' for i in terran_items))
 
-    def get_zerg_tech(self, current_items: dict[SC2Race, list[int]], kerrigan_level: int) -> str:
+    def get_zerg_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
         zerg_items = current_items[SC2Race.ZERG]
         zerg_items = [
             value
             for index, value in enumerate(zerg_items)
-            if index not in (ZergItemType.Level.flag_word, ZergItemType.Primal_Form.flag_word)
+            if index not in [ZergItemType.Level.flag_word]
         ]
-        kerrigan_primal_by_items = is_kerrigan_primal(self.ctx, kerrigan_level)
-        kerrigan_primal_bot_value = 1 if kerrigan_primal_by_items else 0
-        return(f"{kerrigan_level} {kerrigan_primal_bot_value} " + ' '.join(map(str, zerg_items)))
+        return (" ".join(f'{i:02x}' for i in zerg_items))
 
     def get_protoss_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
         protoss_items = current_items[SC2Race.PROTOSS]
@@ -394,7 +392,7 @@ class MissionClient:
     def update_tech(self, current_items: dict[SC2Race, list[int]], kerrigan_level: int) -> None | Error[str]:
         return banks.send_items(
             self.get_terran_tech(current_items),
-            self.get_zerg_tech(current_items, kerrigan_level),
+            self.get_zerg_tech(current_items),
             self.get_protoss_tech(current_items),
             self.get_misc_tech(current_items),
             self.get_trap_items(current_items),
