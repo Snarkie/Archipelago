@@ -65,10 +65,6 @@ second_pass_placeable_items: tuple[str, ...] = (
     ],
     # Kerrigan and Nova levels, abilities and generally useful stuff
     *[
-        item_name for item_name, item_data in item_table.items()
-        if item_data.type in (
-            ZergItemType.Level,
-        )
     ],
     item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE,
     # Zerg static defenses

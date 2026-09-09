@@ -590,26 +590,19 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
         # Catch-all for all of a faction's items
         # Unit upgrades required for no-builds will get the FilterExcluded lifted when flagging AllowedOrphan
         if not terran_missions and item.data.race == SC2Race.TERRAN:
-            if item.name not in item_groups.nova_equipment:
-                item.flags |= ItemFilterFlags.FilterExcluded
-                continue
+            item.flags |= ItemFilterFlags.FilterExcluded
+            continue
         if not zerg_missions and item.data.race == SC2Race.ZERG:
-            if (item.data.type != ZergItemType.Level
-            ):
-                item.flags |= ItemFilterFlags.FilterExcluded
-                continue
+            item.flags |= ItemFilterFlags.FilterExcluded
+            continue
         if not protoss_missions and item.data.race == SC2Race.PROTOSS:
-            if (item.name not in item_groups.soa_items
-                and item.data.type != ProtossItemType.Artanis_Items
-            ):
-                item.flags |= ItemFilterFlags.FilterExcluded
+            item.flags |= ItemFilterFlags.FilterExcluded
             continue
 
         # Faction units
         if (not terran_build_missions
             and item.data.race == SC2Race.TERRAN
             and item.data.type != item_tables.TerranItemType.Upgrade
-            and item.name not in item_groups.nova_equipment
             and item.name not in allowed_remaining_terran_units
         ):
             item.flags |= ItemFilterFlags.FilterExcluded

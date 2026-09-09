@@ -984,10 +984,31 @@ item_name_groups[ItemGroupNames.HOTS_MORPHS] = hots_morphs = [
 item_name_groups[ItemGroupNames.ZERG_MERCENARIES] = zerg_mercenaries = [
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_ABILITIES] = kerrigan_abilities = [
+    item_names.KERRIGAN_KINETIC_BLAST,
+    item_names.KERRIGAN_HEROIC_FORTITUDE,
+    item_names.KERRIGAN_LEAPING_STRIKE,
+    item_names.KERRIGAN_CRUSHING_GRIP,
+    item_names.KERRIGAN_CHAIN_REACTION,
+    item_names.KERRIGAN_PSIONIC_SHIFT,
+    item_names.KERRIGAN_WILD_MUTATION,
+    item_names.KERRIGAN_SPAWN_BANELINGS,
+    item_names.KERRIGAN_MEND,
+    item_names.KERRIGAN_INFEST_BROODLINGS,
+    item_names.KERRIGAN_FURY,
+    item_names.KERRIGAN_ABILITY_EFFICIENCY,
+    item_names.KERRIGAN_APOCALYPSE,
+    item_names.KERRIGAN_SPAWN_LEVIATHAN,
+    item_names.KERRIGAN_DROP_PODS,
+    item_names.KERRIGAN_PRIMAL_FORM,
+    item_names.KERRIGAN_ASSIMILATION_AURA,
+    item_names.KERRIGAN_IMMOBILIZATION_WAVE,
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_PASSIVES] = kerrigan_passives = [
-    item_names.KERRIGAN_HEROIC_FORTITUDE, item_names.KERRIGAN_CHAIN_REACTION,
-    item_names.KERRIGAN_INFEST_BROODLINGS, item_names.KERRIGAN_FURY, item_names.KERRIGAN_ABILITY_EFFICIENCY,
+    item_names.KERRIGAN_HEROIC_FORTITUDE,
+    item_names.KERRIGAN_CHAIN_REACTION,
+    item_names.KERRIGAN_INFEST_BROODLINGS,
+    item_names.KERRIGAN_FURY,
+    item_names.KERRIGAN_ABILITY_EFFICIENCY,
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_ACTIVE_ABILITIES] = kerrigan_active_abilities = [
     item_name for item_name in kerrigan_abilities if item_name not in kerrigan_passives

@@ -71,14 +71,12 @@ class ZergItemType(ItemTypeEnum):
     Mutation_1 = "Mutation", 1
     Upgrade = "Upgrade", 2
     Progressive = "Progressive Upgrade", 3
-    Level = "Level", 4
 
 class ProtossItemType(ItemTypeEnum):
     Unit = "Unit", 0
     Forge_1 = "Forge", 1
     Upgrade = "Upgrade", 2
     Progressive = "Progressive Upgrade", 3
-    ShieldRegeneration = "Shield Regeneration Group", 4
 
 
 class FactionlessItemType(ItemTypeEnum):
@@ -92,8 +90,10 @@ class FactionlessItemType(ItemTypeEnum):
     MaxSupplyTrap = "Max Supply Trap", 7
     ResearchSpeed = "Research Speed", 8
     ResearchCost = "Research Cost", 9
-    GhostSpawnTrap = "Ghost Spawn Trap", 10
-    VoidDuplicateTrap = "Void Duplicate Trap", 11
+    Level = "Level", 10
+    ShieldRegeneration = "Shield Regeneration Group", 11
+    GhostSpawnTrap = "Ghost Spawn Trap", 12
+    VoidDuplicateTrap = "Void Duplicate Trap", 13
     Keys = "Keys", -1
 
 

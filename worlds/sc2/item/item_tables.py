@@ -1060,7 +1060,7 @@ item_table = {
         ItemData(804 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.MaxSupply, -1, SC2Race.ANY, quantity=0,
                  classification=ItemClassification.filler),
     item_names.SHIELD_REGENERATION:
-        ItemData(805 + SC2WOL_ITEM_ID_OFFSET, ProtossItemType.ShieldRegeneration, 1, SC2Race.PROTOSS, quantity=0,
+        ItemData(805 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.ShieldRegeneration, 1, SC2Race.ANY, quantity=0,
                  classification=ItemClassification.filler),
     item_names.BUILDING_CONSTRUCTION_SPEED:
         ItemData(806 + SC2WOL_ITEM_ID_OFFSET, FactionlessItemType.BuildingSpeed, 1, SC2Race.ANY, quantity=0,
@@ -1698,19 +1698,19 @@ item_table = {
     item_names.RAVAGER_WRITHING_ABOMINATION:
         ItemData(462 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 191, SC2Race.ZERG, parent=item_names.RAVAGER),
 
-    item_names.KERRIGAN_LEVELS_10: ItemData(500 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 10, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_9: ItemData(501 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 9, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_8: ItemData(502 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 8, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_7: ItemData(503 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 7, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_6: ItemData(504 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 6, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_5: ItemData(505 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 5, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_4: ItemData(506 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 4, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression_skip_balancing),
-    item_names.KERRIGAN_LEVELS_3: ItemData(507 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 3, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression_skip_balancing),
-    item_names.KERRIGAN_LEVELS_2: ItemData(508 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 2, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression_skip_balancing),
-    item_names.KERRIGAN_LEVELS_1: ItemData(509 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 1, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression_skip_balancing),
-    item_names.KERRIGAN_LEVELS_14: ItemData(510 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 14, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_35: ItemData(511 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 35, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
-    item_names.KERRIGAN_LEVELS_70: ItemData(512 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Level, 70, SC2Race.ZERG, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_10: ItemData(500 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 10, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_9: ItemData(501 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 9, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_8: ItemData(502 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 8, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_7: ItemData(503 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 7, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_6: ItemData(504 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 6, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_5: ItemData(505 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 5, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_4: ItemData(506 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 4, SC2Race.ANY, quantity=0, classification=ItemClassification.progression_skip_balancing),
+    item_names.KERRIGAN_LEVELS_3: ItemData(507 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 3, SC2Race.ANY, quantity=0, classification=ItemClassification.progression_skip_balancing),
+    item_names.KERRIGAN_LEVELS_2: ItemData(508 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 2, SC2Race.ANY, quantity=0, classification=ItemClassification.progression_skip_balancing),
+    item_names.KERRIGAN_LEVELS_1: ItemData(509 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 1, SC2Race.ANY, quantity=0, classification=ItemClassification.progression_skip_balancing),
+    item_names.KERRIGAN_LEVELS_14: ItemData(510 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 14, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_35: ItemData(511 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 35, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
+    item_names.KERRIGAN_LEVELS_70: ItemData(512 + SC2HOTS_ITEM_ID_OFFSET, FactionlessItemType.Level, 70, SC2Race.ANY, quantity=0, classification=ItemClassification.progression),
 
     # Zerg Mercs
     item_names.INFESTED_MEDICS: ItemData(600 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Unit, 33, SC2Race.ZERG, classification=ItemClassification.progression_skip_balancing),

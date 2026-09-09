@@ -19,7 +19,7 @@ from .transfer_data import normalized_unit_types
 from .. import options, locations, item, rules
 from .. import SC2World
 from ..item import item_tables, item_names, item_groups
-from ..item import ZergItemType
+from ..item import FactionlessItemType
 from ..mission_tables import (
     lookup_id_to_mission,
     SC2Mission,
@@ -365,11 +365,6 @@ class MissionClient:
 
     def get_zerg_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
         zerg_items = current_items[SC2Race.ZERG]
-        zerg_items = [
-            value
-            for index, value in enumerate(zerg_items)
-            if index not in [ZergItemType.Level.flag_word]
-        ]
         return (" ".join(f'{i:02x}' for i in zerg_items))
 
     def get_protoss_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
@@ -377,10 +372,12 @@ class MissionClient:
         return (" ".join(f'{i:02x}' for i in protoss_items))
 
     def get_misc_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
-        return ("{} {} {}".format(
+        return ("{} {} {} {} {}".format(
             current_items[SC2Race.ANY][get_item_flag_word(item_names.BUILDING_CONSTRUCTION_SPEED)],
             current_items[SC2Race.ANY][get_item_flag_word(item_names.UPGRADE_RESEARCH_SPEED)],
             current_items[SC2Race.ANY][get_item_flag_word(item_names.UPGRADE_RESEARCH_COST)],
+            current_items[SC2Race.ANY][get_item_flag_word(item_names.SHIELD_REGENERATION)],
+            current_items[SC2Race.ANY][FactionlessItemType.Level.flag_word],
         ))
 
     def get_trap_items(self, current_items: dict[SC2Race, list[int]]) -> str:
@@ -812,8 +809,6 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         else:
             if name == item_names.PROGRESSIVE_ORBITAL_COMMAND:
                 orbital_command_count += 1
-            elif item_data.type == ZergItemType.Level:
-                accumulators[item_data.race][item_data.type.flag_word] += item_data.number
             elif name == item_names.STARTING_MINERALS:
                 accumulators[item_data.race][item_data.type.flag_word] += ctx.minerals_per_item
             elif name == item_names.STARTING_VESPENE:
@@ -930,7 +925,7 @@ def calc_difficulty(difficulty: int) -> Literal['C', 'N', 'H', 'B', 'X']:
 def get_kerrigan_level(
     ctx: 'SC2Context', items: dict[SC2Race, list[int]], missions_beaten: int, mission_id: int
 ) -> int:
-    item_value = items[SC2Race.ZERG][ZergItemType.Level.flag_word]
+    item_value = items[SC2Race.ANY][FactionlessItemType.Level.flag_word]
     mission_value = missions_beaten * ctx.kerrigan_levels_per_mission_completed
     if ctx.kerrigan_levels_per_mission_completed_cap != -1:
         mission_value = min(mission_value, ctx.kerrigan_levels_per_mission_completed_cap)
