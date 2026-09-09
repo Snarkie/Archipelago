@@ -269,10 +269,21 @@ item_name_groups[ItemGroupNames.TERRAN_ITEMS] = terran_items = [
     item_name for item_name, item_data in item_tables.item_table.items()
     if item_data.race == SC2Race.TERRAN
 ]
-
+item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = [
+    item_names.BUNKER,
+    item_names.MISSILE_TURRET,
+    item_names.SENSOR_TOWER,
+    item_names.DEVASTATOR_TURRET,
+    item_names.PLANETARY_FORTRESS,
+    item_names.PSI_SCREEN,
+    item_names.SONIC_DISRUPTER,
+    item_names.PSI_INDOCTRINATOR,
+    item_names.ARGUS_AMPLIFIER,
+]
 item_name_groups[ItemGroupNames.TERRAN_UNITS] = terran_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
     if item_data.type in [item_tables.TerranItemType.Unit]
+    and  item_name not in terran_buildings
 ]
 _terran_core_units = {
     item_names.MARINE: LogicRating.BASIC_STARTER,
@@ -455,7 +466,20 @@ terran_chaos_ship_units = (
     item_names.MIDNIGHT_RIDERS,
     item_names.BRYNHILDS,
 )
-item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [
+item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [    item_names.WAR_PIGS,
+    item_names.DEVIL_DOGS,
+    item_names.HAMMER_SECURITIES,
+    item_names.SPARTAN_COMPANY,
+    item_names.SIEGE_BREAKERS,
+    item_names.HELS_ANGELS,
+    item_names.DUSK_WINGS,
+    item_names.JACKSONS_REVENGE,
+    item_names.SKIBIS_ANGELS,
+    item_names.DEATH_HEADS,
+    item_names.WINGED_NIGHTMARES,
+    item_names.MIDNIGHT_RIDERS,
+    item_names.BRYNHILDS,
+    item_names.JOTUN,
 ]
 item_name_groups[ItemGroupNames.NCO_UNITS] = nco_units = [
     item_names.MARINE, item_names.MARAUDER, item_names.REAPER,
@@ -466,7 +490,25 @@ item_name_groups[ItemGroupNames.NCO_UNITS] = nco_units = [
 item_name_groups[ItemGroupNames.NCO_BUILDINGS] = nco_buildings = [
     item_names.BUNKER, item_names.MISSILE_TURRET, item_names.PLANETARY_FORTRESS,
 ]
-item_name_groups[ItemGroupNames.NOVA_EQUIPMENT] = nova_equipment = [
+item_name_groups[ItemGroupNames.NOVA_EQUIPMENT] = nova_equipment = [    item_names.NOVA_GHOST_VISOR,
+    item_names.NOVA_RANGEFINDER_OCULUS,
+    item_names.NOVA_DOMINATION,
+    item_names.NOVA_BLINK,
+    item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE,
+    item_names.NOVA_ENERGY_SUIT_MODULE,
+    item_names.NOVA_ARMORED_SUIT_MODULE,
+    item_names.NOVA_JUMP_SUIT_MODULE,
+    item_names.NOVA_C20A_CANISTER_RIFLE,
+    item_names.NOVA_HELLFIRE_SHOTGUN,
+    item_names.NOVA_PLASMA_RIFLE,
+    item_names.NOVA_MONOMOLECULAR_BLADE,
+    item_names.NOVA_BLAZEFIRE_GUNBLADE,
+    item_names.NOVA_STIM_INFUSION,
+    item_names.NOVA_PULSE_GRENADES,
+    item_names.NOVA_FLASHBANG_GRENADES,
+    item_names.NOVA_IONIC_FORCE_FIELD,
+    item_names.NOVA_HOLO_DECOY,
+    item_names.NOVA_NUKE,
 ]
 item_name_groups[ItemGroupNames.NOVA_WEAPONS] = nova_weapons = [
     item_names.NOVA_C20A_CANISTER_RIFLE,
@@ -505,15 +547,6 @@ item_name_groups[ItemGroupNames.WOL_BUILDINGS] = wol_buildings = [
     item_names.BUNKER, item_names.MISSILE_TURRET, item_names.SENSOR_TOWER,
     item_names.PERDITION_TURRET, item_names.PLANETARY_FORTRESS,
     item_names.HIVE_MIND_EMULATOR, item_names.PSI_DISRUPTER,
-]
-item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = [
-    *[
-
-    ],
-    item_names.PSI_SCREEN,
-    item_names.SONIC_DISRUPTER,
-    item_names.PSI_INDOCTRINATOR,
-    item_names.ARGUS_AMPLIFIER,
 ]
 item_name_groups[ItemGroupNames.TERRAN_ROYAL_GUARD_UNITS] = [
     # Elite Barracks
@@ -804,6 +837,12 @@ item_name_groups[ItemGroupNames.ZERG_NONMORPH_UNITS] = zerg_nonmorph_units = [
        and item_name not in zerg_buildings
 ]
 item_name_groups[ItemGroupNames.ZERG_MORPHS] = zerg_morphs = [
+    item_names.GUARDIAN,
+    item_names.DEVOURER,
+    item_names.RAVAGER,
+    item_names.OVERSEER,
+    item_names.PRIMAL_IGNITER,
+    item_names.TYRANNOZOR,
 ]
 item_name_groups[ItemGroupNames.ZERG_UNITS] = zerg_units = zerg_nonmorph_units + zerg_morphs
 # For W/A upgrades
@@ -982,6 +1021,15 @@ item_name_groups[ItemGroupNames.HOTS_MORPHS] = hots_morphs = [
     item_names.BROOD_LORD,
 ]
 item_name_groups[ItemGroupNames.ZERG_MERCENARIES] = zerg_mercenaries = [
+    item_names.INFESTED_MEDICS,
+    item_names.INFESTED_SIEGE_BREAKERS,
+    item_names.INFESTED_DUSK_WINGS,
+    item_names.DEVOURING_ONES,
+    item_names.HUNTER_KILLERS,
+    item_names.WISE_OLD_TORRASQUE,
+    item_names.HUNTERLING,
+    item_names.YGGDRASIL,
+    item_names.CAUSTIC_HORRORS,
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_ABILITIES] = kerrigan_abilities = [
     item_names.KERRIGAN_KINETIC_BLAST,
@@ -1101,6 +1149,20 @@ item_name_groups[ItemGroupNames.ZERG_LADDER_UNITS] = [
 
 # Zerg Upgrades
 item_name_groups[ItemGroupNames.HOTS_STRAINS] = hots_strains = [
+    item_names.ZERGLING_RAPTOR_STRAIN,
+    item_names.ZERGLING_SWARMLING_STRAIN,
+    item_names.ROACH_VILE_STRAIN,
+    item_names.ROACH_CORPSER_STRAIN,
+    item_names.IMPALER,
+    item_names.LURKER,
+    item_names.BANELING_SPLITTER_STRAIN,
+    item_names.BANELING_HUNTER_STRAIN,
+    item_names.BROOD_LORD,
+    item_names.VIPER,
+    item_names.SWARM_HOST_CARRION_STRAIN,
+    item_names.SWARM_HOST_CREEPER_STRAIN,
+    item_names.ULTRALISK_NOXIOUS_STRAIN,
+    item_names.ULTRALISK_TORRASQUE_STRAIN,
 ]
 item_name_groups[ItemGroupNames.HOTS_MUTATIONS] = hots_mutations = [
     item_names.ZERGLING_HARDENED_CARAPACE, item_names.ZERGLING_ADRENAL_OVERLOAD, item_names.ZERGLING_METABOLIC_BOOST,
@@ -1493,7 +1555,32 @@ lotv_soa_items = [
     for item_name in soa_items
     if item_name not in (item_names.SOA_PYLON_OVERCHARGE, item_names.OVERWATCH)
 ]
-item_name_groups[ItemGroupNames.PROTOSS_GLOBAL_UPGRADES] = [
+item_name_groups[ItemGroupNames.PROTOSS_GLOBAL_UPGRADES] = [    item_names.MATRIX_OVERLOAD,
+    item_names.QUATRO,
+    item_names.NEXUS_OVERCHARGE,
+    item_names.ORBITAL_ASSIMILATORS,
+    item_names.WARP_HARMONIZATION,
+    item_names.GUARDIAN_SHELL,
+    item_names.RECONSTRUCTION_BEAM,
+    item_names.OVERWATCH,
+    item_names.SUPERIOR_WARP_GATES,
+    item_names.ENHANCED_TARGETING,
+    item_names.OPTIMIZED_ORDNANCE,
+    item_names.KHALAI_INGENUITY,
+    item_names.AMPLIFIED_ASSIMILATORS,
+    item_names.PROGRESSIVE_WARP_RELOCATE,
+    item_names.PROBE_WARPIN,
+    item_names.ELDER_PROBES,
+    item_names.PYLON_PSI_ENHANCEMENT,
+    item_names.NEXUS_KHAYDARIN_CORE,
+    item_names.OPERATIONAL_EFFICIENCY_FLEET_BEACON,
+    item_names.OPERATIONAL_EFFICIENCY_ROBOTICS_BAY,
+    item_names.OPERATIONAL_EFFICIENCY_TEMPLAR_ARCHIVE,
+    item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE,
+    item_names.PRODUCTION_EFFICIENCY,
+    item_names.WARP_HARMONIZATION_STARGATE,
+    item_names.NEXUS_CHRONO_EFFICIENCY,
+    item_names.PROTOSS_BUILDING_SHIELDS,
 ]
 item_name_groups[ItemGroupNames.LOTV_GLOBAL_UPGRADES] = lotv_global_upgrades = [
     item_names.NEXUS_OVERCHARGE,
@@ -1504,6 +1591,58 @@ item_name_groups[ItemGroupNames.LOTV_GLOBAL_UPGRADES] = lotv_global_upgrades = [
     item_names.RECONSTRUCTION_BEAM,
 ]
 item_name_groups[ItemGroupNames.WAR_COUNCIL] = war_council_upgrades = [
+    item_names.ZEALOT_WHIRLWIND,
+    item_names.CENTURION_RESOURCE_EFFICIENCY,
+    item_names.SENTINEL_RESOURCE_EFFICIENCY,
+    item_names.STALKER_PHASE_REACTOR,
+    item_names.DRAGOON_PHALANX_SUIT,
+    item_names.INSTIGATOR_MODERNIZED_SERVOS,
+    item_names.ADEPT_DISRUPTIVE_TRANSFER,
+    item_names.SLAYER_PHASE_BLINK,
+    item_names.AVENGER_KRYHAS_CLOAK,
+    item_names.DARK_TEMPLAR_LESSER_SHADOW_FURY,
+    item_names.DARK_TEMPLAR_GREATER_SHADOW_FURY,
+    item_names.BLOOD_HUNTER_BRUTAL_EFFICIENCY,
+    item_names.SENTRY_DOUBLE_SHIELD_RECHARGE,
+    item_names.ENERGIZER_MOBILE_CHRONO_BEAM,
+    item_names.HAVOC_ENDURING_SIGHT,
+    item_names.HIGH_TEMPLAR_PLASMA_SURGE,
+    item_names.SIGNIFIER_FEEDBACK,
+    item_names.ASCENDANT_BREATH_OF_CREATION,
+    item_names.DARK_ARCHON_INDOMITABLE_WILL,
+    item_names.IMMORTAL_IMPROVED_BARRIER,
+    item_names.VANGUARD_RAPIDFIRE_CANNON,
+    item_names.VANGUARD_FUSION_MORTARS,
+    item_names.ANNIHILATOR_TWILIGHT_CHASSIS,
+    item_names.STALWART_ARC_INDUCERS,
+    item_names.COLOSSUS_FIRE_LANCE,
+    item_names.WRATHWALKER_AERIAL_TRACKING,
+    item_names.REAVER_KHALAI_REPLICATORS,
+    item_names.DISRUPTOR_MOBILITY_PROTOCOLS,
+    item_names.WARP_PRISM_WARP_REFRACTION,
+    item_names.OBSERVER_INDUCE_SCOPOPHOBIA,
+    item_names.PHOENIX_DOUBLE_GRAVITON_BEAM,
+    item_names.CORSAIR_NETWORK_DISRUPTION,
+    item_names.MIRAGE_GRAVITON_BEAM,
+    item_names.SKIRMISHER_PEER_CONTEMPT,
+    item_names.VOID_RAY_PRISMATIC_RANGE,
+    item_names.DESTROYER_REFORGED_BLOODSHARD_CORE,
+    item_names.PULSAR_CHRONO_SHEAR,
+    item_names.DAWNBRINGER_SOLARITE_LENS,
+    item_names.CARRIER_REPAIR_DRONES,
+    item_names.SKYLORD_JUMP,
+    item_names.TRIREME_BOMBER_MINIATURIZATION,
+    item_names.TEMPEST_DISINTEGRATION,
+    item_names.SCOUT_EXPEDITIONARY_HULL,
+    item_names.ARBITER_VESSEL_OF_THE_CONCLAVE,
+    item_names.ORACLE_STASIS_CALIBRATION,
+    item_names.MOTHERSHIP_TALDARIM_INTEGRATED_POWER,
+    item_names.MOTHERSHIP_AIUR_VALOROUS_RESOLVE,
+    item_names.MOTHERSHIP_PURIFIER_MOBILE_POWER_FIELD,
+    item_names.OPPRESSOR_VULCAN_BLASTER,
+    item_names.CALADRIUS_CORONA_BEAM,
+    item_names.MISTWING_PHANTOM_DASH,
+    item_names.SUPPLICANT_SACRIFICE,
 ]
 
 lotv_war_council_upgrades = [

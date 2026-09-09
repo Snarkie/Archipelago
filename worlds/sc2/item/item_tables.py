@@ -1666,7 +1666,7 @@ item_table = {
     item_names.KERRIGAN_SPAWN_LEVIATHAN: ItemData(419 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 175, SC2Race.ZERG, classification=ItemClassification.progression),
     item_names.KERRIGAN_DROP_PODS: ItemData(420 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 176, SC2Race.ZERG, classification=ItemClassification.progression),
     # Handled separately from other abilities
-    item_names.KERRIGAN_PRIMAL_FORM: ItemData(421 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 212, SC2Race.ZERG),
+    item_names.KERRIGAN_PRIMAL_FORM: ItemData(421 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 212, SC2Race.ZERG, classification=ItemClassification.progression),
     item_names.KERRIGAN_ASSIMILATION_AURA: ItemData(422 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 177, SC2Race.ZERG),
     item_names.KERRIGAN_IMMOBILIZATION_WAVE: ItemData(423 + SC2HOTS_ITEM_ID_OFFSET, ZergItemType.Mutation_1, 178, SC2Race.ZERG, classification=ItemClassification.progression),
 
@@ -2337,8 +2337,25 @@ spear_of_adun_calldowns = {
 }
 
 nova_equipment = {
-    *[],
-    item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE
+    item_names.NOVA_GHOST_VISOR,
+    item_names.NOVA_RANGEFINDER_OCULUS,
+    item_names.NOVA_DOMINATION,
+    item_names.NOVA_BLINK,
+    item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE,
+    item_names.NOVA_ENERGY_SUIT_MODULE,
+    item_names.NOVA_ARMORED_SUIT_MODULE,
+    item_names.NOVA_JUMP_SUIT_MODULE,
+    item_names.NOVA_C20A_CANISTER_RIFLE,
+    item_names.NOVA_HELLFIRE_SHOTGUN,
+    item_names.NOVA_PLASMA_RIFLE,
+    item_names.NOVA_MONOMOLECULAR_BLADE,
+    item_names.NOVA_BLAZEFIRE_GUNBLADE,
+    item_names.NOVA_STIM_INFUSION,
+    item_names.NOVA_PULSE_GRENADES,
+    item_names.NOVA_FLASHBANG_GRENADES,
+    item_names.NOVA_IONIC_FORCE_FIELD,
+    item_names.NOVA_HOLO_DECOY,
+    item_names.NOVA_NUKE,
 }
 
 upgrade_bundles: dict[str, list[str]] = {
