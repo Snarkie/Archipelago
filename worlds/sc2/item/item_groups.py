@@ -1047,9 +1047,9 @@ item_name_groups[ItemGroupNames.KERRIGAN_ABILITIES] = kerrigan_abilities = [
     item_names.KERRIGAN_APOCALYPSE,
     item_names.KERRIGAN_SPAWN_LEVIATHAN,
     item_names.KERRIGAN_DROP_PODS,
-    item_names.KERRIGAN_PRIMAL_FORM,
     item_names.KERRIGAN_ASSIMILATION_AURA,
     item_names.KERRIGAN_IMMOBILIZATION_WAVE,
+    # item_names.KERRIGAN_PRIMAL_FORM, # handled separately
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_PASSIVES] = kerrigan_passives = [
     item_names.KERRIGAN_HEROIC_FORTITUDE,
