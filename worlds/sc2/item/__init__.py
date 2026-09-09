@@ -61,20 +61,20 @@ class ItemTypeEnum(enum.Enum):
 
 class TerranItemType(ItemTypeEnum):
     Unit = "Unit", 0
-    Armory = "Armory", 1
+    Item = "Item", 1
     Upgrade = "Upgrade", 2
     Progressive = "Progressive Upgrade", 3
 
 
 class ZergItemType(ItemTypeEnum):
     Unit = "Unit", 0
-    Mutation_1 = "Mutation", 1
+    Item = "Item", 1
     Upgrade = "Upgrade", 2
     Progressive = "Progressive Upgrade", 3
 
 class ProtossItemType(ItemTypeEnum):
     Unit = "Unit", 0
-    Forge_1 = "Forge", 1
+    Item = "Item", 1
     Upgrade = "Upgrade", 2
     Progressive = "Progressive Upgrade", 3
 
