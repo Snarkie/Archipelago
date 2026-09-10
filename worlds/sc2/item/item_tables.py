@@ -2320,44 +2320,6 @@ key_item_table.update(numbered_progressive_keys)
 key_item_table.update(special_keys)
 item_table.update(key_item_table)
 
-
-spear_of_adun_calldowns = {
-    item_names.SOA_CHRONO_SURGE,
-    item_names.SOA_PROGRESSIVE_PROXY_PYLON,
-    item_names.SOA_PYLON_OVERCHARGE,
-    item_names.SOA_ORBITAL_STRIKE,
-    item_names.SOA_TEMPORAL_FIELD,
-    item_names.SOA_SOLAR_LANCE,
-    item_names.SOA_MASS_RECALL,
-    item_names.SOA_SHIELD_OVERCHARGE,
-    item_names.SOA_DEPLOY_FENIX,
-    item_names.SOA_PURIFIER_BEAM,
-    item_names.SOA_TIME_STOP,
-    item_names.SOA_SOLAR_BOMBARDMENT
-}
-
-nova_equipment = {
-    item_names.NOVA_GHOST_VISOR,
-    item_names.NOVA_RANGEFINDER_OCULUS,
-    item_names.NOVA_DOMINATION,
-    item_names.NOVA_BLINK,
-    item_names.NOVA_PROGRESSIVE_STEALTH_SUIT_MODULE,
-    item_names.NOVA_ENERGY_SUIT_MODULE,
-    item_names.NOVA_ARMORED_SUIT_MODULE,
-    item_names.NOVA_JUMP_SUIT_MODULE,
-    item_names.NOVA_C20A_CANISTER_RIFLE,
-    item_names.NOVA_HELLFIRE_SHOTGUN,
-    item_names.NOVA_PLASMA_RIFLE,
-    item_names.NOVA_MONOMOLECULAR_BLADE,
-    item_names.NOVA_BLAZEFIRE_GUNBLADE,
-    item_names.NOVA_STIM_INFUSION,
-    item_names.NOVA_PULSE_GRENADES,
-    item_names.NOVA_FLASHBANG_GRENADES,
-    item_names.NOVA_IONIC_FORCE_FIELD,
-    item_names.NOVA_HOLO_DECOY,
-    item_names.NOVA_NUKE,
-}
-
 upgrade_bundles: dict[str, list[str]] = {
     # Terran
     item_names.PROGRESSIVE_TERRAN_WEAPON_UPGRADE:

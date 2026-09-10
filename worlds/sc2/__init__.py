@@ -595,7 +595,10 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
         if not zerg_missions and item.data.race == SC2Race.ZERG:
             item.flags |= ItemFilterFlags.FilterExcluded
             continue
-        if not protoss_missions and item.data.race == SC2Race.PROTOSS:
+        if (not protoss_missions
+            and (item.data.race == SC2Race.PROTOSS
+                or item.name == item_names.SHIELD_REGENERATION)
+        ):
             item.flags |= ItemFilterFlags.FilterExcluded
             continue
 
@@ -745,24 +748,20 @@ def flag_mission_based_item_excludes(world: SC2World, item_list: list[FilterItem
             item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Kerrigan abilities if there's no Kerrigan
-        # if item.data.type == ZergItemType.Ability and remove_kerrigan_items:
-        #    item.flags |= ItemFilterFlags.FilterExcluded
-
-        # Remove Nova items if there's no Nova
-        if item.data.type == item_tables.nova_equipment and remove_nova_items:
+        if item.name in item_groups.kerrigan_abilities and remove_kerrigan_items:
             item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Artanis items if there's no Artanis
-        # if item.data.type == ProtossItemType.Artanis_Items and remove_artanis_items:
-        #     item.flags |= ItemFilterFlags.FilterExcluded
+        if item.name in item_groups.artanis_abilities and remove_artanis_items:
+            item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Spear of Adun if it's off
-        # if item.name in item_tables.spear_of_adun_calldowns and not soa_presence:
-        #     item.flags |= ItemFilterFlags.FilterExcluded
+        if item.name in item_groups.spear_of_adun_actives and not soa_presence:
+            item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove Spear of Adun passives
-        # if item.name in item_groups.spear_of_adun_passives and not soa_passive_presence:
-        #     item.flags |= ItemFilterFlags.FilterExcluded
+        if item.name in item_groups.spear_of_adun_passives and not soa_passive_presence:
+            item.flags |= ItemFilterFlags.FilterExcluded
 
         # Remove matchup-specific items if you don't play that matchup
         if (item.name in (item_names.HIVE_MIND_EMULATOR, item_names.PSI_DISRUPTER)

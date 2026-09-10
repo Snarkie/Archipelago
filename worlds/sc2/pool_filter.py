@@ -10,7 +10,6 @@ from .item.item_tables import (
     TerranItemType,
     ZergItemType,
     ProtossItemType,
-    spear_of_adun_calldowns,
 )
 from . import tables
 
@@ -213,7 +212,7 @@ class ValidInventory:
         cull_items_over_maximum(kerrigan_passives, self.world.options.kerrigan_max_passive_abilities.value)
 
         # Spear of Adun max abilities
-        spear_of_adun_actives = [item for item in inventory if item.name in spear_of_adun_calldowns]
+        spear_of_adun_actives = [item for item in inventory if item.name in item_groups.spear_of_adun_actives]
         self.world.random.shuffle(spear_of_adun_actives)
         cull_items_over_maximum(spear_of_adun_actives, self.world.options.spear_of_adun_max_active_abilities.value)
 
