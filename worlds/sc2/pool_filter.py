@@ -20,10 +20,7 @@ if TYPE_CHECKING:
 
 # Items affected by the "Ensure Generic Items" option
 # Includes W/A upgrades, macro upgrades, static def, hero/SoA items
-second_pass_placeable_items: tuple[str, ...] = (
-    *item_groups.generic_items,
-)
-
+second_pass_placeable_items = tuple(item_groups.generic_items)
 
 def copy_item(item: StarcraftItem) -> StarcraftItem:
     return StarcraftItem(item.name, item.classification, item.code, item.player, item.filter_flags)
