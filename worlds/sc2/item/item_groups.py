@@ -476,7 +476,8 @@ terran_chaos_ship_units = (
     item_names.MIDNIGHT_RIDERS,
     item_names.BRYNHILDS,
 )
-item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [    item_names.WAR_PIGS,
+item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [
+    item_names.WAR_PIGS,
     item_names.DEVIL_DOGS,
     item_names.HAMMER_SECURITIES,
     item_names.SPARTAN_COMPANY,
