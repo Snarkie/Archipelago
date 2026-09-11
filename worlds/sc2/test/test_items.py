@@ -76,7 +76,7 @@ class TestItems(unittest.TestCase):
                 continue
             signal = (item_data.type, item_data.number)
             assert signal not in encountered, (
-                f"\nItem {item_name} shares type: {item_data.type.display_name}"
+                f"Item {item_name} shares type: {item_data.type.display_name}"
                 f" and number: {item_data.number} with {encountered[signal]}"
             )
             encountered[signal] = item_name
