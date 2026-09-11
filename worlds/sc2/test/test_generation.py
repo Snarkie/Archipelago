@@ -254,7 +254,6 @@ class TestItemFiltering(Sc2SetupTestBase):
         world_items = [(item.name, item_tables.item_table[item.name]) for item in self.multiworld.itempool]
         for item_name, item_data in world_items:
             self.assertNotEqual(item_data.type, item_tables.ZergItemType.Unit, f"Item '{item_name}' included when all zerg build missions are excluded")
-            self.assertNotEqual(item_data.type, item_tables.ZergItemType.Mercenary, f"Item '{item_name}' included when all zerg build missions are excluded")
 
     def test_excluding_all_protoss_missions_excludes_all_protoss_items(self) -> None:
         world_options = {
@@ -296,8 +295,6 @@ class TestItemFiltering(Sc2SetupTestBase):
         world_items = [(item.name, item_tables.item_table[item.name]) for item in self.multiworld.itempool]
         for item_name, item_data in world_items:
             self.assertNotEqual(item_data.type, item_tables.ProtossItemType.Unit, f"Item '{item_name}' included when all protoss build missions are excluded")
-            self.assertNotEqual(item_data.type, item_tables.ProtossItemType.Unit_2, f"Item '{item_name}' included when all protoss build missions are excluded")
-            self.assertNotEqual(item_data.type, item_tables.ProtossItemType.Building, f"Item '{item_name}' included when all protoss build missions are excluded")
 
     def test_vanilla_items_only_excludes_terran_progressives(self) -> None:
         world_options = {
@@ -456,7 +453,7 @@ class TestItemFiltering(Sc2SetupTestBase):
         self.generate_world(world_options)
         itempool = [item.name for item in self.multiworld.itempool]
         self.assertTrue(itempool)
-        soa_items_in_pool = [item_name for item_name in itempool if item_tables.item_table[item_name].type == item_tables.ProtossItemType.Spear_Of_Adun]
+        soa_items_in_pool = [item_name for item_name in itempool if item_name in item_groups.soa_items]
         self.assertGreater(len(soa_items_in_pool), 5)
 
     def test_lotv_only_doesnt_include_kerrigan_items_with_grant_story_tech(self) -> None:
