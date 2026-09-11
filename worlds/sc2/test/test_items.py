@@ -70,22 +70,22 @@ class TestItems(unittest.TestCase):
         Tests if each item is distinct for sending into the mod.
         """
         item_types: list[ItemType] = [
-            *[item.value for item in item_tables.TerranItemType],
-            *[item.value for item in item_tables.ZergItemType],
-            *[item.value for item in item_tables.ProtossItemType],
-            *[item.value for item in item_tables.FactionlessItemType]
+            *[item for item in item_tables.TerranItemType],
+            *[item for item in item_tables.ZergItemType],
+            *[item for item in item_tables.ProtossItemType],
+            *[item for item in item_tables.FactionlessItemType
+                if item is not item_tables.FactionlessItemType.Keys] # all keys use number 0
         ]
-
         self.assertGreater(len(item_types), 0)
 
         for item_type in item_types:
-            item_names: list[str] = [
+            for item_name in item_tables.item_table:
+                item_names: list[str] = [
                 item_name for item_name in item_tables.item_table
-                if item_tables.item_table[item_name].number >= 0  # Negative numbers have special meaning
+                if item_tables.item_table[item_name].number >= 0  # negative numbers have special meaning
                    and item_tables.item_table[item_name].type == item_type
             ]
-            item_numbers = {item_tables.item_table[item_name] for item_name in item_names}
-
+            item_numbers = {item_tables.item_table[item_name].number for item_name in item_names}
             self.assertEqual(len(item_names), len(item_numbers))
 
     def test_progressive_has_quantity(self) -> None:
