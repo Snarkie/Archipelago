@@ -112,27 +112,13 @@ class TestItems(unittest.TestCase):
         non_progressive_single_entity_groups: list[ItemType] = [
             # Terran
             item_tables.TerranItemType.Unit,
-            item_tables.TerranItemType.Upgrade,
+            item_tables.TerranItemType.Item,
             # Zerg
             item_tables.ZergItemType.Unit,
-            item_tables.ZergItemType.Mercenary,
-            item_tables.ZergItemType.Morph,
-            item_tables.ZergItemType.Strain,
             item_tables.ZergItemType.Item,
-            item_tables.ZergItemType.Mutation_2,
-            item_tables.ZergItemType.Mutation_3,
-            item_tables.ZergItemType.Evolution_Pit,
-            item_tables.ZergItemType.Ability,
             # Protoss
             item_tables.ProtossItemType.Unit,
-            item_tables.ProtossItemType.Unit_2,
-            item_tables.ProtossItemType.Building,
             item_tables.ProtossItemType.Item,
-            item_tables.ProtossItemType.Forge_2,
-            item_tables.ProtossItemType.Forge_3,
-            item_tables.ProtossItemType.Forge_4,
-            item_tables.ProtossItemType.Solarite_Core,
-            item_tables.ProtossItemType.Spear_Of_Adun
         ]
 
         quantities: list[int] = [
@@ -142,13 +128,12 @@ class TestItems(unittest.TestCase):
 
         for quantity in quantities:
             self.assertLessEqual(quantity, 1)
-
     def test_item_number_less_than_30(self) -> None:
         """
         Checks if all item numbers are within bounds supported by game mod.
         """
         not_checked_item_types: list[ItemType] = [
-            item_tables.ZergItemType.Level
+            item_tables.FactionlessItemType.Level
         ]
         items_to_check: list[str] = [
             item for item in item_tables.item_table
