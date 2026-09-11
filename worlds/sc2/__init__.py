@@ -610,9 +610,7 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
         if (not zerg_build_missions
-            and item.data.type in (
-                ZergItemType.Unit,
-            )
+            and item.data.type == ZergItemType.Unit
             and item.name not in allowed_remaining_zerg_units
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
@@ -620,9 +618,7 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             # Note(mm): This doesn't handle categories containing e.g. automated assimilators
             # or warp gate improvements because that item type is mixed in with
             # e.g. Reconstruction Beam and Overwatch
-            and item.data.type in [
-                ProtossItemType.Unit
-            ]
+            and item.data.type == ProtossItemType.Unit
             and item.name not in allowed_remaining_protoss_units
         ):
             # Note(mm): This doesn't exclude things like automated assimilators or warp gate improvements
