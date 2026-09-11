@@ -615,11 +615,13 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             and item.data.race == SC2Race.TERRAN
             and item.data.type != item_tables.TerranItemType.Upgrade
             and item.name not in allowed_remaining_terran_units
+            and item.name not in item_groups.nova_equipment
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
         if (not zerg_build_missions
             and item.data.type == ZergItemType.Unit
             and item.name not in allowed_remaining_zerg_units
+            and item.name not in item_groups.kerrigan_abilities
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
         if (not protoss_build_missions
@@ -628,6 +630,8 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             # e.g. Reconstruction Beam and Overwatch
             and item.data.type == ProtossItemType.Unit
             and item.name not in allowed_remaining_protoss_units
+            and item.name not in item_groups.artanis_abilities
+            and item.name not in item_groups.soa_items
         ):
             # Note(mm): This doesn't exclude things like automated assimilators or warp gate improvements
             # because that item type is mixed in with e.g. Reconstruction Beam and Overwatch
