@@ -239,7 +239,7 @@ class ItemGroupNames:
     ARTANIS_ACTIVE_ABILITIES = "Artanis Global Actives"
     ARTANIS_PASSIVE_ABILITIES = "Artanis Global Passives"
 
-    GENERIC_ITEMS = "Generic Items" # Referenced by the option
+    GENERIC_ITEMS = "Generic Items"  # Referenced by the option
     VANILLA_ITEMS = "Vanilla Items"
     OVERPOWERED_ITEMS = "Overpowered Items"
     DISABLED_ITEMS = "Disabled Items"
@@ -1099,7 +1099,7 @@ item_name_groups[ItemGroupNames.KERRIGAN_ABILITIES] = kerrigan_abilities = [
     item_names.KERRIGAN_DROP_PODS,
     item_names.KERRIGAN_ASSIMILATION_AURA,
     item_names.KERRIGAN_IMMOBILIZATION_WAVE,
-    # item_names.KERRIGAN_PRIMAL_FORM, # handled separately
+    # item_names.KERRIGAN_PRIMAL_FORM,  # handled separately
 ]
 item_name_groups[ItemGroupNames.KERRIGAN_PASSIVES] = kerrigan_passives = [
     item_names.KERRIGAN_HEROIC_FORTITUDE,
