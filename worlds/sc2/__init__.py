@@ -605,6 +605,7 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             and (item.data.race == SC2Race.PROTOSS
                 or item.name == item_names.SHIELD_REGENERATION)
             and item.name not in item_groups.artanis_abilities
+            and item.name not in item_groups.soa_items
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
             continue
