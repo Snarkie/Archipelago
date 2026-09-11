@@ -880,13 +880,7 @@ item_name_groups[ItemGroupNames.ZERG_BUILDINGS] = zerg_buildings = [
     item_names.INFESTED_BUNKER,
     item_names.INFESTED_MISSILE_TURRET,
     item_names.NYDUS_WORM,
-    item_names.ECHIDNA_WORM]
-item_name_groups[ItemGroupNames.ZERG_NONMORPH_UNITS] = zerg_nonmorph_units = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in [
-        item_tables.ZergItemType.Unit
-    ]
-       and item_name not in zerg_buildings
+    item_names.ECHIDNA_WORM
 ]
 item_name_groups[ItemGroupNames.ZERG_MORPHS] = zerg_morphs = [
     item_names.GUARDIAN,
@@ -895,6 +889,11 @@ item_name_groups[ItemGroupNames.ZERG_MORPHS] = zerg_morphs = [
     item_names.OVERSEER,
     item_names.PRIMAL_IGNITER,
     item_names.TYRANNOZOR,
+]
+item_name_groups[ItemGroupNames.ZERG_NONMORPH_UNITS] = zerg_nonmorph_units = [
+    item_name for item_name, item_data in item_tables.item_table.items()
+    if item_data.type == item_tables.ZergItemType.Unit
+       and item_name not in zerg_buildings and item_name not in zerg_morphs
 ]
 item_name_groups[ItemGroupNames.ZERG_UNITS] = zerg_units = zerg_nonmorph_units + zerg_morphs
 # For W/A upgrades
