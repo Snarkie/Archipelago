@@ -883,6 +883,11 @@ item_name_groups[ItemGroupNames.ZERG_BUILDINGS] = zerg_buildings = [
     item_names.ECHIDNA_WORM
 ]
 item_name_groups[ItemGroupNames.ZERG_MORPHS] = zerg_morphs = [
+    item_names.BANELING,
+    item_names.LURKER,
+    item_names.IMPALER,
+    item_names.BROOD_LORD,
+    item_names.VIPER,
     item_names.GUARDIAN,
     item_names.DEVOURER,
     item_names.RAVAGER,
