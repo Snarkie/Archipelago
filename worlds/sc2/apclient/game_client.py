@@ -119,6 +119,10 @@ class MissionClient:
         skip_cutscenes = 1 if SC2World.settings.game_skip_cutscenes else 0
         disable_forced_camera = 1 if SC2World.settings.game_disable_forced_camera else 0
         nova_presence = 0  # unused for now
+        if is_kerrigan_primal(self.ctx, kerrigan_level):
+            primal_item = item_tables.item_table[item_names.KERRIGAN_PRIMAL_FORM]
+            flag_word = get_item_flag_word(item_names.KERRIGAN_PRIMAL_FORM)
+            start_items[primal_item.race][flag_word] |= 1 << primal_item.number
         error = banks.send_options(
             f" {difficulty}"
             f" {generic_upgrade_options}"
