@@ -371,13 +371,13 @@ class MissionClient:
         protoss_items = current_items[SC2Race.PROTOSS]
         return (" ".join(f'{i:02x}' for i in protoss_items))
 
-    def get_misc_tech(self, current_items: dict[SC2Race, list[int]]) -> str:
+    def get_misc_tech(self, current_items: dict[SC2Race, list[int]], kerrigan_level) -> str:
         return ("{} {} {} {} {}".format(
             current_items[SC2Race.ANY][get_item_flag_word(item_names.BUILDING_CONSTRUCTION_SPEED)],
             current_items[SC2Race.ANY][get_item_flag_word(item_names.UPGRADE_RESEARCH_SPEED)],
             current_items[SC2Race.ANY][get_item_flag_word(item_names.UPGRADE_RESEARCH_COST)],
             current_items[SC2Race.ANY][get_item_flag_word(item_names.SHIELD_REGENERATION)],
-            current_items[SC2Race.ANY][FactionlessItemType.Level.flag_word],
+            kerrigan_level,
         ))
 
     def get_trap_items(self, current_items: dict[SC2Race, list[int]]) -> str:
@@ -391,7 +391,7 @@ class MissionClient:
             self.get_terran_tech(current_items),
             self.get_zerg_tech(current_items),
             self.get_protoss_tech(current_items),
-            self.get_misc_tech(current_items),
+            self.get_misc_tech(current_items, kerrigan_level),
             self.get_trap_items(current_items),
         )
 
@@ -817,6 +817,8 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
                 accumulators[item_data.race][item_data.type.flag_word] += ctx.starting_supply_per_item
             elif name == item_names.UPGRADE_RESEARCH_COST:
                 accumulators[item_data.race][item_data.type.flag_word] += ctx.research_cost_reduction_per_item
+            elif item_data.type == FactionlessItemType.Level:
+                accumulators[item_data.race][item_data.type.flag_word] += item_data.number
             else:
                 accumulators[item_data.race][item_data.type.flag_word] += 1
 
