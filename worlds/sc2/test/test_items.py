@@ -69,24 +69,17 @@ class TestItems(unittest.TestCase):
         """
         Tests if each item is distinct for sending into the mod.
         """
-        item_types: list[ItemType] = [
-            *[item for item in item_tables.TerranItemType],
-            *[item for item in item_tables.ZergItemType],
-            *[item for item in item_tables.ProtossItemType],
-            *[item for item in item_tables.FactionlessItemType
-                if item is not item_tables.FactionlessItemType.Keys] # all keys use number 0
-        ]
-        self.assertGreater(len(item_types), 0)
-
-        for item_type in item_types:
-            for item_name in item_tables.item_table:
-                item_names: list[str] = [
-                item_name for item_name in item_tables.item_table
-                if item_tables.item_table[item_name].number >= 0  # negative numbers have special meaning
-                   and item_tables.item_table[item_name].type == item_type
-            ]
-            item_numbers = {item_tables.item_table[item_name].number for item_name in item_names}
-            self.assertEqual(len(item_names), len(item_numbers))
+        encountered: dict[tuple[ItemType, int], str] = {}
+        for item_name, item_data in item_tables.item_table.items():
+            if (item_data.number < 0  # negative numbers have special meaning
+            or item_data.type is item_tables.FactionlessItemType.Keys): # all keys share number 0
+                continue
+            signal = (item_data.type, item_data.number)
+            assert signal not in encountered, (
+                f"Item {item_name} shares type: {item_data.type.display_name}"
+                f" and number: {item_data.number} with {encountered[signal]}"
+            )
+            encountered[signal] = item_name
 
     def test_progressive_has_quantity(self) -> None:
         """
