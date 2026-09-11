@@ -281,6 +281,7 @@ item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = [
     item_names.MISSILE_TURRET,
     item_names.SENSOR_TOWER,
     item_names.DEVASTATOR_TURRET,
+    item_names.PERDITION_TURRET,
     item_names.PLANETARY_FORTRESS,
     item_names.PSI_DISRUPTER,
     item_names.PSI_SCREEN,
