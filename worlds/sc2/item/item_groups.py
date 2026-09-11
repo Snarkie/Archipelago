@@ -290,11 +290,11 @@ item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = (
     item_names.PSI_INDOCTRINATOR,
     item_names.ARGUS_AMPLIFIER,
 )
-item_name_groups[ItemGroupNames.TERRAN_UNITS] = terran_units = [
+item_name_groups[ItemGroupNames.TERRAN_UNITS] = terran_units = tuple(
     item_name for item_name, item_data in item_tables.item_table.items()
     if item_data.type == item_tables.TerranItemType.Unit
-    and  item_name not in terran_buildings
-]
+    and item_name not in terran_buildings
+)
 _terran_core_units = {
     item_names.MARINE: LogicRating.BASIC_STARTER,
     item_names.MARAUDER: LogicRating.BASIC_STARTER,
