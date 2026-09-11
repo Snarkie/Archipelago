@@ -276,7 +276,7 @@ item_name_groups[ItemGroupNames.TERRAN_ITEMS] = terran_items = [
     item_name for item_name, item_data in item_tables.item_table.items()
     if item_data.race == SC2Race.TERRAN
 ]
-item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = [
+item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = (
     item_names.BUNKER,
     item_names.MISSILE_TURRET,
     item_names.SENSOR_TOWER,
@@ -289,10 +289,10 @@ item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = [
     item_names.HIVE_MIND_EMULATOR,
     item_names.PSI_INDOCTRINATOR,
     item_names.ARGUS_AMPLIFIER,
-]
+)
 item_name_groups[ItemGroupNames.TERRAN_UNITS] = terran_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in [item_tables.TerranItemType.Unit]
+    if item_data.type == item_tables.TerranItemType.Unit
     and  item_name not in terran_buildings
 ]
 _terran_core_units = {
@@ -476,7 +476,7 @@ terran_chaos_ship_units = (
     item_names.MIDNIGHT_RIDERS,
     item_names.BRYNHILDS,
 )
-item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [
+item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = (
     item_names.WAR_PIGS,
     item_names.DEVIL_DOGS,
     item_names.HAMMER_SECURITIES,
@@ -491,7 +491,7 @@ item_name_groups[ItemGroupNames.TERRAN_MERCENARIES] = terran_mercenaries = [
     item_names.MIDNIGHT_RIDERS,
     item_names.BRYNHILDS,
     item_names.JOTUN,
-]
+)
 item_name_groups[ItemGroupNames.NCO_UNITS] = nco_units = [
     item_names.MARINE, item_names.MARAUDER, item_names.REAPER,
     item_names.HELLION, item_names.GOLIATH, item_names.SIEGE_TANK,
@@ -1408,9 +1408,15 @@ item_name_groups[ItemGroupNames.PROTOSS_ITEMS] = protoss_items = [
     item_name for item_name, item_data in item_tables.item_table.items()
     if item_data.race == SC2Race.PROTOSS
 ]
+item_name_groups[ItemGroupNames.PROTOSS_BUILDINGS] = protoss_buildings = [
+    item_names.PHOTON_CANNON,
+    item_names.KHAYDARIN_MONOLITH,
+    item_names.SHIELD_BATTERY,
+]
 item_name_groups[ItemGroupNames.PROTOSS_UNITS] = protoss_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in [item_tables.ProtossItemType.Unit]
+    if item_data.type == item_tables.ProtossItemType.Unit
+    and  item_name not in protoss_buildings
 ]
 _protoss_core_units = {
     item_names.ZEALOT: LogicRating.BASIC_STARTER,
@@ -1613,8 +1619,6 @@ item_name_groups[ItemGroupNames.STARGATE_UNITS] = stargate_units = [
 ]
 item_name_groups[ItemGroupNames.NEXUS_UNITS] = nexus_units = [
     item_names.MOTHERSHIP_AIUR, item_names.MOTHERSHIP_PURIFIER,
-]
-item_name_groups[ItemGroupNames.PROTOSS_BUILDINGS] = protoss_buildings = [
 ]
 item_name_groups[ItemGroupNames.AIUR_UNITS] = [
     item_names.ZEALOT, item_names.DRAGOON, item_names.SENTRY, item_names.AVENGER, item_names.HIGH_TEMPLAR,
