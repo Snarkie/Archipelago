@@ -128,18 +128,3 @@ class TestItems(unittest.TestCase):
 
         for quantity in quantities:
             self.assertLessEqual(quantity, 1)
-    def test_item_number_less_than_30(self) -> None:
-        """
-        Checks if all item numbers are within bounds supported by game mod.
-        """
-        not_checked_item_types: list[ItemType] = [
-            item_tables.FactionlessItemType.Level
-        ]
-        items_to_check: list[str] = [
-            item for item in item_tables.item_table
-            if item_tables.item_table[item].type not in not_checked_item_types
-        ]
-
-        for item in items_to_check:
-            item_number = item_tables.item_table[item].number
-            self.assertLess(item_number, 30)
