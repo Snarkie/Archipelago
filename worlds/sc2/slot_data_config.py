@@ -61,6 +61,12 @@ class Sc2SlotDataDict(TypedDict, total=False):
     lowest_maximum_supply: int
     research_cost_reduction_per_item: int
 
+    # Mutators
+    apply_mutators: int
+    mutator_limit: int
+    mutator_rate: int
+    mutator_order: list[str]
+
     # Void Trade
     enable_void_trade: int
     void_trade_age_limit: int
@@ -155,6 +161,11 @@ def fill_slot_data(world: 'SC2World') -> Sc2SlotDataDict:
     slot_data["lowest_maximum_supply"] = int(world.options.lowest_maximum_supply)
     slot_data["research_cost_reduction_per_item"] = int(world.options.research_cost_reduction_per_item)
     slot_data["difficulty_damage_modifier"] = int(world.options.difficulty_damage_modifier)
+
+    slot_data["apply_mutators"] = int(world.options.apply_mutators)
+    slot_data["mutator_limit"] = int(world.options.mutator_limit)
+    slot_data["mutator_rate"] = int(world.options.mutator_rate)
+    slot_data["mutator_order"] = world.mutator_order
 
     if world.options.enable_void_trade != options.EnableVoidTrade.option_false:
         slot_data["enable_void_trade"] = int(world.options.enable_void_trade)
