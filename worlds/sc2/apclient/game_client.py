@@ -386,9 +386,17 @@ class MissionClient:
         ))
 
     def get_mutator_items(self, current_items: dict[SC2Race, list[int]]) -> str:
+        if (self.ctx.ghost_spawn_level == -1):
+            ghost_spawn = current_items[SC2Race.ANY][get_item_flag_word(item_names.MUTATOR_GHOST_SPAWN)]
+        else:
+            ghost_spawn = self.ctx.ghost_spawn_level
+        if (self.ctx.void_duplicate_level == -1):
+            void_duplicate = current_items[SC2Race.ANY][get_item_flag_word(item_names.MUTATOR_VOID_DUPLICATE)]
+        else:
+            void_duplicate = self.ctx.void_duplicate_level
         return ("{} {} {}".format(
-            current_items[SC2Race.ANY][get_item_flag_word(item_names.MUTATOR_GHOST_SPAWN)],
-            current_items[SC2Race.ANY][get_item_flag_word(item_names.MUTATOR_VOID_DUPLICATE)],
+            ghost_spawn,
+            void_duplicate,
             current_items[SC2Race.ANY][get_item_flag_word(item_names.MUTATOR_ENABLE_CLOAK)],
         ))
 

@@ -669,6 +669,36 @@ class StarcraftClientProcessor(ClientCommandProcessor):
         return True
 
     @mark_raw
+    def _cmd_ghost_spawn(self, level: str = "") -> None:
+        """
+        Overrides the level of the Ghost Spawn mutator
+        """
+        if level not in [str(i) for i in range(-1, 6)]:
+            sc2_logger.info("Use `/ghost_spawn [0-5] to override the level. -1 restores the default" )
+            return
+        if level == "-1" :
+            self.ctx.ghost_spawn_level = -1;
+            sc2_logger.info("Ghost Spawn mutator set to default level")
+        else:
+            self.ctx.ghost_spawn_level = int(level)
+            sc2_logger.info(f"Ghost Spawn Mutator set to level {self.ctx.ghost_spawn_level}")
+
+    @mark_raw
+    def _cmd_void_duplicate(self, level: str = "") -> None:
+        """
+        Overrides the level of the Void Duplicate mutator
+        """
+        if level not in [str(i) for i in range(-1, 6)]:
+            sc2_logger.info("Use `/void_duplicate [0-5] to override the level. -1 restores the default" )
+            return
+        if level == "-1" :
+            self.ctx.void_duplicate_level = -1;
+            sc2_logger.info(" Void Duplicate mutator set to default level")
+        else:
+            self.ctx.void_duplicate_level = int(level)
+            sc2_logger.info(f" Void Duplicate Mutator set to level {self.ctx.void_duplicate_level}")
+
+    @mark_raw
     def _cmd_set_path(self, path: str = "") -> bool:
         """Manually set the SC2 install directory (if the automatic detection fails)."""
         if path:
@@ -862,6 +892,8 @@ class SC2Context(CommonContext):
         self.mutation_rate_limit = MutationRateLimit.default
         self.mutation_rate_endpoint = MutationRateEndpoint.default
         self.mutation_rate_order: list[str] | None = None
+        self.ghost_spawn_level: int = -1 # Overrides for mutator levels. -1 = don't use override.
+        self.void_duplicate_level: int = -1
         self.detector_items = DetectorItems.option_disabled
         self.show_war_council_nerfs: bool = False
 
