@@ -911,7 +911,10 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
                 accumulators[race][upgrade_flaggroup] += upgrade_count << bundled_number
 
     # Mutators on mission completion
-    if ctx.mutation_rate_source == options.MutationRateSource.option_completion_scaling:
+    if (
+        ctx.mutation_rate_source == options.MutationRateSource.option_completion_scaling
+        and ctx.mutation_rate_limit > 0
+    ):
         missions_per_mutator = int( total_missions * ctx.mutation_rate_endpoint / (mutator_count_available * 100))
         mutator_count = min(completed // missions_per_mutator, ctx.mutation_rate_limit) if missions_per_mutator > 0 else ctx.mutation_rate_limit
 
@@ -920,7 +923,10 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     max_depth = ctx.max_depth
 
     # Mutators on mission depth
-    if ctx.mutation_rate_source == options.MutationRateSource.option_depth_scaling:
+    if (
+        ctx.mutation_rate_source == options.MutationRateSource.option_depth_scaling
+        and ctx.mutation_rate_limit > 0
+    ):
         mutator_count = min((current_depth * mutator_count_available * 100) // (max_depth * ctx.mutation_rate_endpoint ), ctx.mutation_rate_limit)
 
     # Cloak handling, only allow mutators to cloak units after a certain depth
