@@ -231,15 +231,16 @@ class ProtoRule:
             upgrade_depths = (6, 13, 20)
             hero_depths = (3, 14)
 
-        detector_items = world.options.detector_items == options.DetectorItems.option_enabled
+        detector_items = world.options.detector_items != options.DetectorItems.option_disabled
         detector_depths: tuple[int, ...]
+        detector_depth_limit = world.options.detector_items.value
         if detector_items == True:
             if logic_level == LOGIC_BASIC:
-                detector_depths = (8, 8, 12)
+                detector_depths = (detector_depth_limit, detector_depth_limit, 2 * detector_depth_limit)
             elif logic_level == LOGIC_ADVANCED:
-                detector_depths = (8, 12, 20)
+                detector_depths = (detector_depth_limit, 2 * detector_depth_limit, 3 * detector_depth_limit)
             elif logic_level == LOGIC_CHAOS:
-                detector_depths = (8,)
+                detector_depths = (detector_depth_limit,)
 
 
         soa_flags = 0
