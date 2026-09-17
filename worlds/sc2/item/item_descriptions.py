@@ -616,7 +616,7 @@ item_descriptions = {
         Creates a Nuclear Silo building for an enemy player.
         The Nuclear Silo periodically spawns Ghost attack waves,
         which will be able to use Nuclear Strikes.
-        Ghosts may use additional abilities, based on difficulty level.
+        Ghosts may use additional abilities, based on mutator level.
 
         Only works in build missions.
     """),

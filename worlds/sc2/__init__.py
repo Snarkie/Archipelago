@@ -45,7 +45,7 @@ from .options import (
     GrantStoryTech, GenericUpgradeResearch, RequiredTactics,
     upgrade_included_names, EnableVoidTrade, FillerItemsDistribution, MissionOrderScouting, option_groups,
     VanillaItemsOnly, ExcludeOverpoweredItems,
-    is_mission_in_soa_presence, ApplyMutators,
+    is_mission_in_soa_presence,
 )
 from . import options, slot_data_config
 from .rules import SC2Logic, get_required_kerrigan_levels
@@ -57,7 +57,6 @@ from .regions import create_mission_order
 from .mission_order.mission_order import SC2MissionOrder
 from worlds.LauncherComponents import components, Component, launch as launch_component
 from .presets import sc2_options_presets
-from .tables import mutators
 
 logger = logging.getLogger("Starcraft 2")
 
@@ -134,7 +133,8 @@ class SC2World(World):
         self.filler_items_distribution: dict[str, int] = FillerItemsDistribution.default
         self.logic: 'SC2Logic | None' = None
         self.hero_presence: dict[SC2Mission, HeroFlag] = {}
-        self.mutator_order: list [str, int] = []
+        self.mutator_trap_item_order: list [str] = []
+        self.mutation_rate_order: list [str] = []
         self.remove_kerrigan_items = False
 
     def create_item(self, name: str) -> StarcraftItem:
@@ -272,7 +272,7 @@ class SC2World(World):
         flag_start_inventory(self, item_list)
         flag_unused_upgrade_types(self, indexed_item_list)
         flag_unreleased_items(item_list)
-        self.mutator_order = get_mutator_order(self)
+        calculate_mutator_order(self)
         flag_mutator_items(self, item_list)
         flag_disabled_items(item_list)
         flag_war_council_items(self, item_list)
@@ -370,12 +370,23 @@ class SC2World(World):
                                     if location.address is not None:
                                         hint_data[self.player][location.address] = mission_position_name
 
-def get_mutator_order(world: SC2World) -> list[str]:
-    mutator_order: list[str] = []
-    for mutator, lvl in mutators.items():
-        mutator_order.extend(mutator for i in range(lvl))
-    world.random.shuffle(mutator_order)
-    return mutator_order
+
+def pack_hero_presence(presence: dict[SC2Mission, HeroFlag]) -> dict[str, int]:
+    result: dict[str, int] = {}
+    for mission, hero_flag in presence.items():
+        if hero_flag != HeroFlag.NONE:
+            result[str(mission.id)] = hero_flag.value
+    return result
+
+
+def calculate_mutator_order(world: SC2World) -> None:
+    for mutator, lvl in world.options.mutator_trap_item_max_levels.items():
+        world.mutator_trap_item_order.extend(mutator for i in range(lvl))
+    world.random.shuffle(world.mutator_trap_item_order)
+    for mutator, lvl in world.options.mutation_rate_max_levels.items():
+        world.mutation_rate_order.extend(mutator for i in range(lvl))
+    world.random.shuffle(world.mutation_rate_order)
+
 
 def _get_column_display(index: int, single_row_layout: bool) -> str:
     """
@@ -1035,15 +1046,14 @@ def flag_mutator_items(world: SC2World, item_list: list[FilterItem]) -> None:
     Remove all mutator items, unless the option is enabled
     or they're explicitly locked
     """
-    if world.options.apply_mutators.value == ApplyMutators.option_trap_items:
-        temp_mutator_order = list(islice(world.mutator_order, world.options.mutator_limit))
-        for item in item_list:
-            if (item.name in temp_mutator_order
-                and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory) & item.flags
-            ):
-                # lock mutator items up to the limit
-                item.flags |= ItemFilterFlags.Locked
-                temp_mutator_order.remove(item.name)
+    temp_mutator_order = list(islice(world.mutator_trap_item_order, world.options.mutator_trap_item_limit.value))
+    for item in item_list:
+        if (item.name in temp_mutator_order
+            and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory) & item.flags
+        ):
+            # lock mutator items up to the limit
+            item.flags |= ItemFilterFlags.Locked
+            temp_mutator_order.remove(item.name)
     for item in item_list:
         if (item.name in mutator_items
             and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory) & item.flags

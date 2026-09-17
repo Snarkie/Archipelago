@@ -38,6 +38,8 @@ from .options import (
     SpearOfAdunPresence, SpearOfAdunPresentInNoBuild, SpearOfAdunPassiveAbilityPresence,
     SpearOfAdunPassivesPresentInNoBuild, EnableVoidTrade, VoidTradeAgeLimit, void_trade_age_limits_ms, VoidTradeWorkers,
     DifficultyDamageModifier, MissionOrderScouting, GenericUpgradeResearchSpeedup, MercenaryHighlanders, WarCouncilNerfs,
+    MutationRateSource, MutationRateLimit, MutationRateMaxLevels, MutationRateEndpoint,
+    DetectorItems,
 )
 from .mission_order.slot_data import CampaignSlotData, LayoutSlotData, MissionSlotData, MissionOrderObjectSlotData
 from .mission_order.entry_rules import SubRuleRuleData, CountMissionsRuleData, MissionEntryRules
@@ -859,6 +861,11 @@ class SC2Context(CommonContext):
         self.mission_order_scouting = MissionOrderScouting.option_none
         self.mission_item_classification: dict[str, int] | None = None
         self.show_war_council_nerfs: int = 0
+        self.mutation_rate_source = MutationRateSource.default
+        self.mutation_rate_limit = MutationRateLimit.default
+        self.mutation_rate_endpoint = MutationRateEndpoint.default
+        self.mutation_rate_order: list[str] | None = None
+        self.detector_items = DetectorItems.option_disabled
 
     async def server_auth(self, password_requested: bool = False) -> None:
         self.game = STARCRAFT2
