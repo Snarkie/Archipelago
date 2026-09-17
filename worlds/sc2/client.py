@@ -38,6 +38,8 @@ from .options import (
     SpearOfAdunPresence, SpearOfAdunPresentInNoBuild, SpearOfAdunPassiveAbilityPresence,
     SpearOfAdunPassivesPresentInNoBuild, EnableVoidTrade, VoidTradeAgeLimit, void_trade_age_limits_ms, VoidTradeWorkers,
     DifficultyDamageModifier, MissionOrderScouting, GenericUpgradeResearchSpeedup, MercenaryHighlanders, WarCouncilNerfs,
+    MutationRateSource, MutationRateLimit, MutationRateMaxLevels, MutationRateEndpoint,
+    DetectorItems,
 )
 from .mission_order.slot_data import CampaignSlotData, LayoutSlotData, MissionSlotData, MissionOrderObjectSlotData
 from .mission_order.entry_rules import SubRuleRuleData, CountMissionsRuleData, MissionEntryRules
@@ -856,6 +858,11 @@ class SC2Context(CommonContext):
         self.difficulty_damage_modifier: int = DifficultyDamageModifier.default
         self.mission_order_scouting = MissionOrderScouting.option_none
         self.mission_item_classification: dict[str, int] | None = None
+        self.mutation_rate_source = MutationRateSource.default
+        self.mutation_rate_limit = MutationRateLimit.default
+        self.mutation_rate_endpoint = MutationRateEndpoint.default
+        self.mutation_rate_order: list[str] | None = None
+        self.detector_items = DetectorItems.option_disabled
         self.show_war_council_nerfs: bool = False
 
     async def server_auth(self, password_requested: bool = False) -> None:
@@ -1131,10 +1138,11 @@ class SC2Context(CommonContext):
             self.difficulty_damage_modifier = args["slot_data"].get("difficulty_damage_modifier", DifficultyDamageModifier.option_true)
             self.mission_order_scouting = args["slot_data"].get("mission_order_scouting", MissionOrderScouting.option_none)
             self.mission_item_classification = args["slot_data"].get("mission_item_classification")
-            self.apply_mutators = args["slot_data"].get("apply_mutators")
-            self.mutator_limit = args["slot_data"].get("mutator_limit")
-            self.mutator_rate = args["slot_data"].get("mutator_rate")
-            self.mutator_order = args["slot_data"].get("mutator_order")
+            self.mutation_rate_source = args["slot_data"].get("mutation_rate_source", MutationRateSource.default)
+            self.mutation_rate_limit = args["slot_data"].get("mutation_rate_limit", MutationRateLimit.default)
+            self.mutation_rate_endpoint = args["slot_data"].get("mutation_rate_endpoint", MutationRateEndpoint.default)
+            self.mutation_rate_order = args["slot_data"].get("mutation_rate_order")
+            self.detector_items = args["slot_data"].get("detector_items", DetectorItems.option_disabled)
 
             if self.slot_data_version < 5 and required_tactics > RequiredTactics.option_chaos:
                 # Locking Grant Story Tech/Levels if no logic

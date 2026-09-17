@@ -894,7 +894,7 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     total_missions = len([mission for campaign in ctx.custom_mission_order
         for layout in campaign.layouts for column in layout.missions for mission in column if mission.mission_id > 0])
     completed = len([mission_id for mission_id in ctx.mission_id_to_location_ids if ctx.is_mission_completed(mission_id)])
-    mutator_count_available = min(len(ctx.mutator_order), ctx.mutator_limit)
+    mutator_count_available = min(len(ctx.mutation_rate_order), ctx.mutation_rate_limit)
     mutator_count = 0
 
     # W/A upgrade missions
@@ -911,26 +911,26 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
                 accumulators[race][upgrade_flaggroup] += upgrade_count << bundled_number
 
     # Mutators on mission completion
-    if ctx.apply_mutators == options.ApplyMutators.option_progression_scaling:
-        missions_per_mutator = int( total_missions * ctx.mutator_rate / (mutator_count_available * 100))
-        mutator_count = min(completed // missions_per_mutator, ctx.mutator_limit) if missions_per_mutator > 0 else ctx.mutator_limit
+    if ctx.mutation_rate_source == options.MutationRateSource.option_completion_scaling:
+        missions_per_mutator = int( total_missions * ctx.mutation_rate_endpoint / (mutator_count_available * 100))
+        mutator_count = min(completed // missions_per_mutator, ctx.mutation_rate_limit) if missions_per_mutator > 0 else ctx.mutation_rate_limit
 
     # Handle scaling with mission order depth
     current_depth = ctx.mission_id_to_depth[mission_id]
     max_depth = ctx.max_depth
 
     # Mutators on mission depth
-    if ctx.apply_mutators == options.ApplyMutators.option_depth_scaling:
-        mutator_count = min((current_depth * mutator_count_available * 100) // (max_depth * ctx.mutator_rate ), ctx.mutator_limit)
+    if ctx.mutation_rate_source == options.MutationRateSource.option_depth_scaling:
+        mutator_count = min((current_depth * mutator_count_available * 100) // (max_depth * ctx.mutation_rate_endpoint ), ctx.mutation_rate_limit)
 
     # Cloak handling, only allow mutators to cloak units after a certain depth
-    if current_depth >= 8: # matches detector option
+    if ctx.detector_items > 0 and current_depth >= ctx.detector_items:
         cloak_item = item_tables.item_table[item_names.MUTATOR_ENABLE_CLOAK]
         accumulators[cloak_item.race][cloak_item.type.flag_word] += 1 << cloak_item.number
 
     # apply mutators
     if mutator_count > 0:
-        for mutator in islice(ctx.mutator_order, mutator_count):
+        for mutator in islice(ctx.mutation_rate_order, mutator_count):
             mutator_item = item_tables.item_table[mutator]
             accumulators[mutator_item.race][mutator_item.type.flag_word] += 1 << mutator_item.number
 

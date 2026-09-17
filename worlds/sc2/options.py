@@ -22,7 +22,7 @@ from .mission_tables import (
 from . import locations
 from .mission_groups import mission_groups, MissionGroupNames
 from .mission_order.options import CustomMissionOrder
-from .tables import HeroOptions, StabilityOptions
+from .tables import HeroOptions, StabilityOptions, mutators
 
 if TYPE_CHECKING:
     from worlds.AutoWorld import World
@@ -1642,76 +1642,110 @@ class FillerItemsDistribution(ItemDict):
         super(ItemDict, self).__init__(value)
 
 
-class ApplyMutators(Choice):
+class MutatorTrapItemLimit(Range):
     """
-    Controls how Mutators are applied to your campaign.
-    Mutators are optional special conditions added to missions.
-
-    Disabled: Do not apply Mutators (default)
-    Trap Items: Mutators are randomly found in the Multiworld as Trap Items
-    Depth Scaling: Mutators are applied based on how late the mission is available in your mission order
-    Progression Scaling: Mutators are applied based on the percentage of missions you completed
+    Shuffles up to this many Mutators into the item pool as trap items.
+    For multi-level Mutators, each level counts as one item towards the limit.
 
     Warning: Mutators can significantly increase the difficulty of a mission
     and are never considered by logic.
     """
-    display_name = "Apply Mutators"
-    option_disabled = 0
-    option_trap_items = 1
-    option_depth_scaling = 2
-    option_progression_scaling = 3
+    display_name = "Mutator Trap Item Limit"
+    range_start = 0
+    range_end = sum(mutators.values())
     default = 0
 
 
-class MutatorMaxLevels(ItemDict):
+class MutatorTrapItemMaxLevels(ItemDict):
     """
-    Controls which mutators are allowed up to which level.
+    Controls the max level of each individual Mutator
+    to be shuffled into the item pool as trap item.
 
-    Ghost Spawn Mutator: Spawns Ghosts which nuke your base. 5 levels.
-    Void Duplicate Mutator: Increases Enemy Attack Waves. 5 levels.
+    Setting a Mutator to 0 will prevent that Mutator
+    from shuffling into the item pool as trap item.
     """
-    display_name = "Allowed Mutators"
-    default =  {
-        item_names.MUTATOR_GHOST_SPAWN: 5,
-        item_names.MUTATOR_VOID_DUPLICATE: 5,
-    }
+    display_name = "Mutator Trap Item Max Levels"
+
+    default = mutators
     valid_keys = default.keys()
 
-class MutatorLimit(Range):
+    def __init__(self, value: dict[str, int]):
+        # Allow zeros that the parent class doesn't allow
+        if any(item_count < 0 for item_count in value.values()):
+            raise Exception("Cannot have negative item weight.")
+        super(ItemDict, self).__init__(value)
+
+class MutationRateSource(Choice):
     """
-    Total count of mutators to be added to your campaign
+    "Mutation Rate" refers to Mutators being applied
+    at a consistent rate over your campaign.
+
+    Disabled: Do not apply Mutators as you progress the campaign.
+    Depth Scaling: Mutators are applied based on the depth of the mission within the mission order.
+    Completion Scaling: Mutators are applied based on how many missions you have completed.
+
+    Warning: Mutators can significantly increase the difficulty of a mission
+    and are never considered by logic.
     """
-    display_name = "Mutator Limit"
+    display_name = "Mutation Rate Source"
+    option_disabled = 0
+    option_depth_scaling = 1
+    option_completion_scaling = 2
+    default = 0
+
+class MutationRateLimit(Range):
+    """
+    Adds up to this many Mutators as you progress the campaign.
+    For multi-level Mutators, each level counts as one item towards the limit.
+    """
+    display_name = "Mutator Trap Item Limit"
     range_start = 0
-    range_end = 10
-    default = 5
+    range_end = sum(mutators.values())
+    default = 0
 
-
-class MutatorRate(Range):
+class MutationRateEndpoint(Range):
     """
-    Effect changes based on the "Apply Mutators" setting:
-
-    Trap Items: No Effect
-    Depth Scaling: Apply all Mutators up to this depth percentage (1-100)
-    Progression Scaling: Apply all Mutators up to this percentage of mission completions (1-100)
+    Controls the point in the campaign where all Mutators are active, as a percentage.
+    Setting this to 80% means, that all mutators will be active 80% into the mission order,
+    and will be linearly distributed up to this end point.
     """
-    display_name = "Mutator Rate"
-    range_start = 1
+    display_name = "Mutation Rate Endpoint"
+    range_start = 0
     range_end = 100
-    default = 5
+    default = 80
+
+class MutationRateMaxLevels(ItemDict):
+    """
+    Controls the max level of each individual Mutator
+    to be applied over the course of the mission order.
+    """
+    display_name = "Mutator Trap Item Max Levels"
+
+    default = mutators
+    valid_keys = default.keys()
+
+    def __init__(self, value: dict[str, int]):
+        # Allow zeros that the parent class doesn't allow
+        if any(item_count < 0 for item_count in value.values()):
+            raise Exception("Cannot have negative item weight.")
+        super(ItemDict, self).__init__(value)
+
 
 class DetectorItems(Choice):
     """
     Mutators may require you to deal with invisible units, starting from a certain depth
     Enabling this setting will guarantee, that you get access to some way of handling
     cloaked units before reaching that depth, based on your required tactics.
+
+    Depth 5: Mutators are not allowed to use Cloaked Units before reaching Depth 5,
+    and you will get access to items dealing with cloaked units befor depth 5.
     Auto: Enabled, if a mutator with cloaked units is used.
     """
     display_name = "Detector Items"
     option_disabled = 0
-    option_enabled = 1
-    option_auto = 2
-    default = 2
+    option_auto = -1
+    option_depth_5 = 5
+    default = -1
 
 @dataclass
 class Starcraft2Options(PerGameCommonOptions):
@@ -1810,10 +1844,12 @@ class Starcraft2Options(PerGameCommonOptions):
 
     stability_features: StabilityFeatures
     custom_mission_order: CustomMissionOrder
-    apply_mutators: ApplyMutators
-    mutator_max_levels: MutatorMaxLevels
-    mutator_rate: MutatorRate
-    mutator_limit: MutatorLimit
+    mutator_trap_item_limit: MutatorTrapItemLimit
+    mutator_trap_item_max_levels: MutatorTrapItemMaxLevels
+    mutation_rate_source: MutationRateSource
+    mutation_rate_limit: MutationRateLimit
+    mutation_rate_endpoint: MutationRateEndpoint
+    mutation_rate_max_levels: MutationRateMaxLevels
     detector_items: DetectorItems
 
 
@@ -1938,10 +1974,12 @@ option_groups = [
         PlayerColorNova,
     ]),
     OptionGroup("Mutators", [
-        ApplyMutators,
-        MutatorLimit,
-        MutatorMaxLevels,
-        MutatorRate,
+        MutatorTrapItemLimit,
+        MutatorTrapItemMaxLevels,
+        MutationRateSource,
+        MutationRateLimit,
+        MutationRateEndpoint,
+        MutationRateMaxLevels,
         DetectorItems,
     ]),
 ]
