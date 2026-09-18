@@ -755,6 +755,8 @@ item_id_table = {
     item_names.PHOTON_CANNON:       ItemModInfo(ProtossItemType.Unit, 50),
     item_names.KHAYDARIN_MONOLITH:  ItemModInfo(ProtossItemType.Unit, 51),
     item_names.SHIELD_BATTERY:      ItemModInfo(ProtossItemType.Unit, 52),
+    item_names.PSI_SPIRE:           ItemModInfo(ProtossItemType.Unit, 53),
+    item_names.LAUNCH_BAY:          ItemModInfo(ProtossItemType.Unit, 54),
 
     item_names.PROGRESSIVE_PROTOSS_WEAPON_UPGRADE:       ItemModInfo(ProtossItemType.Upgrade, -1),
     item_names.PROGRESSIVE_PROTOSS_ARMOR_UPGRADE:        ItemModInfo(ProtossItemType.Upgrade, -1),

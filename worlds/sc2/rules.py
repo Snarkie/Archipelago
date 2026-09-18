@@ -2136,6 +2136,8 @@ class SC2Logic:
             item_names.PHOTON_CANNON,
             item_names.KHAYDARIN_MONOLITH,
             item_names.NEXUS_OVERCHARGE,
+            item_names.PSI_SPIRE,
+            item_names.LAUNCH_BAY,
         ):
             if state.has(item, self.player):
                 rating += 3
@@ -2152,9 +2154,6 @@ class SC2Logic:
         if has_attacking_building:
             for item in (
                 item_names.ELDER_PROBES,
-                item_names.KHALAI_INGENUITY,
-                item_names.OPTIMIZED_ORDNANCE,
-                item_names.ENHANCED_TARGETING,
                 item_names.PROTOSS_BUILDING_SHIELDS,
             ):
                 rating += 1
@@ -2801,7 +2800,7 @@ class SC2Logic:
                 and state.has(item_names.RECONSTRUCTION_BEAM, self.player)
             )
             or (self.advanced_tactics
-                and state.has_all((item_names.SHIELD_BATTERY, item_names.KHALAI_INGENUITY), self.player)
+                and state.has_all((item_names.SHIELD_BATTERY, item_names.SHIELD_BATTERY_KHALAI_INGENUITY), self.player)
             )
         )
 
@@ -4100,8 +4099,8 @@ class SC2Logic:
             state.has_any(item_groups.protoss_chaos_starter_units, self.player)
             or state.has_all((item_names.WARP_PRISM, item_names.WARP_PRISM_PHASE_BLASTER), self.player)
             or state.has_all((item_names.CALADRIUS, item_names.CALADRIUS_CORONA_BEAM), self.player)
-            or state.has_all((item_names.PHOTON_CANNON, item_names.KHALAI_INGENUITY), self.player)
-            or state.has_all((item_names.KHAYDARIN_MONOLITH, item_names.KHALAI_INGENUITY), self.player)
+            or state.has_all((item_names.PHOTON_CANNON, item_names.PHOTON_CANNON_KHALAI_INGENUITY), self.player)
+            or state.has_all((item_names.KHAYDARIN_MONOLITH, item_names.KHAYDARIN_MONOLITH_KHALAI_INGENUITY), self.player)
         )
 
     @series(LogicSeries.CoreUnit, SC2Race.PROTOSS, 0)

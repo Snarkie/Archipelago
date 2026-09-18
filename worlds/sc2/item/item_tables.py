@@ -814,6 +814,8 @@ item_table = {
     item_names.PHOTON_CANNON:      ItemData(3200, P, apclass=PROG),
     item_names.KHAYDARIN_MONOLITH: ItemData(3201, P, apclass=PROG),
     item_names.SHIELD_BATTERY:     ItemData(3202, P, apclass=PROG),
+    item_names.PSI_SPIRE:     ItemData(3203, P, apclass=PROG),
+    item_names.LAUNCH_BAY:     ItemData(3204, P, apclass=PROG),
 
     # Protoss technologies 1
     item_names.SUPPLICANT_BLOOD_SHIELD:                ItemData(3300, P, parent=item_names.SUPPLICANT),
