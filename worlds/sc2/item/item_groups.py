@@ -1412,6 +1412,8 @@ item_name_groups[ItemGroupNames.PROTOSS_BUILDINGS] = protoss_buildings = [
     item_names.PHOTON_CANNON,
     item_names.KHAYDARIN_MONOLITH,
     item_names.SHIELD_BATTERY,
+    item_names.PSI_SPIRE,
+    item_names.LAUNCH_BAY,
 ]
 item_name_groups[ItemGroupNames.PROTOSS_UNITS] = protoss_units = [
     item_name for item_name, item_data in item_tables.item_table.items()
@@ -1676,9 +1678,7 @@ item_name_groups[ItemGroupNames.PROTOSS_GLOBAL_UPGRADES] = [
     item_names.RECONSTRUCTION_BEAM,
     item_names.OVERWATCH,
     item_names.SUPERIOR_WARP_GATES,
-    item_names.ENHANCED_TARGETING,
-    item_names.OPTIMIZED_ORDNANCE,
-    item_names.KHALAI_INGENUITY,
+    item_names.PYLON_KHALAI_INGENUITY,
     item_names.AMPLIFIED_ASSIMILATORS,
     item_names.PROGRESSIVE_WARP_RELOCATE,
     item_names.PROBE_WARPIN,
@@ -1915,7 +1915,7 @@ item_name_groups[ItemGroupNames.PROTOSS_MACRO_ITEMS] = protoss_macro_items = [
     item_names.ORBITAL_ASSIMILATORS,
     item_names.WARP_HARMONIZATION,
     item_names.SUPERIOR_WARP_GATES,
-    item_names.KHALAI_INGENUITY,
+    item_names.PYLON_KHALAI_INGENUITY,
     item_names.AMPLIFIED_ASSIMILATORS,
     item_names.PROBE_WARPIN,
     item_names.ELDER_PROBES,
@@ -1938,8 +1938,6 @@ item_name_groups[ItemGroupNames.PROTOSS_GENERIC_ITEMS] = protoss_generic_items =
     *soa_items,
     item_names.MATRIX_OVERLOAD,
     item_names.NEXUS_OVERCHARGE,
-    item_names.ENHANCED_TARGETING,
-    item_names.OPTIMIZED_ORDNANCE,
     item_names.PROGRESSIVE_WARP_RELOCATE,
     item_names.NEXUS_KHAYDARIN_CORE,
     item_names.PROTOSS_BUILDING_SHIELDS,
