@@ -391,7 +391,7 @@ class SC2Manager(GameManager):
                             campaign_locked = campaign_idx not in available_campaigns
                             layout_locked = layout_idx not in available_layouts[campaign_idx]
                             if self.is_scoutable(mission_remaining, mission_available, layout_locked, campaign_locked):
-                                categories: Set[str] = set()
+                                categories: set[str] = set()
                                 for _, location_name, _ in mission_remaining:
                                     categories.update(self._scout_search_categories(location_name))
                                 search_parts.extend(categories)
@@ -746,7 +746,9 @@ class SC2Manager(GameManager):
         # Only one information is provided for the victory locations of a mission
         if " Cache (" in location_name:
             location_name = location_name.split(" Cache")[0]
-        item_classification_key = self.ctx.mission_item_classification[location_name]
+        item_classification_key = self.ctx.mission_item_classification.get(location_name)
+        if item_classification_key is None:
+            return ""
         if ((ItemClassification.progression & item_classification_key)
             and (ItemClassification.useful & item_classification_key)
         ):
@@ -761,12 +763,14 @@ class SC2Manager(GameManager):
             return " [color=FA8072](Trap)[/color]"
         return " [color=00EEEE](Filler)[/color]"
 
-    def _scout_search_categories(self, location_name: str) -> List[str]:
+    def _scout_search_categories(self, location_name: str) -> list[str]:
         if self.ctx.mission_item_classification is None:
             return []
         if " Cache (" in location_name:
             location_name = location_name.split(" Cache")[0]
-        classification = self.ctx.mission_item_classification[location_name]
+        classification = self.ctx.mission_item_classification.get(location_name)
+        if classification is None:
+            return []
         categories: list[str] = []
         if ItemClassification.progression & classification:
             categories.append("progression")
