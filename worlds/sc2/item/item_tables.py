@@ -985,6 +985,14 @@ item_table = {
     item_names.SKIRMISHER_ESSENCE_DRAIN:               ItemData(3464, P, parent=item_names.SKIRMISHER),
     item_names.SKIRMISHER_BLOODSHARD_COATING:          ItemData(3465, P, parent=item_names.SKIRMISHER),
     item_names.SKIRMISHER_TERRAZINE_INJECTORS:         ItemData(3466, P, parent=item_names.SKIRMISHER),
+    item_names.PHOTON_CANNON_REPULSOR_SHELL:           ItemData(3467, P, parent=item_names.PHOTON_CANNON),
+    item_names.PHOTON_CANNON_PHASE_CANNON:             ItemData(3468, P, parent=item_names.PHOTON_CANNON),
+    item_names.KHAYDARIN_MONOLITH_RAPID_POWER_CYCLING: ItemData(3469, P, parent=item_names.KHAYDARIN_MONOLITH),
+    item_names.KHAYDARIN_MONOLITH_KHAYDARIN_SURGE:     ItemData(3470, P, parent=item_names.KHAYDARIN_MONOLITH),
+    item_names.PSI_SPIRE_POWER_GRID_STABILIZER:        ItemData(3471, P, parent=item_names.PSI_SPIRE),
+    item_names.PSI_SPIRE_ELECTROMAGNETIC_DISRUPTION:   ItemData(3472, P, parent=item_names.PSI_SPIRE),
+    item_names.LAUNCH_BAY_GRAVITON_CATAPULT:           ItemData(3473, P, parent=item_names.LAUNCH_BAY),
+    item_names.LAUNCH_BAY_FOCUSED_LENS:                ItemData(3474, P, parent=item_names.LAUNCH_BAY),
 
     # Protoss war council
     item_names.ZEALOT_WHIRLWIND:                     ItemData(3500, P, apclass=PROG, parent=item_names.ZEALOT),
