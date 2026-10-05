@@ -908,7 +908,7 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     total_missions = len([mission for campaign in ctx.custom_mission_order
         for layout in campaign.layouts for column in layout.missions for mission in column if mission.mission_id > 0])
     completed = len([mission_id for mission_id in ctx.mission_id_to_location_ids if ctx.is_mission_completed(mission_id)])
-    mutator_count_available = min(len(ctx.mutation_rate_order), ctx.mutation_rate_limit)
+    mutator_count_available = min(len(ctx.mutation_rate_order), ctx.mutation_rate_limit) if ctx.mutation_rate_order else 0
     mutator_count = 0
 
     # W/A upgrade missions
@@ -928,9 +928,10 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     if (
         ctx.mutation_rate_source == options.MutationRateSource.option_completion_scaling
         and ctx.mutation_rate_limit > 0
+        and mutator_count_available > 0
     ):
-        missions_per_mutator = int( total_missions * ctx.mutation_rate_endpoint / (mutator_count_available * 100))
-        mutator_count = min(completed // missions_per_mutator, ctx.mutation_rate_limit) if missions_per_mutator > 0 else ctx.mutation_rate_limit
+        missions_per_mutator = total_missions * ctx.mutation_rate_endpoint / (mutator_count_available * 100)
+        mutator_count = min(int(completed // missions_per_mutator), ctx.mutation_rate_limit) if missions_per_mutator > 0 else ctx.mutation_rate_limit
 
     # Handle scaling with mission order depth
     current_depth = ctx.mission_id_to_depth[mission_id]
@@ -940,8 +941,13 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     if (
         ctx.mutation_rate_source == options.MutationRateSource.option_depth_scaling
         and ctx.mutation_rate_limit > 0
+        and mutator_count_available > 0
     ):
-        mutator_count = min((current_depth * mutator_count_available * 100) // (max_depth * ctx.mutation_rate_endpoint ), ctx.mutation_rate_limit)
+        if (ctx.mutation_rate_endpoint > 0):
+            mutator_count = min((current_depth * mutator_count_available * 100) // (max_depth * ctx.mutation_rate_endpoint ), ctx.mutation_rate_limit)
+        else:
+            # endpoint == 0, apply all mutators immediately
+            mutator_count = mutator_count_available
 
     # Cloak handling, only allow mutators to cloak units after a certain depth
     if ctx.detector_items > 0 and current_depth >= ctx.detector_items:
