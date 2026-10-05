@@ -1179,10 +1179,10 @@ class SC2Context(CommonContext):
             self.difficulty_damage_modifier = slot_data.get("difficulty_damage_modifier", DifficultyDamageModifier.option_true)
             self.mission_order_scouting = slot_data.get("mission_order_scouting", MissionOrderScouting.option_none)
             self.mission_item_classification = slot_data.get("mission_item_classification")
-            self.apply_mutators = slot_data.get("apply_mutators")
-            self.mutator_limit = slot_data.get("mutator_limit")
-            self.mutator_rate = slot_data.get("mutator_rate")
-            self.mutator_order = slot_data.get("mutator_order")
+            self.mutation_rate_source = slot_data.get("mutation_rate_source")
+            self.mutation_rate_limit = slot_data.get("mutation_rate_limit")
+            self.mutation_rate_endpoint = slot_data.get("mutation_rate_endpoint")
+            self.mutation_rate_order = slot_data.get("mutation_rate_order")
 
             if self.slot_data_version < 5 and required_tactics > RequiredTactics.option_chaos:
                 # Locking Grant Story Tech/Levels if no logic
