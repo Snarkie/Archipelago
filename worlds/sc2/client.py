@@ -1119,9 +1119,11 @@ class SC2Context(CommonContext):
             #     if slot_data.get("use_nova_wol_fallback", True):
             #     else:
             if self.slot_data_version < 5:
-                if slot_data.get("kerrigan_presence", True):
+                if slot_data.get("kerrigan_presence", 0) == 0:
+                    # vanilla
                     self.base_hero_presence = self.default_hero_presence(True)
                 else:
+                    # not_present
                     self.base_hero_presence = self.default_hero_presence(False)
             self.reset_runtime_hero_presence()
             self.trade_enabled = slot_data.get("enable_void_trade", EnableVoidTrade.option_false)
