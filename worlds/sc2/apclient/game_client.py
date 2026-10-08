@@ -952,13 +952,15 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
     # Cloak handling, only allow mutators to cloak units after a certain depth
     if ctx.detector_items > 0 and current_depth >= ctx.detector_items:
         cloak_item = item_tables.item_table[item_names.MUTATOR_ENABLE_CLOAK]
-        accumulators[cloak_item.race][cloak_item.type.flag_word] += 1 << cloak_item.number
+        cloak_item_id = item_mod_ids.item_id_table[item_names.MUTATOR_ENABLE_CLOAK]
+        accumulators[cloak_item.race][cloak_item_id.item_type.flag_word] += 1 << cloak_item_id.index
 
     # apply mutators
     if mutator_count > 0:
         for mutator in islice(ctx.mutation_rate_order, mutator_count):
             mutator_item = item_tables.item_table[mutator]
-            accumulators[mutator_item.race][mutator_item.type.flag_word] += 1 << mutator_item.number
+            mutator_item_id = item_mod_ids.item_id_table[mutator]
+            accumulators[mutator_item.race][mutator_item_id.item_type.flag_word] += 1 << mutator_item_id.index
 
     return accumulators
 
