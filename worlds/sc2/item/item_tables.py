@@ -981,7 +981,7 @@ item_table = {
     item_names.MIRAGE_ETERNAL_DUTY:                    ItemData(3458, P, parent=item_names.MIRAGE),
     item_names.MIRAGE_PHASE_ALIGNMENT:                 ItemData(3459, P, parent=item_names.MIRAGE),
     item_names.MIRAGE_AFTERIMAGE:                      ItemData(3460, P, parent=item_names.MIRAGE),
-    item_names.MIRAGE_OBSERVER_MODULE:                 ItemData(3461, P, parent=item_names.MIRAGE),
+    item_names.MIRAGE_OBSERVER_MODULE:                 ItemData(3461, P, apclass=PROG, parent=item_names.MIRAGE),
     item_names.SKIRMISHER_ULTIMATE_SACRIFICE:          ItemData(3462, P, parent=item_names.SKIRMISHER),
     item_names.SKIRMISHER_RESOURCE_EFFICIENCY:         ItemData(3463, P, parent=item_names.SKIRMISHER),
     item_names.SKIRMISHER_ESSENCE_DRAIN:               ItemData(3464, P, parent=item_names.SKIRMISHER),
