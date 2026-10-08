@@ -269,7 +269,7 @@ class TestCustomMissionOrders(Sc2SetupTestBase):
             }
         }
 
-        self.assertNotEqual(item_tables.item_table[test_item].classification, ItemClassification.progression, f"Test item {test_item} won't change classification")
+        self.assertNotEqual(item_tables.item_table[test_item].apclass, ItemClassification.progression, f"Test item {test_item} won't change classification")
 
         self.generate_world(world_options)
         test_items_in_pool = [item for item in self.multiworld.itempool if item.name == test_item]

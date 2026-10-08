@@ -4,13 +4,15 @@ from collections import Counter
 
 from Options import OptionError
 from BaseClasses import Location, ItemClassification
-from .item import StarcraftItem, ItemFilterFlags, item_names, item_parents, item_groups, virtual_items
-from .item.item_tables import (
-    item_table,
-    TerranItemType,
-    ZergItemType,
-    ProtossItemType,
+from .item import (
+    item_names,
+    item_parents,
+    item_groups,
+    virtual_items,
+    StarcraftItem,
+    ItemFilterFlags,
 )
+from .item.item_tables import item_table
 from . import tables
 
 if TYPE_CHECKING:
@@ -279,9 +281,7 @@ class ValidInventory:
         UPGRADE_LEVELS_TO_RESERVE = 2
         for item in inventory:
             if (not (ItemFilterFlags.RequestedOrBetter & item.filter_flags)
-                and item_table[item.name].type in (
-                    TerranItemType.Upgrade, ZergItemType.Upgrade, ProtossItemType.Upgrade
-                )
+                and item.name in item_groups.WA_UPGRADE_ITEMS
                 and reserved_upgrades.get(item.code, 0) < UPGRADE_LEVELS_TO_RESERVE
             ):
                 reserved_upgrades[item.code] = reserved_upgrades.get(item.code, 0) + 1
@@ -314,16 +314,6 @@ class ValidInventory:
             item = self.world.random.choice(removable)
             # Make it less likely to cull w/a items
             item_info = item_table[item.name]
-            for reroll in range(2):
-                if item_info.type.display_name in (
-                    TerranItemType.Upgrade,
-                    ZergItemType.Upgrade,
-                    ProtossItemType.Upgrade,
-                ):
-                    item = self.world.random.choice(removable)
-                    item_info = item_table[item.name]
-                else:
-                    break
             # Do not remove item if it would drop upgrades below minimum
             if min_upgrades_per_unit > 0:
                 group_name = None

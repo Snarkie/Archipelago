@@ -1,6 +1,6 @@
 import enum
 from typing import Iterable
-from . import item_tables, item_names
+from . import item_tables, item_mod_ids, item_names, TerranItemType, ZergItemType, ProtossItemType
 from .item_tables import key_item_table
 from ..mission_tables import campaign_mission_table, SC2Campaign, SC2Mission, SC2Race
 
@@ -38,7 +38,7 @@ item_name_groups["WoL Missions"] = (
 # These item name groups should not show up in documentation
 unlisted_item_name_groups = {
     "Missions", "WoL Missions",
-    item_tables.TerranItemType.Progressive.display_name,
+    TerranItemType.Progressive.display_name,
 }
 
 # Some item names only differ in bracketed parts
@@ -57,8 +57,6 @@ del _shortened_names
 
 # All items get sorted into their data type
 for item, data in item_tables.item_table.items():
-    # Items get assigned to their flaggroup's display type
-    item_name_groups.setdefault(data.type.display_name, []).append(item)
     # Items with a bracket get a short-hand name group for ease of use in YAMLs
     if '(' in item:
         short_name = item[:item.find(' (')]
@@ -90,9 +88,9 @@ class ItemGroupNames:
     TERRAN_ADVANCED_STARTER_UNITS = "Terran Advanced Starter Units"
     TERRAN_CHAOS_STARTER_UNITS = "Terran Chaos Starter Units"
     TERRAN_GENERIC_UPGRADES = "Terran Generic Upgrades"
+    """+attack/armour upgrades"""
     TERRAN_MACRO_ITEMS = "Terran Macro Items"
     TERRAN_GENERIC_ITEMS = "Terran Generic Items"
-    """+attack/armour upgrades"""
     TERRAN_MOBILE_DETECTION = "Terran Mobile Detection"
     TERRAN_DETECTION = "Terran Detection"
     BARRACKS_UNITS = "Barracks Units"
@@ -145,8 +143,8 @@ class ItemGroupNames:
     ZERG_NONMORPH_UNITS = "Zerg Non-morph Units"
     ZERG_MACRO_ITEMS = "Zerg Macro Items"
     ZERG_GENERIC_UPGRADES = "Zerg Generic Upgrades"
-    ZERG_GENERIC_ITEMS = "Zerg Generic Items"
     """+attack/armour upgrades"""
+    ZERG_GENERIC_ITEMS = "Zerg Generic Items"
     ZERG_MOBILE_DETECTION = "Zerg Mobile Detection"
     ZERG_DETECTION = "Zerg Detection"
     HOTS_UNITS = "HotS Units"
@@ -202,8 +200,8 @@ class ItemGroupNames:
     PROTOSS_CHAOS_STARTER_UNITS = "Protoss Chaos Starter Units"
     PROTOSS_MACRO_ITEMS = "Protoss Macro Items"
     PROTOSS_GENERIC_UPGRADES = "Protoss Generic Upgrades"
-    PROTOSS_GENERIC_ITEMS = "Protoss Generic Items"
     """+attack/armour upgrades"""
+    PROTOSS_GENERIC_ITEMS = "Protoss Generic Items"
     PROTOSS_MOBILE_DETECTION = "Protoss Mobile Detection"
     PROTOSS_DETECTION = "Protoss Detection"
     GATEWAY_UNITS = "Gateway Units"
@@ -291,8 +289,8 @@ item_name_groups[ItemGroupNames.TERRAN_BUILDINGS] = terran_buildings = (
     item_names.ARGUS_AMPLIFIER,
 )
 item_name_groups[ItemGroupNames.TERRAN_UNITS] = terran_units = tuple(
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.TerranItemType.Unit
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == TerranItemType.Unit
     and item_name not in terran_buildings
 )
 _terran_core_units = {
@@ -394,8 +392,8 @@ item_name_groups[ItemGroupNames.TERRAN_CHAOS_STARTER_UNITS] = terran_chaos_start
     item_names.PRIDE_OF_AUGUSTGRAD,
 ]
 item_name_groups[ItemGroupNames.TERRAN_GENERIC_UPGRADES] = terran_generic_upgrades = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.TerranItemType.Upgrade
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == TerranItemType.Upgrade
 ]
 item_name_groups[ItemGroupNames.TERRAN_MOBILE_DETECTION] = terran_mobile_detection = (
     item_names.RAVEN,
@@ -795,8 +793,8 @@ item_name_groups[ItemGroupNames.NCO_UPGRADES] = nco_upgrades = nco_baseline_upgr
 item_name_groups[ItemGroupNames.NCO_MAX_PROGRESSIVE_ITEMS] = nco_unit_technology + nova_equipment + terran_generic_upgrades
 item_name_groups[ItemGroupNames.NCO_MIN_PROGRESSIVE_ITEMS] = nco_units + nco_baseline_upgrades
 item_name_groups[ItemGroupNames.TERRAN_PROGRESSIVE_UPGRADES] = terran_progressive_items = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type in [item_tables.TerranItemType.Progressive]
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == TerranItemType.Progressive
 ]
 item_name_groups[ItemGroupNames.WOL_ITEMS] = vanilla_wol_items = (
     wol_units
@@ -895,9 +893,10 @@ item_name_groups[ItemGroupNames.ZERG_MORPHS] = zerg_morphs = [
     item_names.TYRANNOZOR,
 ]
 item_name_groups[ItemGroupNames.ZERG_NONMORPH_UNITS] = zerg_nonmorph_units = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.ZergItemType.Unit
-       and item_name not in zerg_buildings and item_name not in zerg_morphs
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == ZergItemType.Unit
+        and item_name not in zerg_buildings
+        and item_name not in zerg_morphs
 ]
 item_name_groups[ItemGroupNames.ZERG_UNITS] = zerg_units = zerg_nonmorph_units + zerg_morphs
 # For W/A upgrades
@@ -1042,8 +1041,8 @@ zerg_chaos_air_units = (
 )
 
 item_name_groups[ItemGroupNames.ZERG_GENERIC_UPGRADES] = zerg_generic_upgrades = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.ZergItemType.Upgrade
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == ZergItemType.Upgrade
 ]
 item_name_groups[ItemGroupNames.ZERG_MOBILE_DETECTION] = zerg_mobile_detection = (
     item_names.OVERSEER,
@@ -1414,9 +1413,9 @@ item_name_groups[ItemGroupNames.PROTOSS_BUILDINGS] = protoss_buildings = [
     item_names.SHIELD_BATTERY,
 ]
 item_name_groups[ItemGroupNames.PROTOSS_UNITS] = protoss_units = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.ProtossItemType.Unit
-    and  item_name not in protoss_buildings
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == ProtossItemType.Unit
+    and item_name not in protoss_buildings
 ]
 _protoss_core_units = {
     item_names.ZEALOT: LogicRating.BASIC_STARTER,
@@ -1563,8 +1562,8 @@ protoss_advanced_air_units = _intersection(protoss_advanced_units, protoss_air_w
 protoss_chaos_ground_units = protoss_ground_wa
 protoss_chaos_air_units = protoss_air_wa
 item_name_groups[ItemGroupNames.PROTOSS_GENERIC_UPGRADES] = protoss_generic_upgrades = [
-    item_name for item_name, item_data in item_tables.item_table.items()
-    if item_data.type == item_tables.ProtossItemType.Upgrade
+    item_name for item_name, item_mod_data in item_mod_ids.item_id_table.items()
+    if item_mod_data.item_type == ProtossItemType.Upgrade
 ]
 item_name_groups[ItemGroupNames.PROTOSS_MOBILE_DETECTION] = protoss_mobile_detection = (
     item_names.OBSERVER,
@@ -1622,8 +1621,13 @@ item_name_groups[ItemGroupNames.NEXUS_UNITS] = nexus_units = [
 ]
 item_name_groups[ItemGroupNames.AIUR_UNITS] = [
     item_names.ZEALOT, item_names.DRAGOON, item_names.SENTRY, item_names.AVENGER, item_names.HIGH_TEMPLAR,
-    item_names.IMMORTAL, item_names.REAVER, item_names.MOTHERSHIP_AIUR,
-    item_names.PHOENIX, item_names.SCOUT, item_names.ARBITER, item_names.CARRIER,
+    item_names.IMMORTAL, item_names.REAVER,
+    item_names.PHOENIX,
+    item_names.PULSAR,
+    item_names.SCOUT,
+    item_names.ARBITER,
+    item_names.CARRIER,
+    item_names.MOTHERSHIP_AIUR,
 ]
 item_name_groups[ItemGroupNames.NERAZIM_UNITS] = [
     item_names.CENTURION, item_names.STALKER, item_names.DARK_TEMPLAR, item_names.SIGNIFIER, item_names.DARK_ARCHON,
@@ -2035,6 +2039,11 @@ item_name_groups[ItemGroupNames.KEYS] = keys = [
 # ####################### #
 #   Internal-use groups   #
 # ####################### #
+WA_UPGRADE_ITEMS = (
+    *terran_generic_upgrades,
+    *zerg_generic_upgrades,
+    *protoss_generic_upgrades,
+)
 ENEMY_WITHIN_ZERG_STANDARD_UNITS = (
     item_names.ZERGLING, item_names.ROACH, item_names.HYDRALISK,
 )

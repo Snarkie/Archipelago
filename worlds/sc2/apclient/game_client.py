@@ -18,7 +18,7 @@ from .failable import Error
 from .transfer_data import normalized_unit_types
 from .. import options, locations, item, rules
 from .. import SC2World
-from ..item import item_tables, item_names, item_groups
+from ..item import item_tables, item_names, item_groups, item_mod_ids
 from ..item import FactionlessItemType
 from ..mission_tables import (
     lookup_id_to_mission,
@@ -121,8 +121,8 @@ class MissionClient:
         nova_presence = 0  # unused for now
         if is_kerrigan_primal(self.ctx, kerrigan_level):
             primal_item = item_tables.item_table[item_names.KERRIGAN_PRIMAL_FORM]
-            flag_word = get_item_flag_word(item_names.KERRIGAN_PRIMAL_FORM)
-            start_items[primal_item.race][flag_word] |= 1 << primal_item.number
+            primal_id = item_mod_ids.item_id_table[item_names.KERRIGAN_PRIMAL_FORM]
+            start_items[primal_item.race][primal_id.item_type.flag_word] |= 1 << primal_id.index
         error = banks.send_options(
             f" {difficulty}"
             f" {generic_upgrade_options}"
@@ -169,7 +169,7 @@ class MissionClient:
             try:
                 await self.on_step()
             except Exception as ex:
-                logger.error(ex)
+                logger.exception(ex)
 
     async def on_step(self) -> None:
         # @assume setup is done
@@ -766,10 +766,12 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         name = item_tables.lookup_id_to_name.get(network_item.item)
         if name is None:
             continue
-        item_data: item.ItemData = item_list[name]
-
-        if item_data.type.flag_word < 0:
+        item_id = item_mod_ids.item_id_table.get(name)
+        if item_id is None:
             continue
+        if item_id.item_type.flag_word < 0:
+            continue
+        item_data: item.ItemData = item_list[name]
 
         if ctx.slot_data_version < 5:
             if name in item_groups.item_name_groups[item_groups.ItemGroupNames.TERRAN_STIMPACKS]:
@@ -781,19 +783,19 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
 
         # exists exactly once
         if item_data.quantity == 1 or name in item_groups.item_name_groups[item_groups.ItemGroupNames.UNRELEASED_ITEMS]:
-            accumulators[item_data.race][item_data.type.flag_word] |= 1 << item_data.number
+            accumulators[item_data.race][item_id.item_type.flag_word] |= 1 << item_id.index
 
         # exists multiple times
         elif item_data.quantity > 1:
-            flaggroup = item_data.type.flag_word
+            flaggroup = item_id.item_type.flag_word
             # Generic upgrades apply only to Weapon / Armor upgrades
-            if item_data.number >= 0:
-                bit_mask = ((1 << item_data.quantity.bit_length()) - 1 ) << item_data.number
+            if item_id.index >= 0:
+                bit_mask = ((1 << item_data.quantity.bit_length()) - 1 ) << item_id.index
                 current_amount = accumulators[item_data.race][flaggroup] & bit_mask
-                new_amount = current_amount + (1 << item_data.number)
-                max_amount = item_data.quantity << item_data.number
+                new_amount = current_amount + (1 << item_id.index)
+                max_amount = item_data.quantity << item_id.index
                 if new_amount <= max_amount:
-                    accumulators[item_data.race][flaggroup] += 1 << item_data.number
+                    accumulators[item_data.race][flaggroup] += 1 << item_id.index
             else:
                 if name == item_names.PROGRESSIVE_PROTOSS_GROUND_UPGRADE:
                     shields_from_ground_upgrade += 1
@@ -804,41 +806,43 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
 
             # Regen bio-steel nerf with API3 - undo for older games
             if ctx.slot_data_version < 3 and name == item_names.PROGRESSIVE_REGENERATIVE_BIO_STEEL:
-                current_level = (accumulators[item_data.race][flaggroup] >> item_data.number) % 4
+                current_level = (accumulators[item_data.race][flaggroup] >> item_id.index) % 4
                 if current_level == 2:
                     # Switch from level 2 to level 3 for compatibility
-                    accumulators[item_data.race][flaggroup] += 1 << item_data.number
+                    accumulators[item_data.race][flaggroup] += 1 << item_id.index
         # sum
         # Fillers, deprecated items
         else:
             if name == item_names.PROGRESSIVE_ORBITAL_COMMAND:
                 orbital_command_count += 1
             elif name == item_names.STARTING_MINERALS:
-                accumulators[item_data.race][item_data.type.flag_word] += ctx.minerals_per_item
+                accumulators[item_data.race][item_id.item_type.flag_word] += ctx.minerals_per_item
             elif name == item_names.STARTING_VESPENE:
-                accumulators[item_data.race][item_data.type.flag_word] += ctx.vespene_per_item
+                accumulators[item_data.race][item_id.item_type.flag_word] += ctx.vespene_per_item
             elif name == item_names.STARTING_SUPPLY:
-                accumulators[item_data.race][item_data.type.flag_word] += ctx.starting_supply_per_item
+                accumulators[item_data.race][item_id.item_type.flag_word] += ctx.starting_supply_per_item
             elif name == item_names.UPGRADE_RESEARCH_COST:
-                accumulators[item_data.race][item_data.type.flag_word] += ctx.research_cost_reduction_per_item
-            elif item_data.type == FactionlessItemType.Level:
-                accumulators[item_data.race][item_data.type.flag_word] += item_data.number
+                accumulators[item_data.race][item_id.item_type.flag_word] += ctx.research_cost_reduction_per_item
+            elif item_id.item_type == FactionlessItemType.Level:
+                accumulators[item_data.race][item_id.item_type.flag_word] += item_id.index
             else:
-                accumulators[item_data.race][item_data.type.flag_word] += 1
+                accumulators[item_data.race][item_id.item_type.flag_word] += 1
 
     if mission_id in ctx.grant_hero_items:
         if nova_weapon_count == 0:
             # todo(mm): Replace this with some other in-game buff when the mod can be updated
             # Grant rifle
             item_data = item_tables.item_table[item_names.NOVA_C20A_CANISTER_RIFLE]
-            accumulators[item_data.race][item_data.type.flag_word] |= 1 << item_data.number
+            item_id = item_mod_ids.item_id_table[item_names.NOVA_C20A_CANISTER_RIFLE]
+            accumulators[item_data.race][item_id.item_type.flag_word] |= 1 << item_id.index
 
     # Fix Shields from generic upgrades by unit class (Maximum of ground/air upgrades)
     if shields_from_ground_upgrade > 0 or shields_from_air_upgrade > 0:
         shield_upgrade_level = max(shields_from_ground_upgrade, shields_from_air_upgrade)
         shield_upgrade_item = item_list[item_names.PROGRESSIVE_PROTOSS_SHIELDS]
+        shield_upgrade_id = item_mod_ids.item_id_table[item_names.PROGRESSIVE_PROTOSS_SHIELDS]
         for _ in range(0, shield_upgrade_level):
-            accumulators[shield_upgrade_item.race][shield_upgrade_item.type.flag_word] += 1 << shield_upgrade_item.number
+            accumulators[shield_upgrade_item.race][shield_upgrade_id.item_type.flag_word] += 1 << shield_upgrade_id.index
 
     # Deprecated Orbital Command handling (Backwards compatibility):
     if orbital_command_count > 0:
@@ -850,43 +854,45 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         ]
         replacement_item_ids = [item_tables.item_table[item_name].code for item_name in orbital_command_replacement_items]
         if sum(item_id in replacement_item_ids for item_id in items) > 0:
-            logger.warning(inspect.cleandoc("""
-                Both old Orbital Command and its replacements are present in the world. Skipping compatibility handling.
-            """))
+            logger.warning(
+                "Both old Orbital Command and its replacements are present in the world. "
+                "Skipping compatibility handling."
+            )
         else:
             # None of replacement items are present
             # L1: MULE and Scanner Sweep
-            scanner_sweep_data = item_tables.item_table[item_names.COMMAND_CENTER_SCANNER_SWEEP]
-            mule_data = item_tables.item_table[item_names.COMMAND_CENTER_MULE]
-            accumulators[scanner_sweep_data.race][scanner_sweep_data.type.flag_word] += 1 << scanner_sweep_data.number
-            accumulators[mule_data.race][mule_data.type.flag_word] += 1 << mule_data.number
+            scanner_sweep_id = item_mod_ids.item_id_table[item_names.COMMAND_CENTER_SCANNER_SWEEP]
+            mule_id = item_mod_ids.item_id_table[item_names.COMMAND_CENTER_MULE]
+            accumulators[SC2Race.TERRAN][scanner_sweep_id.item_type.flag_word] += 1 << scanner_sweep_id.index
+            accumulators[SC2Race.TERRAN][mule_id.item_type.flag_word] += 1 << mule_id.index
             if orbital_command_count >= 2:
                 # L2 MULE and Scanner Sweep usable even in Planetary Fortress Mode
-                planetary_orbital_module_data = item_tables.item_table[item_names.PLANETARY_FORTRESS_ORBITAL_MODULE]
-                accumulators[planetary_orbital_module_data.race][planetary_orbital_module_data.type.flag_word] += \
-                    1 << planetary_orbital_module_data.number
+                planetary_orbital_id = item_mod_ids.item_id_table[item_names.PLANETARY_FORTRESS_ORBITAL_MODULE]
+                accumulators[SC2Race.TERRAN][planetary_orbital_id.item_type.flag_word] += (
+                    1 << planetary_orbital_id.index
+                )
 
     # Progressive Stimpack handling (Backwards compatibility):
     if ctx.slot_data_version < 5:
         for name, count in stimpack_count.items():
             if count > 1:
                 # stimpack level 2, grant medpack to upgrade to super stim
-                medpack_item_data: item.ItemData = item_list[compat_stimpack_to_medpack[name]]
-                accumulators[medpack_item_data.race][medpack_item_data.type.flag_word] |= (
-                    1 << medpack_item_data.number
+                medpack_item_id = item_mod_ids.item_id_table[compat_stimpack_to_medpack[name]]
+                accumulators[SC2Race.TERRAN][medpack_item_id.item_type.flag_word] |= (
+                    1 << medpack_item_id.index
                 )
-    # Progressive Transport Hook handling (Backwards compatibility):
+        # Progressive Transport Hook handling (Backwards compatibility):
         if transport_hook_count >= 2:
             transport_hook_replacement_items = (
                 item_names.SHOCK_DIVISION,
                 item_names.SHOCK_DIVISION_ARMAMENT_STABILIZERS,
             )
             for replacement_item_name in transport_hook_replacement_items:
-                replacement_item_data = item_list[replacement_item_name]
-                accumulators[replacement_item_data.race][replacement_item_data.type.flag_word] |= (
-                    1 << replacement_item_data.number
+                replacement_race = item_list[replacement_item_name].race
+                replacement_item_id = item_mod_ids.item_id_table[replacement_item_name]
+                accumulators[replacement_race][replacement_item_id.item_type.flag_word] |= (
+                    1 << replacement_item_id.index
                 )
-
 
     # Upgrades from completed missions
     if ctx.generic_upgrade_missions > 0:
@@ -894,7 +900,7 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         num_missions = int((ctx.generic_upgrade_missions / 100) * total_missions)
         completed = len([mission_id for mission_id in ctx.mission_id_to_location_ids if ctx.is_mission_completed(mission_id)])
         upgrade_count = min(completed // num_missions, ctx.max_upgrade_level) if num_missions > 0 else ctx.max_upgrade_level
-        upgrade_count = min(upgrade_count, item_tables.WEAPON_ARMOR_UPGRADE_MAX_LEVEL)
+        upgrade_count = min(upgrade_count, item_tables.WA_MAX_LEVEL)
 
         # Equivalent to "Progressive Weapon/Armor Upgrade" item
         global_upgrades: set[str] = options.upgrade_included_names[options.GenericUpgradeItems.option_bundle_all]
@@ -912,7 +918,7 @@ def get_bundle_upgrade_member_numbers(bundled_item: str) -> list[int]:
     if bundled_item in (item_names.PROGRESSIVE_PROTOSS_GROUND_UPGRADE, item_names.PROGRESSIVE_PROTOSS_AIR_UPGRADE):
         # Shields are handled as a maximum of those two
         upgrade_elements = [item_name for item_name in upgrade_elements if item_name != item_names.PROGRESSIVE_PROTOSS_SHIELDS]
-    return [item_tables.item_table[item_name].number for item_name in upgrade_elements]
+    return [item_mod_ids.item_id_table[item_name].index for item_name in upgrade_elements]
 
 
 def calc_difficulty(difficulty: int) -> Literal['C', 'N', 'H', 'B', 'X']:
@@ -1091,4 +1097,4 @@ def get_mission_variant(mission_id: int) -> int:
 
 
 def get_item_flag_word(item_name: str) -> int:
-    return item_tables.item_table[item_name].type.flag_word
+    return item_mod_ids.item_id_table[item_name].item_type.flag_word

@@ -3,7 +3,7 @@ Unit tests for item_groups.py
 """
 
 import unittest
-from ..item import item_groups, item_names, item_tables
+from ..item import item_groups, item_names, item_mod_ids, TerranItemType
 
 
 class ItemGroupsUnitTests(unittest.TestCase):
@@ -30,8 +30,11 @@ class ItemGroupsUnitTests(unittest.TestCase):
 
     def test_terran_original_progressive_group_fully_contained_in_wol_upgrades(self) -> None:
         for item_name in item_groups.terran_original_progressive_upgrades:
-            self.assertIn(item_tables.item_table[item_name].type, [
-            item_tables.TerranItemType.Progressive], f"{item_name} is not progressive")
+            self.assertEqual(
+                item_mod_ids.item_id_table[item_name].item_type,
+                TerranItemType.Progressive,
+                f"{item_name} is not progressive"
+            )
             self.assertIn(item_name, item_groups.wol_upgrades)
 
     def test_all_items_in_stimpack_group_are_stimpacks(self) -> None:

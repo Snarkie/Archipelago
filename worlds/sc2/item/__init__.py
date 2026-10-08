@@ -98,7 +98,7 @@ class FactionlessItemType(ItemTypeEnum):
 
 
 ItemType = Union[TerranItemType, ZergItemType, ProtossItemType, FactionlessItemType]
-race_to_item_type: Dict[SC2Race, Type[ItemTypeEnum]] = {
+race_to_item_type: dict[SC2Race, Type[ItemTypeEnum]] = {
     SC2Race.ANY: FactionlessItemType,
     SC2Race.TERRAN: TerranItemType,
     SC2Race.ZERG: ZergItemType,
@@ -108,19 +108,17 @@ race_to_item_type: Dict[SC2Race, Type[ItemTypeEnum]] = {
 
 class ItemData(NamedTuple):
     code: int
-    type: ItemType
-    number: int  # Important for bot commands to send the item into the game
     race: SC2Race
-    classification: ItemClassification = ItemClassification.useful
+    apclass: ItemClassification = ItemClassification.useful
     quantity: int = 1
     parent: str | None = None
     important_for_filtering: bool = False
 
     def is_important_for_filtering(self):
         return (
-                self.important_for_filtering
-                or self.classification == ItemClassification.progression
-                or self.classification == ItemClassification.progression_skip_balancing
+            self.important_for_filtering
+            or self.apclass == ItemClassification.progression
+            or self.apclass == ItemClassification.progression_skip_balancing
         )
 
 @dataclass

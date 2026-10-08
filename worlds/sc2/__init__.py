@@ -16,6 +16,7 @@ from .item import (
     item_groups,
     item_names,
     item_tables,
+    item_mod_ids,
     item_parents,
     virtual_items,
     FilterItem, ItemFilterFlags, StarcraftItem,
@@ -130,7 +131,7 @@ class SC2World(World):
 
     def create_item(self, name: str) -> StarcraftItem:
         data = item_tables.item_table[name]
-        return StarcraftItem(name, data.classification, data.code, self.player)
+        return StarcraftItem(name, data.apclass, data.code, self.player)
 
     def collect(self, state: CollectionState, item: Item) -> bool:
         change = super().collect(state, item)
@@ -254,12 +255,14 @@ class SC2World(World):
 
         set_up_filler_items_distribution(self, remove_kerrigan_items)
         item_list: list[FilterItem] = create_and_flag_explicit_item_locks_and_excludes(self)
-        indexed_item_list: dict[str, FilterItem] = {filter_item.name: filter_item for filter_item in item_list}
+        indexed_item_list: dict[str, list[FilterItem]] = {}
+        for filter_item in item_list:
+            indexed_item_list.setdefault(filter_item.name, []).append(filter_item)
         flag_excludes_by_faction_presence(self, item_list)
         flag_mission_based_item_excludes(self, item_list, remove_nova_items, remove_kerrigan_items, remove_artanis_items)
         flag_allowed_orphan_items(self, indexed_item_list)
         flag_start_inventory(self, item_list)
-        flag_unused_upgrade_types(self, item_list)
+        flag_unused_upgrade_types(self, indexed_item_list)
         flag_unreleased_items(item_list)
         flag_disabled_items(item_list)
         flag_war_council_items(self, item_list)
@@ -406,7 +409,6 @@ def get_hero_item_removal_flags(world: SC2World) -> tuple[bool, bool, bool]:
         if HeroFlag.NOVA & heroes:
             remove_nova_items = False
         if HeroFlag.KERRIGAN & heroes:
-            print(f"###              Kerrigan enabled because {mission}")
             remove_kerrigan_items = False
         if HeroFlag.ARTANIS & heroes:
             remove_artanis_items = False
@@ -593,15 +595,17 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             continue
 
         # Faction units
+        item_mod_id = item_mod_ids.item_id_table.get(item.name)
+        item_type = item_mod_id.item_type if item_mod_id is not None else None
         if (not terran_build_missions
             and item.data.race == SC2Race.TERRAN
-            and item.data.type != item_tables.TerranItemType.Upgrade
+            and item_type != TerranItemType.Upgrade
             and item.name not in allowed_remaining_terran_units
             and item.name not in item_groups.nova_equipment
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
         if (not zerg_build_missions
-            and item.data.type == ZergItemType.Unit
+            and item_type == ZergItemType.Unit
             and item.name not in allowed_remaining_zerg_units
             and item.name not in item_groups.kerrigan_abilities
         ):
@@ -610,7 +614,7 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
             # Note(mm): This doesn't handle categories containing e.g. automated assimilators
             # or warp gate improvements because that item type is mixed in with
             # e.g. Reconstruction Beam and Overwatch
-            and item.data.type == ProtossItemType.Unit
+            and item_type == ProtossItemType.Unit
             and item.name not in allowed_remaining_protoss_units
             and item.name not in item_groups.artanis_abilities
             and item.name not in item_groups.soa_items
@@ -628,17 +632,17 @@ def flag_excludes_by_faction_presence(world: SC2World, item_list: list[FilterIte
                 item.flags |= ItemFilterFlags.FilterExcluded
 
         # Faction +attack/armour upgrades
-        if (item.data.type == TerranItemType.Upgrade
+        if (item_type == TerranItemType.Upgrade
             and not terran_build_missions
             and not auto_upgrades_in_nobuilds
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
-        if (item.data.type == ZergItemType.Upgrade
+        if (item_type == ZergItemType.Upgrade
             and not zerg_build_missions
             and not auto_upgrades_in_nobuilds
         ):
             item.flags |= ItemFilterFlags.FilterExcluded
-        if (item.data.type == ProtossItemType.Upgrade
+        if (item_type == ProtossItemType.Upgrade
             and not protoss_build_missions
             and not auto_upgrades_in_nobuilds
         ):
@@ -745,7 +749,7 @@ def flag_mission_based_item_excludes(
     return
 
 
-def flag_allowed_orphan_items(world: SC2World, item_list: dict[str, FilterItem]) -> None:
+def flag_allowed_orphan_items(world: SC2World, item_list: dict[str, list[FilterItem]]) -> None:
     """Adds the `Allowed_Orphan` flag to items that shouldn't be filtered with their parents, like combat shield"""
     missions = world.custom_mission_order.get_used_missions()
     MAX_ORPHAN_TERRAN_ITEMS = 4
@@ -759,9 +763,11 @@ def flag_allowed_orphan_items(world: SC2World, item_list: dict[str, FilterItem])
             item_names.MEDIC_STABILIZER_MEDPACKS,
             item_names.MARINE_LASER_TARGETING_SYSTEM,
         ):
-            item = item_list.get(item_name)
-            if item is not None and ItemFilterFlags.UserExcluded not in item.flags:
-                terran_candidate_items.add(item_name)
+            items = item_list.get(item_name, [])
+            for item in items:
+                if ItemFilterFlags.UserExcluded not in item.flags:
+                    terran_candidate_items.add(item_name)
+                    break
     # These rules only trigger on Standard tactics
     if SC2Mission.BELLY_OF_THE_BEAST in missions and world.options.required_tactics == RequiredTactics.option_basic:
         for item_name in (
@@ -776,27 +782,29 @@ def flag_allowed_orphan_items(world: SC2World, item_list: dict[str, FilterItem])
             item_names.FIREBAT_STIMPACK,
             item_names.FIREBAT_MEDPACK,
         ):
-            item = item_list.get(item_name)
-            if item is not None and ItemFilterFlags.UserExcluded not in item.flags:
-                terran_candidate_items.add(item_name)
+            items = item_list.get(item_name, [])
+            for item in items:
+                if ItemFilterFlags.UserExcluded not in item.flags:
+                    terran_candidate_items.add(item_name)
+                    break
     if terran_candidate_items:
         sorted_items = sorted(terran_candidate_items)
         world.random.shuffle(sorted_items)
         for item_name in sorted_items[:MAX_ORPHAN_TERRAN_ITEMS]:
-            item = item_list[item_name]
-            item.flags |= ItemFilterFlags.AllowedOrphan
-            item.flags &= ~ItemFilterFlags.FilterExcluded
+            items = item_list[item_name]
+            for item in items:
+                item.flags |= ItemFilterFlags.AllowedOrphan
+                item.flags &= ~ItemFilterFlags.FilterExcluded
     if SC2Mission.EVIL_AWOKEN in missions and world.options.required_tactics == RequiredTactics.option_basic:
         for item_name in (
             item_names.STALKER_PHASE_REACTOR,
             item_names.STALKER_DISINTEGRATING_PARTICLES,
             item_names.STALKER_PARTICLE_REFLECTION,
         ):
-            item = item_list.get(item_name)
-            if item is None:
-                continue
-            item.flags |= ItemFilterFlags.AllowedOrphan
-            item.flags &= ~ItemFilterFlags.FilterExcluded
+            items = item_list.get(item_name, [])
+            for item in items:
+                item.flags |= ItemFilterFlags.AllowedOrphan
+                item.flags &= ~ItemFilterFlags.FilterExcluded
 
 
 def flag_start_inventory(world: SC2World, item_list: list[FilterItem]) -> None:
@@ -963,14 +971,15 @@ def flag_start_abilities(world: SC2World, item_list: list[FilterItem]) -> None:
             ability.flags |= ItemFilterFlags.StartInventory
 
 
-def flag_unused_upgrade_types(world: SC2World, item_list: list[FilterItem]) -> None:
+def flag_unused_upgrade_types(world: SC2World, item_list: dict[str, list[FilterItem]]) -> None:
     """Excludes +armour/attack upgrades based on generic upgrade strategy.
     Caps upgrade items based on `max_upgrade_level`."""
     include_upgrades = world.options.generic_upgrade_missions == 0
     upgrade_items = world.options.generic_upgrade_items.value
     upgrade_included_counts: dict[str, int] = {}
-    for item in item_list:
-        if item.data.type in item_tables.upgrade_item_types:
+    for item_name in item_groups.WA_UPGRADE_ITEMS:
+        items = item_list.get(item_name, [])
+        for item in items:
             if not include_upgrades or (item.name not in upgrade_included_names[upgrade_items]):
                 item.flags |= ItemFilterFlags.Removed
             else:
@@ -1155,7 +1164,7 @@ def get_random_first_mission(world: SC2World, mission_order: SC2MissionOrder) ->
 def create_item_with_correct_settings(player: int, name: str, filter_flags: ItemFilterFlags = ItemFilterFlags.Available) -> StarcraftItem:
     data = item_tables.item_table[name]
 
-    item = StarcraftItem(name, data.classification, data.code, player, filter_flags)
+    item = StarcraftItem(name, data.apclass, data.code, player, filter_flags)
     if ItemFilterFlags.ForceProgression & filter_flags:
         item.classification = ItemClassification.progression
 

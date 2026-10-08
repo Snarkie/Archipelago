@@ -1,6 +1,14 @@
 import unittest
 
-from ..item import item_tables, ItemType
+from ..item import (
+    item_tables,
+    item_mod_ids,
+    ItemType,
+    FactionlessItemType,
+    ZergItemType,
+    TerranItemType,
+    ProtossItemType,
+)
 
 
 class TestItems(unittest.TestCase):
@@ -9,8 +17,7 @@ class TestItems(unittest.TestCase):
         Tests if grouped upgrades have set number correctly
         """
         bundled_items = item_tables.upgrade_bundles.keys()
-        bundled_item_data = [item_tables.item_table[item_name] for item_name in bundled_items]
-        bundled_item_numbers = [item_data.number for item_data in bundled_item_data]
+        bundled_item_numbers = [item_mod_ids.item_id_table[item_name].index for item_name in bundled_items]
 
         check_numbers = [number == -1 for number in bundled_item_numbers]
 
@@ -24,11 +31,11 @@ class TestItems(unittest.TestCase):
         bundled_items = item_tables.upgrade_bundles.keys()
         non_bundled_upgrades = [
             item_name for item_name in item_tables.item_table.keys()
-            if (item_name not in bundled_items
-                and item_tables.item_table[item_name].type in item_tables.upgrade_item_types)
+            if item_name not in bundled_items and item_mod_ids.is_wa_upgrade(item_name)
         ]
-        non_bundled_upgrade_data = [item_tables.item_table[item_name] for item_name in non_bundled_upgrades]
-        non_bundled_upgrade_numbers = [item_data.number for item_data in non_bundled_upgrade_data]
+        non_bundled_upgrade_numbers = [
+            item_mod_ids.item_id_table[item_name].index for item_name in non_bundled_upgrades
+        ]
 
         check_numbers = [number % check_modulo == 0 for number in non_bundled_upgrade_numbers]
 
@@ -50,12 +57,12 @@ class TestItems(unittest.TestCase):
         """
         weapon_armor_upgrades = [
             item
-            for item, item_data in item_tables.item_table.items()
-            if item_data.type in item_tables.upgrade_item_types
+            for item in item_tables.item_table
+            if item_mod_ids.is_wa_upgrade(item)
         ]
 
         for weapon_armor_upgrade in weapon_armor_upgrades:
-            self.assertEqual(item_tables.item_table[weapon_armor_upgrade].quantity, item_tables.WEAPON_ARMOR_UPGRADE_MAX_LEVEL)
+            self.assertEqual(item_tables.item_table[weapon_armor_upgrade].quantity, item_tables.WA_MAX_LEVEL)
 
     def test_item_ids_distinct(self) -> None:
         """
@@ -70,15 +77,14 @@ class TestItems(unittest.TestCase):
         Tests if each item is distinct for sending into the mod.
         """
         encountered: dict[tuple[ItemType, int], str] = {}
-        for item_name, item_data in item_tables.item_table.items():
-            if (item_data.number < 0  # negative numbers have special meaning
-                or item_data.type is item_tables.FactionlessItemType.Keys # all keys share number 0
-            ):
+        for item_name, item_data in item_mod_ids.item_id_table.items():
+            if (item_data.index < 0):
+                # negative numbers have special meaning
                 continue
-            signal = (item_data.type, item_data.number)
+            signal = (item_data.item_type, item_data.index)
             assert signal not in encountered, (
-                f"Item {item_name} shares type: {item_data.type.display_name}"
-                f" and number: {item_data.number} with {encountered[signal]}"
+                f"Item {item_name} shares type: {item_data.item_type.display_name}"
+                f" and number: {item_data.index} with {encountered[signal]}"
             )
             encountered[signal] = item_name
 
@@ -86,18 +92,17 @@ class TestItems(unittest.TestCase):
         """
         :return:
         """
-        progressive_groups: list[ItemType] = [
-            item_tables.TerranItemType.Progressive,
-            item_tables.ProtossItemType.Progressive,
-            item_tables.ZergItemType.Progressive
-        ]
+        progressive_groups: set[ItemType] = {
+            TerranItemType.Progressive,
+            ProtossItemType.Progressive,
+            ZergItemType.Progressive,
+        }
 
-        quantities: list[int] = [
-            item_tables.item_table[item].quantity for item in item_tables.item_table
-            if item_tables.item_table[item].type in progressive_groups
-        ]
-
-        self.assertNotIn(1, quantities)
+        for item_name, item_mod_data in item_mod_ids.item_id_table.items():
+            if item_mod_data.item_type not in progressive_groups:
+                continue
+            quantity = item_tables.item_table[item_name].quantity
+            self.assertNotEqual(quantity, 1, f"Progressive item {item_name} has quantity {quantity}")
 
     def test_non_progressive_quantity(self) -> None:
         """
@@ -105,19 +110,20 @@ class TestItems(unittest.TestCase):
         """
         non_progressive_single_entity_groups: list[ItemType] = [
             # Terran
-            item_tables.TerranItemType.Unit,
-            item_tables.TerranItemType.Item,
+            TerranItemType.Unit,
+            TerranItemType.Item,
             # Zerg
-            item_tables.ZergItemType.Unit,
-            item_tables.ZergItemType.Item,
+            ZergItemType.Unit,
+            ZergItemType.Item,
             # Protoss
-            item_tables.ProtossItemType.Unit,
-            item_tables.ProtossItemType.Item,
+            ProtossItemType.Unit,
+            ProtossItemType.Item,
         ]
 
+        default_item_id = item_mod_ids.ItemModInfo(FactionlessItemType.Nothing, -1)
         quantities: list[int] = [
             item_tables.item_table[item].quantity for item in item_tables.item_table
-            if item_tables.item_table[item].type in non_progressive_single_entity_groups
+            if item_mod_ids.item_id_table.get(item, default_item_id).item_type in non_progressive_single_entity_groups
         ]
 
         for quantity in quantities:

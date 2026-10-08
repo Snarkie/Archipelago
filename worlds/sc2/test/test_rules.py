@@ -35,7 +35,7 @@ class TestInventory:
     def is_item_progression(self, item: str) -> bool:
         return (
             item in virtual_items.VirtualItem._member_names_
-            or item_tables.item_table[item].classification in self.progression_types
+            or item_tables.item_table[item].apclass in self.progression_types
         )
 
     def random_boolean(self):

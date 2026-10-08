@@ -209,7 +209,7 @@ class SC2Logic:
         return state.count(item.name, self.player)  # type: ignore[arg-type]
 
     def _wa_upgrade_count_generic_filtering(self, item: VirtualItem, state: CollectionState) -> int:
-        return item_tables.WEAPON_ARMOR_UPGRADE_MAX_LEVEL
+        return item_tables.WA_MAX_LEVEL
 
     def _wa_upgrade_count_generic_placement(self, item: VirtualItem, state: CollectionState) -> int:
         return (
