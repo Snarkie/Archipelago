@@ -210,6 +210,7 @@ class ItemGroupNames:
     PROPHECY_UNITS = "Prophecy Units"
     PROPHECY_BUILDINGS = "Prophecy Buildings"
     LOTV_UNITS = "LotV Units"
+    LOTV_BUILDINGS = "LotV Buildings"
     LOTV_ITEMS = "LotV Items"
     LOTV_GLOBAL_UPGRADES = "LotV Global Upgrades"
     SOA_PASSIVES = "SOA Passive Abilities"
@@ -1596,6 +1597,11 @@ item_name_groups[ItemGroupNames.PROPHECY_UNITS] = prophecy_units = [
 item_name_groups[ItemGroupNames.PROPHECY_BUILDINGS] = prophecy_buildings = [
     item_names.PHOTON_CANNON,
 ]
+item_name_groups[ItemGroupNames.LOTV_BUILDINGS] = lotv_buildings = [
+    item_names.PHOTON_CANNON,
+    item_names.KHAYDARIN_MONOLITH,
+    item_names.SHIELD_BATTERY,
+]
 item_name_groups[ItemGroupNames.GATEWAY_UNITS] = gateway_units = [
     item_names.ZEALOT, item_names.CENTURION, item_names.SENTINEL, item_names.SUPPLICANT,
     item_names.STALKER, item_names.INSTIGATOR, item_names.SLAYER,
@@ -1774,7 +1780,7 @@ lotv_war_council_upgrades = [
 ]
 item_name_groups[ItemGroupNames.LOTV_ITEMS] = vanilla_lotv_items = (
     lotv_units
-    + protoss_buildings
+    + lotv_buildings
     + lotv_soa_items
     + lotv_global_upgrades
     + protoss_generic_upgrades
