@@ -1314,7 +1314,7 @@ item_descriptions = {
     item_names.OPERATIONAL_EFFICIENCY_TEMPLAR_ARCHIVE: "Removes the vespene cost and halves the mineral cost of Templar Archives.\nAlso allows building a Templar Archive without a Gateway.",
     item_names.OPERATIONAL_EFFICIENCY_DARK_SHRINE: "Removes the vespene cost and halves the mineral cost of Dark Shrines.\nAlso allows building a Dark Shrine without a Gateway.",
     item_names.KHAYDARIN_MONOLITH_RAPID_POWER_CYCLING: "Reduces the charging time for Khaydarin Monoliths.",
-    item_names.KHAYDARIN_MONOLITH_KHAYDARIN_SURGE: "Khaydarin Monolith attacks stun enemy targets, with a cooldown.\nCan stun Heroic targets, with a longer cooldown.",
+    item_names.KHAYDARIN_MONOLITH_KHAYDARIN_SURGE: "Khaydarin Monolith attacks stun enemy targets, with a maximum uptime.\nCan stun Heroic targets, with a lower maximum uptime.",
     item_names.PSI_SPIRE_POWER_GRID_STABILIZER: "Psi Spires gain increased range and area of effect.",
     item_names.PSI_SPIRE_ELECTROMAGNETIC_DISRUPTION: "Psi Spires reduce damage and speed of enemies.",
     item_names.LAUNCH_BAY_GRAVITON_CATAPULT: "Launch Bays can launch Interceptors more quickly.",
