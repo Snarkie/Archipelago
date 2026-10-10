@@ -1183,6 +1183,7 @@ class SC2Context(CommonContext):
             self.mutation_rate_limit = slot_data.get("mutation_rate_limit")
             self.mutation_rate_endpoint = slot_data.get("mutation_rate_endpoint")
             self.mutation_rate_order = slot_data.get("mutation_rate_order", [])
+            self.detector_items = slot_data.get("detector_items")
 
             if self.slot_data_version < 5 and required_tactics > RequiredTactics.option_chaos:
                 # Locking Grant Story Tech/Levels if no logic

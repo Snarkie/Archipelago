@@ -66,6 +66,7 @@ class Sc2SlotDataDict(TypedDict, total=False):
     mutation_rate_limit: int
     mutation_rate_endpoint: int
     mutation_rate_order: list[str]
+    detector_items: int
 
     # Void Trade
     enable_void_trade: int
@@ -166,6 +167,7 @@ def fill_slot_data(world: 'SC2World') -> Sc2SlotDataDict:
     slot_data["mutation_rate_limit"] = int(world.options.mutation_rate_limit)
     slot_data["mutation_rate_endpoint"] = int(world.options.mutation_rate_endpoint)
     slot_data["mutation_rate_order"] = world.mutation_rate_order
+    slot_data["detector_items"] = int(world.options.detector_items)
 
     if world.options.enable_void_trade != options.EnableVoidTrade.option_false:
         slot_data["enable_void_trade"] = int(world.options.enable_void_trade)
