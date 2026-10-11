@@ -842,7 +842,7 @@ class SC2Context(CommonContext):
         self.custom_mission_order: list[CampaignSlotData] = []
         self.mission_id_to_entry_rules: dict[int, MissionEntryRules]
         self.mission_id_to_depth: dict[int, int]
-        self.max_depth: int
+        self.max_depth: int = 0
         self.final_mission_ids: list[int] = [29]
         self.final_locations: list[int] = []
         self.announcements: queue.Queue = queue.Queue()
@@ -1094,7 +1094,8 @@ class SC2Context(CommonContext):
                 for campaign in self.custom_mission_order for layout in campaign.layouts
                 for column in layout.missions for mission in column
             }
-            self.max_depth = max(self.mission_id_to_depth.values())
+            if self.mission_id_to_depth :
+                self.max_depth = max(self.mission_id_to_depth.values())
             self.mission_order = slot_data.get("mission_order", MissionOrder.option_vanilla)
             if self.slot_data_version < 4:
                 self.final_mission_ids = [v3_data.get("final_mission", SC2Mission.ALL_IN.id)]

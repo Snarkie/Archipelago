@@ -1249,6 +1249,7 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         ctx.mutation_rate_source == options.MutationRateSource.option_depth_scaling
         and ctx.mutation_rate_limit > 0
         and mutator_count_available > 0
+        and max_depth > 0
     ):
         if (ctx.mutation_rate_endpoint > 0):
             mutator_count = min(
