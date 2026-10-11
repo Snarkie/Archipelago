@@ -1049,7 +1049,7 @@ def flag_mutator_items(world: SC2World, item_list: list[FilterItem]) -> None:
     temp_mutator_order = list(islice(world.mutator_trap_item_order, world.options.mutator_trap_item_limit.value))
     for item in item_list:
         if (item.name in temp_mutator_order
-            and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory) & item.flags
+            and not (ItemFilterFlags.Locked|ItemFilterFlags.StartInventory|ItemFilterFlags.UserExcluded) & item.flags
         ):
             # lock mutator items up to the limit
             item.flags |= ItemFilterFlags.Locked
