@@ -1238,7 +1238,7 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         and mutator_count_available > 0
     ):
         missions_per_mutator = total_missions * ctx.mutation_rate_endpoint / (mutator_count_available * 100)
-        mutator_count = min(int(completed // missions_per_mutator), ctx.mutation_rate_limit) if missions_per_mutator > 0 else ctx.mutation_rate_limit
+        mutator_count = min(int(completed / missions_per_mutator), ctx.mutation_rate_limit) if missions_per_mutator > 0 else ctx.mutation_rate_limit
 
     # Handle scaling with mission order depth
     current_depth = ctx.mission_id_to_depth[mission_id]
@@ -1251,7 +1251,10 @@ def calculate_items(ctx: 'SC2Context', mission_id: int) -> dict[SC2Race, list[in
         and mutator_count_available > 0
     ):
         if (ctx.mutation_rate_endpoint > 0):
-            mutator_count = min((current_depth * mutator_count_available * 100) // (max_depth * ctx.mutation_rate_endpoint ), ctx.mutation_rate_limit)
+            mutator_count = min(
+                int((current_depth * mutator_count_available * 100) / (max_depth * ctx.mutation_rate_endpoint )),
+                ctx.mutation_rate_limit
+            )
         else:
             # endpoint == 0, apply all mutators immediately
             mutator_count = mutator_count_available
