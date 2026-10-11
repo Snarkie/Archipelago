@@ -1302,7 +1302,7 @@ item_descriptions = {
     item_names.SUPERIOR_WARP_GATES: "Protoss Warp Gates can hold up to 3 charges of unit warp-ins.",
     item_names.ENHANCED_TARGETING: "Protoss defensive structures gain +2 range.",
     item_names.OPTIMIZED_ORDNANCE: "Increases the attack speed of Protoss defensive structures by 25%.",
-    item_names.KHALAI_INGENUITY: "Pylons, Photon Cannons, Monoliths, and Shield Batteries warp in near-instantly.",
+    item_names.KHALAI_INGENUITY: "Pylons and Protoss defensive structures warp in near-instantly.",
     item_names.PHOTON_CANNON_REPULSOR_SHELL: "Increases Photon Cannon Shields and Shield Regeneration.",
     item_names.PHOTON_CANNON_PHASE_CANNON: "Allows Photon Cannons to transform into a mobile Phase Cannon form, which cannot attack.",
     item_names.AMPLIFIED_ASSIMILATORS: "Assimilators produce Vespene gas 25% faster.",
