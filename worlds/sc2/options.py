@@ -1762,6 +1762,7 @@ class MutatorTrapItemMaxLevels(ItemDict):
 
     default = mutators
     valid_keys = default.keys()
+    max = 5;
 
     def __init__(self, value: dict[str, int]):
         # Allow zeros that the parent class doesn't allow
@@ -1817,6 +1818,7 @@ class MutationRateMaxLevels(ItemDict):
 
     default = mutators
     valid_keys = default.keys()
+    max = 5;
 
     def __init__(self, value: dict[str, int]):
         # Allow zeros that the parent class doesn't allow
